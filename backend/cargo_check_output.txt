@@ -1,0 +1,1025 @@
+﻿cargo :    Compiling allbright-c2-backend v119.0.0 (D:\ALLBRIGHT\backend)
+At line:4 char:26
++ cd D:\ALLBRIGHT\backend; cargo check 2>&1 | Out-File -FilePath "D:\AL ...
++                          ~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (   Compiling al...BRIGHT\backend):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+error[E0432]: unresolved import `sha2`
+  --> m099_zk_proof.rs:30:9
+   |
+30 |     use sha2::{Sha256, Digest};
+   |         ^^^^
+   |
+help: a similar path exists
+   |
+30 |     use k256::sha2::{Sha256, Digest};
+   |         ++++++
+
+error[E0432]: unresolved import `sha2`
+  --> m099_zk_proof.rs:50:13
+   |
+50 |         use sha2::{Sha256, Digest};
+   |             ^^^^
+   |
+help: a similar path exists
+   |
+50 |         use k256::sha2::{Sha256, Digest};
+   |             ++++++
+
+error[E0425]: cannot find type `VecDeque` in this scope
+  --> m007_gas_oracle.rs:40:24
+   |
+40 |     pub price_history: VecDeque<GasPrice>,
+   |                        ^^^^^^^^ not found in this scope
+   |
+help: consider importing this struct
+   |
+ 7 + use std::collections::VecDeque;
+   |
+
+error[E0425]: cannot find type `Duration` in this scope
+  --> m007_gas_oracle.rs:42:26
+   |
+42 |     pub update_interval: Duration,
+   |                          ^^^^^^^^ not found in this scope
+   |
+help: consider importing one of these structs
+   |
+ 7 + use crate::Duration;
+   |
+ 7 + use std::time::Duration;
+   |
+
+error[E0433]: cannot find type `VecDeque` in this scope
+  --> m007_gas_oracle.rs:60:28
+   |
+60 |             price_history: VecDeque::with_capacity(1000),
+   |                            ^^^^^^^^ use of undeclared type `VecDeque`
+   |
+help: consider importing this struct
+   |
+ 7 + use std::collections::VecDeque;
+   |
+
+error[E0433]: cannot find type `Duration` in this scope
+  --> m007_gas_oracle.rs:68:30
+   |
+68 |             update_interval: Duration::from_secs(15),
+   |                              ^^^^^^^^ use of undeclared type `Duration`
+   |
+help: consider importing one of these structs
+   |
+ 7 + use crate::Duration;
+   |
+ 7 + use std::time::Duration;
+   |
+
+error[E0425]: cannot find type `Transaction` in this scope
+  --> m008_mev_protection.rs:71:48
+   |
+71 |     pub fn analyze_transaction(&mut self, tx: &Transaction) -> Vec<MevThreat> {
+   |                                                ^^^^^^^^^^^ not found in this scope
+   |
+help: consider importing this struct
+   |
+ 7 + use crate::m003_transaction_batcher::Transaction;
+   |
+
+error[E0425]: cannot find type `Transaction` in this scope
+   --> m008_mev_protection.rs:102:48
+    |
+102 |     pub fn protect_transaction(&mut self, tx: &Transaction) -> ProtectionResult {
+    |                                                ^^^^^^^^^^^ not found in this scope
+    |
+help: consider importing this struct
+    |
+  7 + use crate::m003_transaction_batcher::Transaction;
+    |
+
+error[E0425]: cannot find type `KeyManager` in this scope
+   --> main.rs:383:22
+    |
+383 |     pub key_manager: KeyManager,
+    |                      ^^^^^^^^^^ not found in this scope
+
+warning: unused import: `AtomicBool`
+  --> m054_auto_optimizer.rs:10:36
+   |
+10 | use std::sync::atomic::{AtomicU64, AtomicBool, Ordering};
+   |                                    ^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `std::thread`
+  --> m099_zk_proof.rs:10:5
+   |
+10 | use std::thread;
+   |     ^^^^^^^^^^^
+
+warning: unused import: `std::sync::Arc`
+ --> aise_unified_intelligence.rs:8:5
+  |
+8 | use std::sync::Arc;
+  |     ^^^^^^^^^^^^^^
+
+warning: unused import: `tokio::sync::RwLock`
+ --> aise_unified_intelligence.rs:9:5
+  |
+9 | use tokio::sync::RwLock;
+  |     ^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `std::collections::HashMap`
+ --> m132_copilot_auditor.rs:9:5
+  |
+9 | use std::collections::HashMap;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `std::sync::Arc`
+  --> m132_copilot_auditor.rs:10:5
+   |
+10 | use std::sync::Arc;
+   |     ^^^^^^^^^^^^^^
+
+warning: unused import: `std::sync::Arc`
+ --> disaster_recovery.rs:9:5
+  |
+9 | use std::sync::Arc;
+  |     ^^^^^^^^^^^^^^
+
+warning: unused import: `tokio::sync::RwLock`
+  --> disaster_recovery.rs:10:5
+   |
+10 | use tokio::sync::RwLock;
+   |     ^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `Ordering`
+ --> kpi_telemetry.rs:5:36
+  |
+5 | use std::sync::atomic::{AtomicU64, Ordering};
+  |                                    ^^^^^^^^
+
+warning: unused imports: `SystemTime` and `UNIX_EPOCH`
+ --> kpi_telemetry.rs:6:17
+  |
+6 | use std::time::{SystemTime, UNIX_EPOCH};
+  |                 ^^^^^^^^^^  ^^^^^^^^^^
+
+warning: unused import: `MeasuredKpi`
+  --> continuum_optimization.rs:11:51
+   |
+11 | use crate::kpi_telemetry::{KpiTelemetryCollector, MeasuredKpi, Pillar};
+   |                                                   ^^^^^^^^^^^
+
+warning: unused import: `SubcategoryMeasurements`
+  --> continuum_optimization.rs:12:57
+   |
+12 | use crate::m054_auto_optimizer::{AutoOptimizationAgent, SubcategoryMeasurements};
+   |                                                         ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unnecessary parentheses around block return value
+  --> continuum_optimization.rs:77:25
+   |
+77 |                         ((kpi.measured_value - kpi.baseline_value) / kpi.baseline_value)
+   |                         ^                                                              ^
+   |
+   = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+   |
+77 -                         ((kpi.measured_value - kpi.baseline_value) / kpi.baseline_value)
+77 +                         (kpi.measured_value - kpi.baseline_value) / kpi.baseline_value
+   |
+
+error[E0119]: conflicting implementations of trait `std::default::Default` for type `m099_zk_proof::ZkProofManager`
+   --> m099_zk_proof.rs:102:10
+    |
+102 | #[derive(Default)]
+    |          ^^^^^^^ conflicting implementation for `m099_zk_proof::ZkProofManager`
+...
+195 | impl Default for ZkProofManager {
+    | ------------------------------- first implementation here
+
+error[E0277]: can't compare `&str` with `str`
+  --> constitution_guard.rs:55:80
+   |
+55 |         if action.objective.is_some() && action.objective.as_ref().unwrap().ne("profit_growth") {
+   |                                                                             -- ^^^^^^^^^^^^^^^ no implementation 
+for `&str == str`
+   |                                                                             |
+   |                                                                             required by a bound introduced by 
+this call
+   |
+   = help: the trait `PartialEq<str>` is not implemented for `&str`
+help: the trait `PartialEq` is implemented for `str`
+  --> D:\rustup-home\toolchains\stable-x86_64-pc-windows-msvc\lib/rustlib/src/rust\library\core\src\str\traits.rs:27:1
+   |
+27 | impl const PartialEq for str {
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0369]: binary operation `<=` cannot be applied to type `constitution_guard::RiskLevel`
+  --> constitution_guard.rs:91:85
+   |
+91 |         let allowed = violations.is_empty() || violations.iter().all(|v| v.severity <= RiskLevel::Medium);
+   |                                                                          ---------- ^^ ----------------- 
+constitution_guard::RiskLevel
+   |                                                                          |
+   |                                                                          constitution_guard::RiskLevel
+   |
+note: an implementation of `PartialOrd` might be missing for `constitution_guard::RiskLevel`
+  --> constitution_guard.rs:31:1
+   |
+31 | pub enum RiskLevel {
+   | ^^^^^^^^^^^^^^^^^^ must implement `PartialOrd`
+help: consider annotating `constitution_guard::RiskLevel` with `#[derive(PartialEq, PartialOrd)]`
+   |
+31 + #[derive(PartialEq, PartialOrd)]
+32 | pub enum RiskLevel {
+   |
+
+error[E0277]: the trait bound `constitution_guard::RiskLevel: std::cmp::Ord` is not satisfied
+    --> constitution_guard.rs:92:64
+     |
+  92 |         let risk_level = violations.iter().map(|v| v.severity).min().unwrap_or(RiskLevel::Low);
+     |                                                                ^^^ the trait `std::cmp::Ord` is not implemented 
+for `constitution_guard::RiskLevel`
+     |
+note: the method call chain might not have had the expected associated types
+    --> constitution_guard.rs:92:44
+     |
+  52 |         let mut violations = Vec::new();
+     |                              ---------- this expression has type `Vec<GovernanceViolation>`
+...
+  92 |         let risk_level = violations.iter().map(|v| v.severity).min().unwrap_or(RiskLevel::Low);
+     |                                     ------ ^^^^^^^^^^^^^^^^^^^ `Iterator::Item` changed to `RiskLevel` here
+     |                                     |
+     |                                     `Iterator::Item` is `&GovernanceViolation` here
+note: required by a bound in `std::iter::Iterator::min`
+    --> D:\rustup-home\toolchains\stable-x86_64-pc-windows-msvc\lib/rustlib/src/rust\library\core\src\iter\traits\itera
+tor.rs:3292:21
+     |
+3289 |     fn min(self) -> Option<Self::Item>
+     |        --- required by a bound in this associated function
+...
+3292 |         Self::Item: Ord,
+     |                     ^^^ required by this bound in `Iterator::min`
+help: consider annotating `constitution_guard::RiskLevel` with `#[derive(Ord)]`
+     |
+  31 + #[derive(Ord)]
+  32 | pub enum RiskLevel {
+     |
+
+error[E0308]: mismatched types
+   --> constitution_guard.rs:128:35
+    |
+128 |                 auth.risk_level = RiskLevel::Critical;
+    |                 ---------------   ^^^^^^^^^^^^^^^^^^^ expected `shield_guardrails::RiskLevel`, found 
+`constitution_guard::RiskLevel`
+    |                 |
+    |                 expected due to the type of this binding
+    |
+    = note: `constitution_guard::RiskLevel` and `shield_guardrails::RiskLevel` have similar names, but are actually 
+distinct types
+note: `constitution_guard::RiskLevel` is defined in module `crate::constitution_guard` of the current crate
+   --> constitution_guard.rs:31:1
+    |
+ 31 | pub enum RiskLevel {
+    | ^^^^^^^^^^^^^^^^^^
+note: `shield_guardrails::RiskLevel` is defined in module `crate::shield_guardrails` of the current crate
+   --> shield_guardrails.rs:31:1
+    |
+ 31 | pub enum RiskLevel {
+    | ^^^^^^^^^^^^^^^^^^
+
+error[E0433]: cannot find type `KeyManager` in this scope
+   --> main.rs:441:31
+    |
+441 |         let mut key_manager = KeyManager::new();
+    |                               ^^^^^^^^^^ use of undeclared type `KeyManager`
+
+error[E0560]: struct `CentralC2Server` has no field named `copilot_auditor`
+   --> main.rs:476:13
+    |
+476 |             copilot_auditor: CopilotAuditor::new(),
+    |             ^^^^^^^^^^^^^^^ `CentralC2Server` does not have this field
+    |
+    = note: all struct fields are already assigned
+
+error[E0382]: borrow of moved value: `modules`
+   --> main.rs:593:79
+    |
+489 |         let modules = vec![
+    |             ------- move occurs because `modules` has type `Vec<(&str, &str, &str)>`, which does not implement 
+the `Copy` trait
+...
+581 |         for (id, name, file) in modules {
+    |                                 ------- `modules` moved due to this implicit call to `.into_iter()`
+...
+593 |         tracing::info!("CGM: Registered {} core modules in runtime registry", modules.len());
+    |                                                                               ^^^^^^^ value borrowed here after 
+move
+    |
+note: `into_iter` takes ownership of the receiver `self`, which moves `modules`
+   --> D:\rustup-home\toolchains\stable-x86_64-pc-windows-msvc\lib/rustlib/src/rust\library\core\src\iter\traits\collec
+t.rs:312:18
+    |
+312 |     fn into_iter(self) -> Self::IntoIter;
+    |                  ^^^^
+help: consider iterating over a slice of the `Vec<(&str, &str, &str)>`'s content to avoid moving into the `for` loop
+    |
+581 |         for (id, name, file) in &modules {
+    |                                 +
+
+error[E0596]: cannot borrow `gate` as mutable, as it is not declared as mutable
+    --> main.rs:1318:13
+     |
+1318 |     let _ = gate.validate_all();
+     |             ^^^^ cannot borrow as mutable
+     |
+help: consider changing this to be mutable
+     |
+1316 |     let mut gate = SecurityGate::new();
+     |         +++
+
+error[E0599]: no variant, associated function, or constant named `Internal` found for enum `AppError` in the current 
+scope
+    --> main.rs:1374:59
+     |
+1374 |     let state = FLEET_STATE.get().ok_or_else(|| AppError::Internal("Fleet state not initialized".into()))?;
+     |                                                           ^^^^^^^^ variant, associated function, or constant 
+not found in `AppError`
+     |
+    ::: error.rs:8:1
+     |
+   8 | pub enum AppError {
+     | ----------------- variant, associated function, or constant `Internal` not found for this enum
+
+error[E0599]: no variant, associated function, or constant named `Internal` found for enum `AppError` in the current 
+scope
+    --> main.rs:1387:58
+     |
+1387 |     let kpis = RUNNER_KPIS.get().ok_or_else(|| AppError::Internal("Runner KPIs not initialized".into()))?;
+     |                                                          ^^^^^^^^ variant, associated function, or constant not 
+found in `AppError`
+     |
+    ::: error.rs:8:1
+     |
+   8 | pub enum AppError {
+     | ----------------- variant, associated function, or constant `Internal` not found for this enum
+
+error[E0599]: no variant, associated function, or constant named `Internal` found for enum `AppError` in the current 
+scope
+    --> main.rs:1405:58
+     |
+1405 |     let kpis = RUNNER_KPIS.get().ok_or_else(|| AppError::Internal("Runner KPIs not initialized".into()))?;
+     |                                                          ^^^^^^^^ variant, associated function, or constant not 
+found in `AppError`
+     |
+    ::: error.rs:8:1
+     |
+   8 | pub enum AppError {
+     | ----------------- variant, associated function, or constant `Internal` not found for this enum
+
+error[E0599]: no variant, associated function, or constant named `Internal` found for enum `AppError` in the current 
+scope
+    --> main.rs:1432:58
+     |
+1432 |     let kpis = RUNNER_KPIS.get().ok_or_else(|| AppError::Internal("Runner KPIs not initialized".into()))?;
+     |                                                          ^^^^^^^^ variant, associated function, or constant not 
+found in `AppError`
+     |
+    ::: error.rs:8:1
+     |
+   8 | pub enum AppError {
+     | ----------------- variant, associated function, or constant `Internal` not found for this enum
+
+error[E0689]: can't call method `max` on ambiguous numeric type `{float}`
+    --> main.rs:1453:69
+     |
+1453 |         subsystem_scores.push(("Velocity SubSystem", velocity_score.max(0.0)));
+     |                                                                     ^^^
+     |
+help: you must specify a type for this binding, like `f32`
+     |
+1452 |         let velocity_score: f32 = 100.0 - (kpi.avg_latency_us / 1000.0).min(100.0);
+     |                           +++++
+
+error[E0599]: no variant, associated function, or constant named `Internal` found for enum `AppError` in the current 
+scope
+    --> main.rs:1481:59
+     |
+1481 |     let state = FLEET_STATE.get().ok_or_else(|| AppError::Internal("Fleet state not initialized".into()))?;
+     |                                                           ^^^^^^^^ variant, associated function, or constant 
+not found in `AppError`
+     |
+    ::: error.rs:8:1
+     |
+   8 | pub enum AppError {
+     | ----------------- variant, associated function, or constant `Internal` not found for this enum
+
+error[E0689]: can't call method `max` on ambiguous numeric type `{float}`
+    --> main.rs:1485:45
+     |
+1485 |     let compliance = ((1.0 - apex) * 100.0).max(0.0).min(100.0);
+     |                                             ^^^
+
+error[E0599]: no variant, associated function, or constant named `Internal` found for enum `AppError` in the current 
+scope
+    --> main.rs:1498:59
+     |
+1498 |     let state = FLEET_STATE.get().ok_or_else(|| AppError::Internal("Fleet state not initialized".into()))?;
+     |                                                           ^^^^^^^^ variant, associated function, or constant 
+not found in `AppError`
+     |
+    ::: error.rs:8:1
+     |
+   8 | pub enum AppError {
+     | ----------------- variant, associated function, or constant `Internal` not found for this enum
+
+error[E0689]: can't call method `min` on ambiguous numeric type `{float}`
+    --> main.rs:1519:47
+     |
+1519 |                     "strength": base_strength.min(1.0).max(0.0),
+     |                                               ^^^
+     |
+help: you must specify a type for this binding, like `f32`
+     |
+1508 |                 let base_strength: f32 = 0.5 + (1.0 - apex) * 0.3;
+     |                                  +++++
+
+error[E0599]: no variant, associated function, or constant named `Internal` found for enum `AppError` in the current 
+scope
+    --> main.rs:1575:59
+     |
+1575 |     let state = FLEET_STATE.get().ok_or_else(|| AppError::Internal("Fleet state not initialized".into()))?;
+     |                                                           ^^^^^^^^ variant, associated function, or constant 
+not found in `AppError`
+     |
+    ::: error.rs:8:1
+     |
+   8 | pub enum AppError {
+     | ----------------- variant, associated function, or constant `Internal` not found for this enum
+
+error[E0277]: the trait bound `Atomic<u64>: std::marker::Copy` is not satisfied
+  --> m054_auto_optimizer.rs:65:37
+   |
+65 |             kpi_deviations_scaled: [AtomicU64::new(0); 72],
+   |                                     ^^^^^^^^^^^^^^^^^ the trait `std::marker::Copy` is not implemented for 
+`Atomic<u64>`
+   |
+   = note: the `Copy` trait is required because this value will be copied for each element of the array
+help: create an inline `const` block
+   |
+65 |             kpi_deviations_scaled: [const { AtomicU64::new(0) }; 72],
+   |                                     +++++++                   +
+
+error[E0015]: cannot call non-const associated function `VecDeque::<m084_alerts::Alert>::with_capacity` in statics
+  --> m084_alerts.rs:18:57
+   |
+18 | static ALERT_QUEUE: Mutex<VecDeque<Alert>> = Mutex::new(VecDeque::with_capacity(ALERT_QUEUE_CAPACITY));
+   |                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: calls in statics are limited to constant functions, tuple structs and tuple variants
+   = note: consider wrapping this expression in `std::sync::LazyLock::new(|| ...)`
+
+error[E0277]: the trait bound `MerkleTree: std::default::Default` is not satisfied
+    --> m099_zk_proof.rs:106:5
+     |
+ 102 | #[derive(Default)]
+     |          ------- in this derive macro expansion
+...
+ 106 |     merkle_tree: RwLock<MerkleTree>,
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `std::default::Default` is not implemented for `MerkleTree`
+     |
+help: the trait `std::default::Default` is implemented for `parking_lot::lock_api::RwLock<R, T>`
+    --> D:\cargo-home\registry\src\index.crates.io-1949cf8c6b5b557f\lock_api-0.4.14\src\rwlock.rs:1221:1
+     |
+1221 | impl<R: RawRwLock, T: ?Sized + Default> Default for RwLock<R, T> {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     = note: required for `parking_lot::lock_api::RwLock<parking_lot::RawRwLock, MerkleTree>` to implement 
+`std::default::Default`
+help: consider annotating `MerkleTree` with `#[derive(Default)]`
+     |
+  59 + #[derive(Default)]
+  60 | struct MerkleTree {
+     |
+
+error[E0223]: ambiguous associated type
+  --> m003_transaction_batcher.rs:97:124
+   |
+97 | ...om_rfc3339(&batch.created_at).unwrap().with_timezone(&chrono::Utc::DateTime::timestamp(&chrono::Utc::now()));
+   |                                                          ^^^^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `DateTime` implemented for `Utc`, you could use the 
+fully-qualified path
+   |
+97 -             let age = chrono::Utc::now() - chrono::DateTime::parse_from_rfc3339(&batch.created_at).unwrap().with_t
+imezone(&chrono::Utc::DateTime::timestamp(&chrono::Utc::now()));
+97 +             let age = chrono::Utc::now() - 
+chrono::DateTime::parse_from_rfc3339(&batch.created_at).unwrap().with_timezone(&<Utc as 
+Example>::DateTime::timestamp(&chrono::Utc::now()));
+   |
+
+error[E0277]: the trait bound `GasSource: std::hash::Hash` is not satisfied
+    --> m007_gas_oracle.rs:61:22
+     |
+  61 |             sources: HashMap::from([
+     |                      ^^^^^^^ the trait `std::hash::Hash` is not implemented for `GasSource`
+     |
+help: the trait `From<[(K, V); N]>` is implemented for `HashMap<K, V>`
+    --> D:\rustup-home\toolchains\stable-x86_64-pc-windows-msvc\lib/rustlib/src/rust\library\std\src\collections\hash\m
+ap.rs:1526:1
+     |
+1526 | / impl<K, V, const N: usize> From<[(K, V); N]> for HashMap<K, V, RandomState>
+1527 | | where
+1528 | |     K: Eq + Hash,
+     | |_________________^
+     = note: required for `HashMap<GasSource, {integer}>` to implement `From<[(GasSource, {integer}); 5]>`
+help: consider annotating `GasSource` with `#[derive(Hash)]`
+     |
+  20 + #[derive(Hash)]
+  21 | pub enum GasSource {
+     |
+
+error[E0308]: mismatched types
+  --> m014_audit_logger.rs:63:22
+   |
+63 |             message: "M014 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M014 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m015_performance_reporter.rs:63:22
+   |
+63 |             message: "M015 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M015 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m022_arbitrage_detector.rs:63:22
+   |
+63 |             message: "M022 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M022 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m023_liquidity_analyzer.rs:63:22
+   |
+63 |             message: "M023 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M023 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m024_price_monitor.rs:63:22
+   |
+63 |             message: "M024 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M024 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m025_trade_executor.rs:63:22
+   |
+63 |             message: "M025 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M025 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m026_order_router.rs:63:22
+   |
+63 |             message: "M026 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M026 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m027_slippage_calculator.rs:63:22
+   |
+63 |             message: "M027 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M027 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m028_fraud_detector.rs:63:22
+   |
+63 |             message: "M028 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M028 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m029_access_controller.rs:63:22
+   |
+63 |             message: "M029 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M029 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m030_encryption_manager.rs:63:22
+   |
+63 |             message: "M030 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M030 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m031_key_rotator.rs:63:22
+   |
+63 |             message: "M031 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M031 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m032_certificate_manager.rs:63:22
+   |
+63 |             message: "M032 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M032 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m033_audit_trail.rs:63:22
+   |
+63 |             message: "M033 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M033 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m034_anomaly_detector.rs:63:22
+   |
+63 |             message: "M034 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M034 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m035_threat_monitor.rs:63:22
+   |
+63 |             message: "M035 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M035 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m036_incident_responder.rs:63:22
+   |
+63 |             message: "M036 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M036 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m037_backup_manager.rs:63:22
+   |
+63 |             message: "M037 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M037 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m038_container_manager.rs:63:22
+   |
+63 |             message: "M038 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M038 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m039_load_balancer.rs:63:22
+   |
+63 |             message: "M039 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M039 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m040_service_mesh.rs:63:22
+   |
+63 |             message: "M040 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M040 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m042_config_manager.rs:63:22
+   |
+63 |             message: "M042 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M042 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m043_secret_manager.rs:63:22
+   |
+63 |             message: "M043 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M043 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m045_health_checker.rs:63:22
+   |
+63 |             message: "M045 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M045 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m046_metrics_collector.rs:63:22
+   |
+63 |             message: "M046 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M046 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m047_log_aggregator.rs:63:22
+   |
+63 |             message: "M047 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M047 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m048_alert_dispatcher.rs:63:22
+   |
+63 |             message: "M048 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M048 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m049_incident_tracker.rs:63:22
+   |
+63 |             message: "M049 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M049 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m050_governance_engine.rs:63:22
+   |
+63 |             message: "M050 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M050 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m056_learning_engine.rs:63:22
+   |
+63 |             message: "M056 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M056 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m060_model_trainer.rs:63:22
+   |
+63 |             message: "M060 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M060 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m064_data_pipeline.rs:63:22
+   |
+63 |             message: "M064 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M064 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m065_feature_store.rs:63:22
+   |
+63 |             message: "M065 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M065 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m078_governance_auditor.rs:63:22
+   |
+63 |             message: "M078 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M078 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m079_constitutional_enforcer.rs:63:22
+   |
+63 |             message: "M079 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M079 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0308]: mismatched types
+  --> m080_compliance_reporter.rs:63:22
+   |
+63 |             message: "M080 executed successfully",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `&str`
+   |
+help: try using a conversion method
+   |
+63 |             message: "M080 executed successfully".to_string(),
+   |                                                  ++++++++++++
+
+error[E0609]: no field `votes_cast` on type `&mut VoteInfo`
+    --> ai_agents.rs:1052:47
+     |
+1052 |             proposal_id, vote.votes_for, vote.votes_cast, quorum)
+     |                                               ^^^^^^^^^^ unknown field
+     |
+     = note: available fields are: `proposal_id`, `votes_for`, `votes_against`, `quorum_reached`, `end_time`
+
+error[E0277]: the trait bound `std::sync::Arc<std::sync::Mutex<f64>>: std::marker::Copy` is not satisfied
+  --> continuum_optimization.rs:30:25
+   |
+30 |             kpi_gains: [Arc::new(Mutex::new(0.0)); 72],
+   |                         ^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `std::marker::Copy` is not implemented for 
+`std::sync::Arc<std::sync::Mutex<f64>>`
+   |
+   = note: the `Copy` trait is required because this value will be copied for each element of the array
+   = help: consider using `core::array::from_fn` to initialize the array
+   = help: see https://doc.rust-lang.org/stable/std/array/fn.from_fn.html for more information
+
+warning: unused variable: `secret`
+   --> m099_zk_proof.rs:145:43
+    |
+145 |     pub fn verify(&self, secret_id: &str, secret: &[u8]) -> bool {
+    |                                           ^^^^^^ help: if this is intentional, prefix it with an underscore: 
+`_secret`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `avg_liquidity`
+   --> m012_risk_calculator.rs:120:13
+    |
+120 |         let avg_liquidity = if self.positions.is_empty() { 0.0 } else { total_liquidity / self.positions.len() 
+as f64 };
+    |             ^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_avg_liquidity`
+
+warning: unused variable: `data_integrity`
+   --> m132_copilot_auditor.rs:288:13
+    |
+288 |         let data_integrity = self.validate_data_integrity(oracle);
+    |             ^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_data_integrity`
+
+warning: unused variable: `metrics`
+   --> m132_copilot_auditor.rs:370:44
+    |
+370 |     fn assess_health_and_fail_safes(&self, metrics: &CopilotMetrics, benchmarks: &AnalyticalBenchmarks) -> 
+(String, Vec<DacamOverri...
+    |                                            ^^^^^^^ help: if this is intentional, prefix it with an underscore: 
+`_metrics`
+
+warning: unused variable: `prev`
+  --> continuum_optimization.rs:47:13
+   |
+47 |         let prev = *self.profit_30s_previous.lock().unwrap();
+   |             ^^^^ help: if this is intentional, prefix it with an underscore: `_prev`
+
+warning: unused variable: `profit_gap`
+  --> continuum_optimization.rs:51:13
+   |
+51 |         let profit_gap = if curr > 0.0 {
+   |             ^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_profit_gap`
+
+warning: unused variable: `telemetry`
+   --> continuum_optimization.rs:110:9
+    |
+110 |         telemetry: &KpiTelemetryCollector
+    |         ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_telemetry`
+
+error: lifetime may not live long enough
+  --> constitution_guard.rs:15:5
+   |
+12 | #[derive(Debug, Clone, Serialize, Deserialize)]
+   |                                   ----------- lifetime `'de` defined here
+...
+15 |     pub violations: Vec<GovernanceViolation>,
+   |     ^^^ requires that `'de` must outlive `'static`
+
+warning: unused variable: `file`
+   --> main.rs:581:24
+    |
+581 |         for (id, name, file) in modules {
+    |                        ^^^^ help: if this is intentional, prefix it with an underscore: `_file`
+
+Some errors have detailed explanations: E0015, E0119, E0223, E0277, E0308, E0369, E0382, E0425, E0432...
+For more information about an error, try `rustc --explain E0015`.
+warning: `allbright-c2-backend` (bin "allbright-c2-backend") generated 21 warnings
+error: could not compile `allbright-c2-backend` (bin "allbright-c2-backend") due to 73 previous errors; 21 warnings 
+emitted

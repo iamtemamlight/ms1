@@ -1,0 +1,265 @@
+# ALLBRIGHT Local Development Docker Compose
+# With Redundant Ports (Minimum 2 Backups Per Service)
+
+services:
+  # ============================================================================
+  # BACKEND (Rust gRPC Server) - M01-M60 Modules
+  # ============================================================================
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: allbright-backend
+    ports:
+      - "50051:50051"   # Primary gRPC
+      - "51051:51051"   # Backup gRPC 1
+      - "51052:51052"   # Backup gRPC 2
+      - "50052:50052"   # Primary WebSocket
+      - "51053:51053"   # Backup WebSocket 1
+      - "51054:51054"   # Backup WebSocket 2
+      - "3001:3001"     # Primary HTTP
+      - "3002:3001"     # Backup HTTP 1
+      - "3003:3001"     # Backup HTTP 2
+    environment:
+      - RUST_LOG=info
+      - PILOT_MODE=true
+      - DATABASE_URL=postgresql://apxuser:apxpass@postgres:5432/allbright
+      - REDIS_URL=redis://redis:6379
+      - HTTP_BIND_ADDR=0.0.0.0:3001
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - apx-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "grpcurl", "-plaintext", "localhost:50051", "list"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    read_only: true
+    tmpfs:
+      - /tmp:size=64M,mode=1777
+    volumes:
+      - ./certs:/app/certs:ro
+
+  # ============================================================================
+  # POSTGRES DATABASE (Primary + 2 Backups)
+  # ============================================================================
+  postgres:
+    image: postgres:15-alpine
+    container_name: allbright-postgres
+    environment:
+      - POSTGRES_USER=apxuser
+      - POSTGRES_PASSWORD=apxpass
+      - POSTGRES_DB=allbright
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./wme_schema.sql:/docker-entrypoint-initdb.d/wme_schema.sql:ro
+    ports:
+      - "5432:5432"   # Primary
+      - "5433:5432"   # Backup 1
+      - "5434:5432"   # Backup 2
+    networks:
+      - apx-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U apxuser -d allbright"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================================================
+  # REDIS CACHE (Primary + 2 Backups)
+  # ============================================================================
+  redis:
+    image: redis:7-alpine
+    container_name: allbright-redis
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
+    ports:
+      - "6379:6379"   # Primary
+      - "6380:6379"   # Backup 1
+      - "6381:6379"   # Backup 2
+    networks:
+      - apx-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================================================
+  # REDIS BACKUP SERVICES
+  # ============================================================================
+  redis-backup-1:
+    image: redis:7-alpine
+    container_name: allbright-redis-backup-1
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
+    ports:
+      - "6382:6379"
+    networks:
+      - apx-network
+    restart: unless-stopped
+
+  redis-backup-2:
+    image: redis:7-alpine
+    container_name: allbright-redis-backup-2
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
+    ports:
+      - "6383:6379"
+    networks:
+      - apx-network
+    restart: unless-stopped
+
+  # ============================================================================
+  # PROMETHEUS METRICS (Primary + 2 Backups)
+  # ============================================================================
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: allbright-prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    ports:
+      - "9090:9090"   # Primary
+      - "9091:9090"   # Backup 1
+      - "9092:9090"   # Backup 2
+    networks:
+      - apx-network
+    restart: unless-stopped
+
+  # ============================================================================
+  # DASHBOARD FRONTEND (React + Vite + Tauri) - Primary + 2 Backups
+  # ============================================================================
+  dashboard:
+    build:
+      context: .
+      dockerfile: apps/dashboard/Dockerfile
+    container_name: allbright-web-dashboard
+    ports:
+      - "5173:80"   # Primary
+      - "5174:80"   # Backup 1
+      - "5175:80"   # Backup 2
+    environment:
+      - VITE_BACKEND_API_URL=http://backend:3000
+      - VITE_WS_URL=ws://backend:50052
+      - VITE_ENGINE_MODE=simulation
+      - VITE_FLEET_RPC_URL=http://localport-rpc:8545
+      - VITE_DEMO_MODE=true
+      - VITE_DEBUG=false
+    depends_on:
+      - backend
+    networks:
+      - apx-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  # ============================================================================
+  # DASHBOARD BACKUP SERVICES
+  # ============================================================================
+  dashboard-backup-1:
+    build:
+      context: .
+      dockerfile: apps/dashboard/Dockerfile
+    container_name: allbright-web-dashboard-backup-1
+    ports:
+      - "5176:80"
+    environment:
+      - VITE_API_URL=http://backend:51051
+    networks:
+      - apx-network
+    restart: unless-stopped
+
+  dashboard-backup-2:
+    build:
+      context: .
+      dockerfile: apps/dashboard/Dockerfile
+    container_name: allbright-web-dashboard-backup-2
+    ports:
+      - "5177:80"
+    environment:
+      - VITE_API_URL=http://backend:51052
+    networks:
+      - apx-network
+    restart: unless-stopped
+
+  # ============================================================================
+  # LOCALPORT FLEET RPC (EVM Multi-Chain) - Primary + 4 Backups
+  # ============================================================================
+  localport-rpc:
+    image: ethereum/client-go:latest
+    container_name: allbright-localport-rpc
+    command: --http --http.addr 0.0.0.0 --http.vhosts * --http.api eth,net,debug,txpool --ws --ws.addr 0.0.0.0 --ws.api eth,net,debug,txpool --datadir /data
+    ports:
+      - "8545:8545"   # Primary Fleet RPC
+      - "8550:8545"   # Backup 1
+      - "8551:8545"   # Backup 2
+      - "8552:8545"   # Backup 3
+      - "8553:8545"   # Backup 4
+      - "8546:8546"   # Secondary RPC
+      - "8554:8546"   # Backup 1
+      - "8555:8546"   # Backup 2
+      - "8547:8547"   # Shadow-Fork Simulation
+      - "8548:8548"   # Testing/QA
+      - "8549:8549"   # Arbitrum One RPC Mirror
+    volumes:
+      - localport-data:/data
+    networks:
+      - apx-network
+    restart: unless-stopped
+
+  # ============================================================================
+  # LOCALPORT RPC BACKUP SERVICES (Additional Redundancy)
+  # ============================================================================
+  localport-rpc-backup-1:
+    image: ethereum/client-go:latest
+    container_name: allbright-localport-rpc-backup-1
+    command: --http --http.addr 0.0.0.0 --http.vhosts * --http.api eth,net,debug,txpool --datadir /data
+    ports:
+      - "8560:8545"
+      - "8561:8545"
+    volumes:
+      - localport-data-1:/data
+    networks:
+      - apx-network
+    restart: unless-stopped
+
+  localport-rpc-backup-2:
+    image: ethereum/client-go:latest
+    container_name: allbright-localport-rpc-backup-2
+    command: --http --http.addr 0.0.0.0 --http.vhosts * --http.api eth,net,debug,txpool --datadir /data
+    ports:
+      - "8562:8545"
+      - "8563:8545"
+    volumes:
+      - localport-data-2:/data
+    networks:
+      - apx-network
+    restart: unless-stopped
+
+networks:
+  apx-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  prometheus-data:
+  localport-data:
+  localport-data-1:
+  localport-data-2:

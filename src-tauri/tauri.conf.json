@@ -1,0 +1,46 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/schema.json",
+  "build": {
+    "beforeBuildCommand": "npm run build",
+    "beforeDevCommand": "",
+    "devPath": "",
+    "distDir": "../apps/dashboard/dist"
+  },
+  "package": {
+    "active": true,
+    "targets": "msi,nsis",
+    "icon": [
+      "../icons/icon.ico"
+    ]
+  },
+  "tauri": {
+    "bundle": {
+      "active": true,
+      "targets": "msi,nsis",
+      "identifier": "com.allbright.defi",
+      "icon": [
+        "../icons/icon.ico"
+      ],
+      "publisher": "AllBright DeFi Software Engineering Ltd.",
+      "windows": [
+        {
+          "title": "AllBright Dashboard - Production (LocalPort)",
+          "width": 1200,
+          "height": 800,
+          "resizable": true,
+          "fullscreen": false
+        }
+      ]
+    },
+    "security": {
+      "csp": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' ws: wss: http://127.0.0.1:3001 http://127.0.0.1:3002 http://127.0.0.1:8545 http://127.0.0.1:8546 http://127.0.0.1:8547 http://127.0.0.1:8548 http://127.0.0.1:8549; frame-ancestors 'self';"
+    },
+    "allowlist": {
+      "all": false,
+      "fs": { "scope": ["$APPDATA/**", "$RESOURCE/**"] },
+      "shell": { "open": true },
+      "process": { "relaunch": false },
+      "dialog": { "all": true }
+    }
+  }
+}

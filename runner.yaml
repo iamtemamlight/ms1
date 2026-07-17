@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: allbright-runner-{id}
+  namespace: allbright-fleet
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: allbright-runner
+      runner-id: "{id}"
+      chain: "{chain}"
+  template:
+    metadata:
+      labels:
+        app: allbright-runner
+        runner-id: "{id}"
+        chain: "{chain}"
+    spec:
+      containers:
+      - name: runner
+        image: allbright/runner:latest
+        envFrom:
+        - configMapRef:
+            name: allbright-shared-config
+        env:
+        - name: RUNNER_ID
+          value: "{id}"
+        - name: SIGNING_BASE_URL
+          value: "https://{signer_ip}:8443"
+        volumeMounts:
+        - name: mtls-certs
+          mountPath: "/etc/certs"
+          readOnly: true
+      volumes:
+      - name: mtls-certs
+        secret:
+          secretName: allbright-mtls-client

@@ -1,0 +1,342 @@
+syntax = "proto3";
+
+package allbright.c2;
+
+enum ChainType {
+  EVM = 0;
+  SVM = 1; // Solana / Monad
+}
+
+// Proprietary Command & Control Service
+service FleetCommand {
+  // Bidirectional stream for real-time telemetry and command delivery
+  rpc ConnectCommander(stream CommanderInput) returns (stream FleetStatus) {}
+  
+  // Trigger emergency circuit breakers
+  rpc GlobalKillSwitch(KillRequest) returns (KillResponse) {}
+  
+  // Resume operations after a halt
+  rpc ResumeOperations(ResumeRequest) returns (ResumeResponse) {}
+
+  // Push new Q* Solver parameters to the fleet
+  rpc UpdateStrategy(StrategyUpdateRequest) returns (StrategyUpdateResponse) {}
+
+  // Initiate MPC key rotation ceremony
+  rpc InitiateRotation(RotationRequest) returns (RotationResponse) {}
+
+  // Internal: Aggregators push regional summaries to the C2 service
+  rpc PushRegionalSummary(RegionalSummary) returns (MetricResponse) {}
+
+  // Internal: Runners push localized telemetry to the C2 service
+  rpc PushMetrics(MetricBatch) returns (MetricResponse) {}
+
+  // Internal: Verify SGX Remote Attestation for a runner
+  rpc VerifyAttestation(AttestationRequest) returns (AttestationResponse) {}
+
+  // Commander: Trigger manual profit extraction
+  rpc TriggerExtraction(ExtractionRequest) returns (ExtractionResponse) {}
+
+  // Commander: Configure Gasless Transfer Settings
+  rpc SetTransferSettings(TransferSettingsRequest) returns (MetricResponse) {}
+
+  // Commander: Stream real-time risk and adverse selection alerts
+  rpc StreamRiskAlerts(RiskRequest) returns (stream RiskAlert) {}
+
+  // Commander: Final TSS Handshake for Live Trading Authorization
+  rpc AuthorizeLiveTrading(TssHandshakeRequest) returns (TssHandshakeResponse) {}
+
+  // Commander: Get detailed introspection for a specific runner
+  rpc GetRunnerDetails(RunnerDetailsRequest) returns (RunnerKpiMatrix) {}
+
+  // Commander: Stream AI Copilot recommendations
+  rpc StreamCopilotAdvice(CopilotRequest) returns (stream CopilotAdvice) {}
+
+// Commander: Update Autonomy Settings
+  rpc SetAutonomySettings(AutonomySettings) returns (MetricResponse) {}
+
+  // Internal: Update network conditions (gas prices, L1 fees, runway occupancy)
+  rpc UpdateNetworkConditions(UpdateNetworkConditionsRequest) returns (UpdateNetworkConditionsResponse) {}
+}
+
+message CommanderInput {
+  string commander_id = 1;
+  string command_payload = 2;
+  bytes signature = 3; // TSS/YubiKey signed command
+}
+
+message FleetStatus {
+  int32 active_runners = 1;
+  double aggregate_yield_eth = 2;
+  string alert_level = 3; // GREEN, YELLOW, RED
+  int32 secure_nodes = 4; // Nodes verified via SGX Remote Attestation
+  double evm_yield_eth = 5;
+  double svm_yield_eth = 6;
+  double avg_win_rate = 7;
+  double avg_profit_per_trade_eth = 8;
+  int32 avg_trades_per_hour = 9;
+  double avg_profit_per_hour_eth = 10;
+  int32 mev_attacks_blocked = 11;
+  int32 front_run_attempts_detected = 12;
+  double daily_profit_target_eth = 13;
+  double daily_progress_percent = 14;
+  double confidence_score_percent = 15;
+  // Full 72 KPI Matrix (AISE Exhaustive Telemetry)
+  ProfitMetrics profit = 16;
+  VelocityMetrics velocity = 17;
+  ShieldMetrics shield = 18;
+  EfficiencyMetrics efficiency = 19;
+  ContinuityMetrics continuity = 20;
+  MarketMetrics market = 21;
+  double apex_deflection_pct = 22;
+}
+
+message ProfitMetrics {
+  double solver_accuracy = 1;
+  double q_star_precision = 2;
+  double path_convexity = 3;
+  double daily_profit_min = 4;
+  double daily_profit_max = 5;
+  double eth_per_day = 6;
+  double profit_per_trade = 7;
+  double profit_per_hour = 8;
+  double win_rate_ema = 9;
+  double pool_depth = 10;
+  double volume_24h = 11;
+  double deflection_pct = 12;
+  int32 adverse_selection_hits = 13;
+  double yield_target_progress = 14;
+}
+
+message VelocityMetrics {
+  int64 internal_loop_latency_ns = 1;
+  int64 math_latency_ns = 2;
+  int64 network_latency_ns = 3;
+  int64 signing_latency_ns = 4;
+  double isp_jitter_ms = 5;
+  int32 simd_throughput = 6;
+  int32 block_inclusion_time_ms = 7;
+  int32 trades_per_hour = 8;
+  double deflection_pct = 9;
+  double websocket_latency_ms = 10;
+  int32 broadcast_lag_ms = 11;
+  int64 recursive_routing_lag_ns = 12;
+}
+
+message ShieldMetrics {
+  int64 threats_blocked = 1;
+  string circuit_breaker_status = 2;
+  bool hsm_integrity = 3;
+  int32 ofac_bloom_filter_hits = 4;
+  double signature_obfuscation_integrity = 5;
+  string credential_verification_status = 6;
+  string key_rotation_status = 7;
+  double deflection_pct = 8;
+  int32 audit_score = 9;
+  double mev_exposure_pct = 10;
+  int64 ip_rotation_count = 11;
+  double mimicry_jitter_index = 12;
+  string physical_sovereignty_status = 13;
+}
+
+message EfficiencyMetrics {
+  double cache_hit_rate = 1;
+  double bribe_efficiency = 2;
+  double gas_adjusted_profit = 3;
+  double l1_fee_impact_pct = 4;
+  double cpu_load_pct = 5;
+  double heap_usage_mb = 6;
+  double gc_pauses_ms = 7;
+  double sponsorship_uptime_pct = 8;
+  int32 bundle_count = 9;
+  double deflection_pct = 10;
+  double simd_lane_utilization = 11;
+  double bribe_elasticity = 12;
+}
+
+message ContinuityMetrics {
+  int32 active_runners = 1;
+  double fleet_readiness_pct = 2;
+  uint64 kernel_integrity_version = 3;
+  string heartbeat_sync_status = 4;
+  double deflection_pct = 5;
+  int32 ip_rotation_interval_mins = 6;
+  double regional_latency_drift_ms = 7;
+  int32 runway_occupancy_bps = 8;
+  string autonomy_level = 9;
+  int32 expansion_speed_pods_per_hour = 10;
+  double drift_score = 11;
+}
+
+message MarketMetrics {
+  double yield_dominance_pct = 1;
+  double dark_profit_volume = 2;
+  double strategic_mev_volume = 3;
+  double jit_liquidity_capture = 4;
+  double arb_leakage_recovery = 5;
+  double deflection_pct = 6;
+  int64 private_window_width_us = 7;
+  string regional_roi = 8;
+  double chain_specific_profit_pct = 9;
+  double apex_performance_index = 10;
+}
+
+message KillRequest {
+  string target_region = 1; // "ALL" or specific region
+  string reason = 2;
+}
+
+message KillResponse {
+  bool success = 1;
+  int32 nodes_halted = 2;
+}
+
+message StrategyUpdateRequest {
+  float risk_aversion = 1;
+  float max_slippage_tolerance = 2;
+}
+
+message StrategyUpdateResponse {
+  bool propagation_complete = 1;
+}
+
+message RotationRequest {
+  string wallet_id = 1; // UUID format
+  repeated string runner_ids = 2;
+}
+
+message RotationResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message ExtractionRequest {
+  double sweep_percentage = 1; // 0.0 to 100.0
+}
+
+message ExtractionResponse {
+  bool success = 1;
+  double amount_extracted_eth = 2;
+}
+
+message TransferSettingsRequest {
+  bool auto_transfer_enabled = 1;
+  double min_threshold_eth = 2; // Default starting 0.5
+}
+
+message TransferSettingsResponse {
+  bool success = 1;
+}
+
+message AttestationRequest {
+  string runner_id = 1;
+  bytes quote = 2; // Intel SGX Quote
+}
+
+message AttestationResponse {
+  bool is_valid = 1;
+  string details = 2;
+}
+
+message MetricBatch {
+  string runner_id = 1;
+  repeated MetricEntry entries = 2;
+}
+
+message MetricEntry {
+  string name = 1;
+  double value = 2;
+}
+
+message MetricResponse {
+  bool success = 1;
+}
+
+message RegionalSummary {
+  string region_id = 1;
+  int32 active_runners = 2;
+  double avg_latency_us = 3;
+  double avg_gas_efficiency = 4;
+  double total_yield_eth = 5;
+  ChainType chain_type = 6;
+}
+
+message TssHandshakeRequest {
+  string commander_id = 1;
+  bytes hardware_challenge_response = 2; // YubiKey signed payload
+}
+
+message TssHandshakeResponse {
+  bool authorized = 1;
+  string vault_status = 2; // "LOCKED" or "LIVE"
+}
+
+message RunnerDetailsRequest {
+  string runner_id = 1;
+}
+
+message RunnerKpiMatrix {
+  string runner_id = 1;
+  double uptime_percent = 2;
+  double avg_latency_us = 3;
+  double avg_profit_per_trade_eth = 4;
+  double win_rate_percent = 5;
+  double risk_exposure_score = 6;
+  double capital_efficiency = 7;
+  string current_chain = 8;
+  string status = 9; // ACTIVE, PAUSED, OFFLINE
+}
+
+message CopilotRequest {
+  string commander_id = 1;
+}
+
+message CopilotAdvice {
+  string severity = 1; // "INFO", "WARN", "CRITICAL"
+  string action_type = 2; // "STRATEGY", "EXPANSION", "KILL"
+  string message = 3;
+  string reasoning = 4; // Algorithmic justification
+  bool executed_autonomously = 5; // True if Copilot acted within corridor
+}
+
+message AutonomySettings {
+  bool allow_strategy_tuning = 1;   // +/- 5% variance allowed
+  bool allow_regional_rebalance = 2; // Moving collateral between active zones
+  bool allow_auto_expansion = 3;     // Cloning runners if ROI > 200%
+  float risk_corridor_width = 4;     // Max deviation from Commander's baseline
+}
+
+message RiskRequest {
+  string commander_id = 1;
+}
+
+message RiskAlert {
+  string timestamp = 1;
+  string runner_id = 2;
+  string risk_level = 3; // LOW, MEDIUM, HIGH, TOXIC
+  string asset_involved = 4;
+  string source = 5; // e.g., "Chainalysis", "Internal_Flow_Monitor"
+  string message = 6;
+}
+
+message ResumeRequest {
+  string runner_id = 1;
+  string reason = 2;
+}
+
+message ResumeResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// Network Conditions Update Messages
+message UpdateNetworkConditionsRequest {
+  string runner_id = 1;
+  uint64 l2_gwei = 2;
+  uint64 l1_gwei = 3;
+  uint32 runway_occupancy_bps = 4;
+}
+
+message UpdateNetworkConditionsResponse {
+  bool success = 1;
+  string message = 2;
+}

@@ -1,0 +1,23 @@
+[package]
+name = "allbright-dashboard"
+version = "1.0.0"
+edition = "2021"
+description = "AllBright DeFi Dashboard - Production Installer"
+authors = ["AllBright DeFi Software Engineering Ltd."]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tokio = { version = "1", features = ["full"] }
+
+[features]
+custom-protocol = ["tauri/custom-protocol"]
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true

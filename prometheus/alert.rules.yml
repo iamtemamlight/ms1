@@ -1,0 +1,115 @@
+# ALLBRIGHT Prometheus Alerting Rules
+# Production alert thresholds for flash loan arbitrage operations
+
+groups:
+  - name: allbright_backend_alerts
+    interval: 30s
+    rules:
+      # ===================================================================
+      # CRITICAL ALERTS (P0)
+      # ===================================================================
+      - alert: BackendDown
+        expr: up{job="backend"} == 0
+        for: 30s
+        labels:
+          severity: critical
+          priority: P0
+        annotations:
+          summary: "Backend service is down"
+          description: "Backend has been unreachable for >30s. Immediate investigation required."
+
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 1m
+        labels:
+          severity: critical
+          priority: P0
+        annotations:
+          summary: "High HTTP 5xx error rate"
+          description: "Error rate {{ $value | humanizePercentage }} exceeds 5% threshold over 5m"
+
+      - alert: HighLatency
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 2
+        for: 2m
+        labels:
+          severity: critical
+          priority: P0
+        annotations:
+          summary: "High p95 latency"
+          description: "p95 latency {{ $value }}s exceeds 2s threshold"
+
+      - alert: DatabaseConnectionFailure
+        expr: pg_up == 0
+        for: 10s
+        labels:
+          severity: critical
+          priority: P0
+        annotations:
+          summary: "PostgreSQL connection lost"
+          description: "Database has been unreachable for >10s. Trading operations will fail."
+
+      # ===================================================================
+      # HIGH PRIORITY ALERTS (P1)
+      # ===================================================================
+      - alert: HighMemoryUsage
+        expr: process_resident_memory_bytes / 1024 / 1024 > 1024
+        for: 5m
+        labels:
+          severity: warning
+          priority: P1
+        annotations:
+          summary: "High memory usage (>1GB)"
+          description: "Memory usage {{ $value | humanize1024 }} exceeds 1GB threshold"
+
+      - alert: TradeFailureRate
+        expr: rate(trades_total{status="failed"}[5m]) / rate(trades_total[5m]) > 0.1
+        for: 2m
+        labels:
+          severity: warning
+          priority: P1
+        annotations:
+          summary: "High trade failure rate"
+          description: "Trade failure rate {{ $value | humanizePercentage }} exceeds 10%"
+
+      - alert: RedisDown
+        expr: redis_up == 0
+        for: 30s
+        labels:
+          severity: warning
+          priority: P1
+        annotations:
+          summary: "Redis cache unavailable"
+          description: "Redis has been unreachable for >30s. Caching degraded."
+
+      - alert: ProfitDecline
+        expr: rate(net_profit_eth_total[30m]) < 0
+        for: 15m
+        labels:
+          severity: warning
+          priority: P1
+        annotations:
+          summary: "Negative profit trend"
+          description: "Net profit trending negative over the last 30 minutes"
+
+      # ===================================================================
+      # MEDIUM PRIORITY ALERTS (P2)
+      # ===================================================================
+      - alert: LowDiskSpace
+        expr: (node_filesystem_avail_bytes / node_filesystem_size_bytes) < 0.1
+        for: 5m
+        labels:
+          severity: info
+          priority: P2
+        annotations:
+          summary: "Low disk space (<10%)"
+          description: "Disk usage at {{ $value | humanizePercentage }} remaining"
+
+      - alert: CertificateExpiring
+        expr: (cert_expiry_timestamp - time()) / 86400 < 30
+        for: 1h
+        labels:
+          severity: info
+          priority: P2
+        annotations:
+          summary: "TLS certificate expiring soon"
+          description: "Certificate expires in {{ $value | humanizeDuration }}"

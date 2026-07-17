@@ -1,0 +1,21 @@
+{
+  "name": "allbright-backend",
+  "private": true,
+  "version": "119.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "ws": "^8.16.0"
+  },
+  "devDependencies": {
+    "prisma": "^6.19.3"
+  }
+}

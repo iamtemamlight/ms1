@@ -1,0 +1,178 @@
+[7/11/2026 11:59 PM] Temam: Execute live simulation for 100 transactions and stop, then analyse the key performance indicators
+[7/12/2026 12:25 PM] Temam: Here’s a comprehensive instruction you can give to your AI agent for building the flash‑loan arbitrage app and integrating it into your Allbright dashboard. It covers architecture, UI, functionality, and deployment – all tailored to your “desktop‑like, beautiful, and architecturally useful” vision.
+
+---
+
+🧠 AI Agent Instruction: Build a Flash‑Loan Arbitrage Dashboard App
+
+1. Project Overview
+
+Build a full‑stack web application that:
+
+· Enables automated arbitrage using flash loans (e.g., on Ethereum / Polygon).
+· Provides a desktop‑grade UI (responsive, modern, dark‑theme optional, with live charts and metrics).
+· Collects key performance metrics (profit, gas costs, trade volume, success rate, token spreads).
+· Allows wallet deposits (ETH/BTC/stablecoins) as collateral for flash‑loan operations.
+· Automatically transfers net profits to the owner’s designated wallet after each successful trade.
+· Integrates as a module into the existing Allbright dashboard (via iframe or embedded API).
+
+---
+
+2. Architecture (Recommended)
+
+· Frontend: React + TypeScript + Tailwind CSS (or Material‑UI for desktop feel).
+  · State management: Redux Toolkit or Zustand.
+  · Real‑time updates: WebSocket (for price feeds) + GraphQL subscriptions.
+· Backend: Node.js (NestJS or Express) + TypeScript.
+  · Handles trade execution, wallet management, and metric aggregation.
+  · Communicates with blockchain via ethers.js / web3.js.
+· Smart Contracts (optional but recommended):
+  · A custom flash‑loan receiver contract that encapsulates the arbitrage logic and auto‑transfers profits.
+  · Use existing protocols (Uniswap V3, SushiSwap, Balancer) for swapping.
+· Database: PostgreSQL (for historical trades, metrics, user settings).
+· Blockchain Node: Alchemy/Infura for RPC, plus The Graph for subgraph queries (optional).
+· Deployment: Docker containers; frontend served via Nginx, backend via PM2 or Kubernetes.
+
+---
+
+3. Core Functionalities (Step‑by‑Step)
+
+3.1. Wallet Connection & Deposit
+
+· Support MetaMask, WalletConnect, and Coinbase Wallet.
+· Show balance of connected wallet (ETH/tokens).
+· Deposit flow: User selects asset, enters amount, signs a transaction to transfer collateral to the app’s smart contract.
+  · Collateral is used to cover flash‑loan fees and potential slippage.
+· Display deposit history and current collateral balance.
+
+3.2. Arbitrage Scanning & Execution
+
+· Continuously scan for price discrepancies across DEXs (e.g., Uniswap ↔ SushiSwap).
+· Calculate profitability:
+  · Include flash‑loan fee (e.g., 0.09% for Aave), gas cost, and slippage.
+· Show real‑time opportunities in a table with:
+  · Tokens, spread %, estimated profit, gas cost, and time to expiry.
+· Manual & Auto‑mode:
+  · Auto‑mode: execute instantly when profit > user‑defined threshold.
+  · Manual: user clicks “Execute” on a specific opportunity.
+· Execution flow:
+  1. Initiate flash‑loan from Aave / dYdX.
+  2. Perform swap on DEX A.
+  3. Perform swap on DEX B.
+  4. Repay flash‑loan + fee.
+  5. Transfer net profit to owner’s wallet (hardcoded or configurable).
+
+3.3. Metrics Dashboard (Key KPIs)
+
+Display real‑time and historical metrics:
+
+· Total arbitrage profit (24h, 7d, all‑time).
+· Number of successful trades / failed trades.
+· Average gas price used.
+· ROI on collateral.
+· Token pair profitability leaderboard.
+· Live charts (using Chart.js or Recharts) showing profit over time, trade frequency, etc.
+
+3.4. Automated Profit Transfer
+
+· After each successful arbitrage, invoke a backend function that sends the profit (minus gas) to the owner’s wallet (defined in environment variables).
+· Log every transfer with tx hash, amount, and timestamp.
+
+3.5. User Controls & Settings
+
+· Set auto‑trade thresholds (min profit, max gas, slippage tolerance).
+· Whitelist/blacklist token pairs.
+· Pause/resume auto‑trading.
+· Export trade history (CSV).
+
+---
+
+4. UI/UX Design (Desktop‑Like)
+[7/12/2026 12:25 PM] Temam: · Layout: Left sidebar with navigation (Dashboard, Trades, Wallet, Settings), main content area.
+· Top bar: Live price ticker, wallet connection status, and network selector.
+· Dashboard view:
+  · Card‑based KPI tiles (Total Profit, Trades, Collateral).
+  · Full‑width chart for profit trend.
+  · Opportunity table (sortable, filterable).
+· Dark theme by default with accent colours (e.g., teal/gold).
+· Responsive for 1920x1080 and smaller desktops – but not mobile-first (desktop focus).
+
+---
+
+5. Integration with Allbright Dashboard
+
+· The app must be embeddable as a micro‑frontend inside Allbright.
+· Provide a single URL (e.g., https://arbitrage.allbright.com) that loads the full app.
+· Use postMessage API to communicate with the parent dashboard:
+  · Send metrics (total profit, active trades) to the parent for global summary.
+  · Receive user authentication token from the parent to auto‑connect wallet (if available).
+· Optionally, provide a REST API for the dashboard to pull aggregated metrics (for summary widgets).
+
+---
+
+6. Security & Best Practices
+
+· Private keys: Never store on frontend. Backend uses environment variables for owner wallet private key (or use a hardware wallet / MPC).
+· Rate limiting on trade execution endpoints.
+· Input validation for deposit amounts and trade parameters.
+· Audit smart contracts (if custom) by a third‑party.
+· Use HTTPS and secure headers (CSP, CORS).
+
+---
+
+7. Development Roadmap (Phases)
+
+1. Phase 0: Setup – project structure, environment, CI/CD.
+2. Phase 1: Wallet integration + deposit/withdraw.
+3. Phase 2: Arbitrage scanner (price feeds, profit calculation).
+4. Phase 3: Trade execution (flash‑loan + swap).
+5. Phase 4: Metrics aggregation & dashboard UI.
+6. Phase 5: Auto‑transfer & settings.
+7. Phase 6: Integration with Allbright dashboard (embedding & API).
+8. Phase 7: Testing (unit, integration, mainnet fork) & deployment.
+
+---
+
+8. Technology Stack (Suggested)
+
+Layer Technology
+Frontend React 18, TypeScript, Vite
+UI Library Tailwind CSS + Headless UI / Radix
+Charts Recharts
+State Redux Toolkit + RTK Query
+Backend NestJS (or Express)
+Blockchain ethers.js v6, Hardhat (for tests)
+Database PostgreSQL + Prisma ORM
+Real‑time WebSocket (via Socket.IO)
+Deployment Docker, AWS ECS / Vercel (frontend)
+
+---
+
+9. Testing & Quality Assurance
+
+· Write unit tests for profit calculation and swap logic.
+· Integration tests for deposit/withdraw and trade execution on a forked mainnet.
+· End‑to‑end tests (Cypress) for critical user flows.
+· Performance testing – ensure UI updates in <1s for price feeds.
+
+---
+
+10. Documentation
+
+· API documentation (Swagger/OpenAPI).
+· User guide (how to connect wallet, set thresholds).
+· Developer setup guide (for future maintainers).
+
+---
+
+11. Final Deliverables
+
+· Fully functional app deployed on a staging and production URL.
+· Source code in a private GitHub repo (with README and CI/CD).
+· Integration instructions for Allbright team (embed code, API endpoints).
+· A demo video showcasing the app’s features.
+
+---
+
+Proceed to build the app following this instruction. Prioritise a clean, extensible architecture that allows easy addition of new DEXs and tokens.
+After completion, deliver a deployment script and integration notes for the Allbright dashboard.

@@ -1,0 +1,23 @@
+{
+  "name": "allbright-desktop",
+  "private": true,
+  "version": "119.0.0",
+  "scripts": {
+    "tauri": "tauri",
+    "tauri:build": "tauri build",
+    "tauri:dev": "tauri dev",
+    "dashboard:build": "npm run --prefix apps/dashboard build",
+    "dashboard:dev": "npm run --prefix apps/dashboard dev",
+    "desktop:build": "cd src-tauri && tauri build",
+    "desktop:build:msi-nsis": "cd src-tauri && tauri build --bundles msi nsis"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3"
+  }
+}

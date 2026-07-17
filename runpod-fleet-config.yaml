@@ -1,0 +1,38 @@
+# Allbright Sovereign Fleet Deployment (Phase 5 - Hardening)
+# Target: RunPod Secure Cloud (Dedicated vCPU)
+# DNS Architecture: Wildcard Routing (*.allbright.com)
+
+version: "1.0"
+services:
+  vessel-runner:
+    image: registry.allbright.internal/sovereign-engine:v2.4-apex
+    container_name: allbright-vessel-${RUNNER_ID}
+    resources:
+      vcpus: 4
+      memory: 8GB
+      # Requirement: CPU must support AVX-512 and VNNI
+      cpu_features: ["avx512", "vnni"]
+    env:
+      # Core Operational Mode
+      - ALLBRIGHT_MODE=runner
+      - RUNNER_ID=${RUNNER_ID}
+      - LOG_LEVEL=info
+      
+      # Domain & Connectivity
+      - PUBLIC_DOMAIN=allbright.com
+      - RUNNER_SUBDOMAIN=${RUNNER_ID}.allbright.com
+      - C2_GATEWAY=https://c2.allbright.com:50051
+      
+      # Secrets (Injected via RunPod Secret Manager)
+      - ALLBRIGHT_SECRET_PASS=${SOVEREIGN_PHRASE}
+      - RPC_URL=${ALCHEMY_PAYGO_URL}
+      
+      # Security Anchors
+      - ALLBRIGHT_YUBIKEY_ACTIVE=false # Optional until HW arrives
+      - MTLS_ENABLED=true
+    networks:
+      - sovereign-mesh
+    ports:
+      - "4001:4001" # Internal IPC / Telemetry
+      - "50052:50052" # gRPC Regional Aggregation
+    restart: always

@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package signer;
+
+service Signer {
+  rpc SignHash(SignRequest) returns (SignResponse);
+  rpc HealthCheck(HealthRequest) returns (HealthResponse);
+}
+
+message SignRequest {
+  string wallet_label = 1;
+  string hash = 2;
+}
+
+message SignResponse {
+  string signature = 1;
+  string wallet_label = 2;
+  int64 timestamp = 3;
+  string status = 4;
+}
+
+message HealthRequest {}
+
+message HealthResponse {
+  string status = 1;
+  string version = 2;
+  int64 timestamp = 3;
+}

@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Trade {
+  id                 String    @id @default(cuid())
+  opportunityId      String?
+  tokenPair          String
+  buyDex             String
+  sellDex            String
+  netProfitEth       Float?
+  gasFeeEth          Float?
+  status             String?
+  txHash             String?
+  error              String?
+  timestamp          DateTime  @default(now())
+  simulated          Boolean   @default(false)
+}
+
+model Metric {
+  id                  String   @id @default(cuid())
+  accumulatedProfit   Float    @default(0)
+  totalTrades         Int      @default(0)
+  successfulTrades    Int      @default(0)
+  failedTrades        Int      @default(0)
+  timestamp           DateTime @default(now())
+}
+
+model Wallet {
+  id           String   @id @default(cuid())
+  address      String   @unique
+  network      String
+  usdcBalance  Float    @default(0)
+  ethBalance   Float    @default(0)
+  totalValueUsd Float   @default(0)
+  updatedAt    DateTime @updatedAt
+}

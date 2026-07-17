@@ -1,0 +1,3 @@
+{"error_type":"generic","error_message":"[frontend:ui_error_state] fetching caps from lsp","source_file":"frontend/ui_error_state","tool_name":"ui_error_state","chat_id":null,"collected_at":"2026-06-29T12:57:28.120843900+00:00","severity":"high"}
+{"error_type":"llm_error","error_message":"LLM error (401 Unauthorized): \"Invalid API Key\"","source_file":"chat/generation.rs","tool_name":null,"chat_id":"39d922df-3208-4f15-aca4-ef8b1e7bb2ab","collected_at":"2026-06-29T13:50:32.289396900+00:00","severity":"high"}
+{"error_type":"generic","error_message":"LLM error (401 Unauthorized): \"Invalid API Key\"","source_file":null,"tool_name":null,"chat_id":"39d922df-3208-4f15-aca4-ef8b1e7bb2ab","collected_at":"2026-06-29T13:50:32.500230300+00:00","severity":"high"}

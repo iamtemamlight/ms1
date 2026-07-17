@@ -1,0 +1,6 @@
+{
+  "name": "Allbright Arbitrage Dashboard",
+  "description": "A high-performance DeFi arbitrage scanner and trade execution dashboard, embeddable inside the Allbright portal.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,1017 @@
+# ALLBRIGHT AI Agent Registry
+# Complete registry of all 107 AI agents
+# Version: V119.1
+# Last Updated: 2026-07-13
+
+[meta]
+version = "V119.1"
+total_agents = 107
+last_audit = "2026-07-13"
+naming_convention = "AI001-AI107 (sequential)"
+
+# ============================================================================
+# FUNCTIONAL AGENTS (AI001-AI107)
+# ============================================================================
+
+[[agent]]
+id = "AI001"
+name = "Desktop Agent"
+type = "functional"
+struct_name = "AI001DesktopAgent"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Desktop installation and management agent"
+
+[[agent]]
+id = "AI002"
+name = "Installer Agent"
+type = "functional"
+struct_name = "AI002InstallerAgent"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "MSI and installer creation agent"
+
+[[agent]]
+id = "AI003"
+name = "Health Monitor"
+type = "functional"
+struct_name = "AI003HealthMonitor"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Fleet health monitoring and diagnostics"
+
+[[agent]]
+id = "AI004"
+name = "Risk Manager"
+type = "functional"
+struct_name = "AI004RiskManager"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Risk calculation and management"
+
+[[agent]]
+id = "AI005"
+name = "Yield Optimizer"
+type = "functional"
+struct_name = "AI005YieldOptimizer"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Yield optimization and aggregation"
+
+[[agent]]
+id = "AI006"
+name = "Latency Tracker"
+type = "functional"
+struct_name = "AI006LatencyTracker"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Latency P50/P99 tracking"
+
+[[agent]]
+id = "AI007"
+name = "Pool Rebalancer"
+type = "functional"
+struct_name = "AI007PoolRebalancer"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Portfolio and pool rebalancing"
+
+[[agent]]
+id = "AI008"
+name = "MEV Shield"
+type = "functional"
+struct_name = "AI008MevShield"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "MEV protection and frontrunning prevention"
+
+[[agent]]
+id = "AI009"
+name = "Wallet Rotator"
+type = "functional"
+struct_name = "AI009WalletRotator"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Wallet rotation and management"
+
+[[agent]]
+id = "AI010"
+name = "Gas Optimizer"
+type = "functional"
+struct_name = "AI010GasOptimizer"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Gas price optimization"
+
+[[agent]]
+id = "AI011"
+name = "Slippage Monitor"
+type = "functional"
+struct_name = "AI011SlippageMonitor"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Slippage detection and alerts"
+
+[[agent]]
+id = "AI012"
+name = "Nonce Manager"
+type = "functional"
+struct_name = "AI012NonceManager"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Nonce tracking and gap detection"
+
+[[agent]]
+id = "AI013"
+name = "Arbitrage Scanner"
+type = "functional"
+struct_name = "AI013ArbitrageScanner"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Arbitrage opportunity detection"
+
+[[agent]]
+id = "AI014"
+name = "Flash Loan Guard"
+type = "functional"
+struct_name = "AI014FlashLoanGuard"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Flash loan execution and monitoring"
+
+[[agent]]
+id = "AI015"
+name = "Emergency Stop"
+type = "functional"
+struct_name = "AI015EmergencyStop"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Emergency halt and circuit breaker"
+
+[[agent]]
+id = "AI016"
+name = "Performance Tracker"
+type = "functional"
+struct_name = "AI016PerformanceTracker"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Performance metrics collection"
+
+[[agent]]
+id = "AI017"
+name = "Compliance Checker"
+type = "functional"
+struct_name = "AI017ComplianceChecker"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "MiCA, SOC2, GDPR, AML compliance"
+
+[[agent]]
+id = "AI018"
+name = "Network Monitor"
+type = "functional"
+struct_name = "AI018NetworkMonitor"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Network partition detection"
+
+[[agent]]
+id = "AI019"
+name = "State Syncer"
+type = "functional"
+struct_name = "AI019StateSyncer"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Cross-region state synchronization"
+
+[[agent]]
+id = "AI020"
+name = "Analytics Engine"
+type = "functional"
+struct_name = "AI020AnalyticsEngine"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Data analytics and insights"
+
+[[agent]]
+id = "AI021"
+name = "Liquidity Scanner"
+type = "functional"
+struct_name = "AI021LiquidityScanner"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Liquidity depth assessment"
+
+[[agent]]
+id = "AI022"
+name = "Price Feed"
+type = "functional"
+struct_name = "AI022PriceFeed"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Price feed monitoring"
+
+[[agent]]
+id = "AI023"
+name = "Order Book"
+type = "functional"
+struct_name = "AI023OrderBook"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Order book analysis"
+
+[[agent]]
+id = "AI024"
+name = "Swap Router"
+type = "functional"
+struct_name = "AI024SwapRouter"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "DEX swap routing"
+
+[[agent]]
+id = "AI025"
+name = "Token Balance"
+type = "functional"
+struct_name = "AI025TokenBalance"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Token balance tracking"
+
+[[agent]]
+id = "AI026"
+name = "Gas Tracker"
+type = "functional"
+struct_name = "AI026GasTracker"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Gas usage tracking"
+
+[[agent]]
+id = "AI027"
+name = "Block Builder"
+type = "functional"
+struct_name = "AI027BlockBuilder"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Block construction and submission"
+
+[[agent]]
+id = "AI028"
+name = "Mempool Watcher"
+type = "functional"
+struct_name = "AI028MempoolWatcher"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Mempool transaction monitoring"
+
+[[agent]]
+id = "AI029"
+name = "Rollup Sequencer"
+type = "functional"
+struct_name = "AI029RollupSequencer"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "L2 rollup sequencing"
+
+[[agent]]
+id = "AI030"
+name = "Bridge Relayer"
+type = "functional"
+struct_name = "AI030BridgeRelayer"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Cross-chain bridge operations"
+
+[[agent]]
+id = "AI031"
+name = "NFT Manager"
+type = "functional"
+struct_name = "AI031NftManager"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "NFT collection management"
+
+[[agent]]
+id = "AI032"
+name = "Multisig Manager"
+type = "functional"
+struct_name = "AI032MultisigManager"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Multi-signature wallet management"
+
+[[agent]]
+id = "AI033"
+name = "Timelock Controller"
+type = "functional"
+struct_name = "AI033TimelockController"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Timelock execution control"
+
+[[agent]]
+id = "AI034"
+name = "Proxy Admin"
+type = "functional"
+struct_name = "AI034ProxyAdmin"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Proxy contract administration"
+
+[[agent]]
+id = "AI035"
+name = "Access Control"
+type = "functional"
+struct_name = "AI035AccessControl"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Role-based access control"
+
+[[agent]]
+id = "AI036"
+name = "Budget Manager"
+type = "functional"
+struct_name = "AI036BudgetManager"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Budget allocation and tracking"
+
+[[agent]]
+id = "AI037"
+name = "Treasury"
+type = "functional"
+struct_name = "AI037Treasury"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Treasury fund management"
+
+[[agent]]
+id = "AI038"
+name = "Donation Manager"
+type = "functional"
+struct_name = "AI038DonationManager"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Donation processing"
+
+[[agent]]
+id = "AI039"
+name = "Grant Manager"
+type = "functional"
+struct_name = "AI039GrantManager"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Grant issuance and tracking"
+
+[[agent]]
+id = "AI040"
+name = "Vesting Schedule"
+type = "functional"
+struct_name = "AI040VestingSchedule"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Token vesting management"
+
+[[agent]]
+id = "AI041"
+name = "Oracle Price"
+type = "functional"
+struct_name = "AI041OraclePrice"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Oracle price feed aggregation"
+
+[[agent]]
+id = "AI042"
+name = "Aggregator"
+type = "functional"
+struct_name = "AI042Aggregator"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Data feed aggregation"
+
+[[agent]]
+id = "AI043"
+name = "Validator Set"
+type = "functional"
+struct_name = "AI043ValidatorSet"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Validator set management"
+
+[[agent]]
+id = "AI044"
+name = "Slashing Manager"
+type = "functional"
+struct_name = "AI044SlashingManager"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Slashing condition detection"
+
+[[agent]]
+id = "AI045"
+name = "Delegation Manager"
+type = "functional"
+struct_name = "AI045DelegationManager"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Staking delegation management"
+
+[[agent]]
+id = "AI046"
+name = "Snapshot Manager"
+type = "functional"
+struct_name = "AI046SnapshotManager"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Governance snapshot creation"
+
+[[agent]]
+id = "AI047"
+name = "Proposal Manager"
+type = "functional"
+struct_name = "AI047ProposalManager"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Governance proposal management"
+
+[[agent]]
+id = "AI048"
+name = "Vote Manager"
+type = "functional"
+struct_name = "AI048VoteManager"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Vote tallying and management"
+
+[[agent]]
+id = "AI049"
+name = "Queuing Manager"
+type = "functional"
+struct_name = "AI049QueuingManager"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Transaction queue management"
+
+[[agent]]
+id = "AI050"
+name = "Execution Manager"
+type = "functional"
+struct_name = "AI050ExecutionManager"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Transaction execution orchestration"
+
+[[agent]]
+id = "AI051"
+name = "Alert Dispatcher"
+type = "functional"
+struct_name = "AI051AlertDispatcher"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Alert routing and notification"
+
+[[agent]]
+id = "AI052"
+name = "Channel Manager"
+type = "functional"
+struct_name = "AI052ChannelManager"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Communication channel management"
+
+[[agent]]
+id = "AI053"
+name = "Fee Collector"
+type = "functional"
+struct_name = "AI053FeeCollector"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Fee collection and distribution"
+
+[[agent]]
+id = "AI054"
+name = "Incentive Manager"
+type = "functional"
+struct_name = "AI054IncentiveManager"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Incentive program management"
+
+[[agent]]
+id = "AI055"
+name = "Distribution Manager"
+type = "functional"
+struct_name = "AI055DistributionManager"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Token distribution orchestration"
+
+[[agent]]
+id = "AI056"
+name = "Rate Limiter"
+type = "functional"
+struct_name = "AI056RateLimiter"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "API rate limiting"
+
+[[agent]]
+id = "AI057"
+name = "Retry Manager"
+type = "functional"
+struct_name = "AI057RetryManager"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Failed operation retry logic"
+
+[[agent]]
+id = "AI058"
+name = "Circuit Breaker"
+type = "functional"
+struct_name = "AI058CircuitBreaker"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Circuit breaker pattern implementation"
+
+[[agent]]
+id = "AI059"
+name = "Cache Manager"
+type = "functional"
+struct_name = "AI059CacheManager"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Cache invalidation and management"
+
+[[agent]]
+id = "AI060"
+name = "Load Balancer"
+type = "functional"
+struct_name = "AI060LoadBalancer"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Request load balancing"
+
+[[agent]]
+id = "AI061"
+name = "Throttler"
+type = "functional"
+struct_name = "AI061Throttler"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Request throttling"
+
+[[agent]]
+id = "AI062"
+name = "Logger"
+type = "functional"
+struct_name = "AI062Logger"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Logging and log aggregation"
+
+[[agent]]
+id = "AI063"
+name = "Metrics Aggregator"
+type = "functional"
+struct_name = "AI063MetricsAggregator"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Metrics collection and aggregation"
+
+[[agent]]
+id = "AI064"
+name = "Tracer"
+type = "functional"
+struct_name = "AI064Tracer"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Distributed tracing"
+
+[[agent]]
+id = "AI065"
+name = "Debugger"
+type = "functional"
+struct_name = "AI065Debugger"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Debugging and diagnostics"
+
+[[agent]]
+id = "AI066"
+name = "Profiler"
+type = "functional"
+struct_name = "AI066Profiler"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Performance profiling"
+
+[[agent]]
+id = "AI067"
+name = "Monitor"
+type = "functional"
+struct_name = "AI067Monitor"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "System monitoring"
+
+[[agent]]
+id = "AI068"
+name = "Reporter"
+type = "functional"
+struct_name = "AI068Reporter"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Report generation"
+
+[[agent]]
+id = "AI069"
+name = "Scheduler"
+type = "functional"
+struct_name = "AI069Scheduler"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Job scheduling"
+
+[[agent]]
+id = "AI070"
+name = "Worker"
+type = "functional"
+struct_name = "AI070Worker"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Task execution worker"
+
+[[agent]]
+id = "AI071"
+name = "Dispatcher"
+type = "functional"
+struct_name = "AI071Dispatcher"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Task dispatching"
+
+[[agent]]
+id = "AI072"
+name = "Queue Manager"
+type = "functional"
+struct_name = "AI072QueueManager"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Queue management"
+
+[[agent]]
+id = "AI073"
+name = "Pool Manager"
+type = "functional"
+struct_name = "AI073PoolManager"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Liquidity pool management"
+
+[[agent]]
+id = "AI074"
+name = "Router"
+type = "functional"
+struct_name = "AI074Router"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Request and transaction routing"
+
+[[agent]]
+id = "AI075"
+name = "Gateway"
+type = "functional"
+struct_name = "AI075Gateway"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "API gateway management"
+
+[[agent]]
+id = "AI076"
+name = "Bridge"
+type = "functional"
+struct_name = "AI076Bridge"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Cross-chain bridge operations"
+
+[[agent]]
+id = "AI077"
+name = "Proxy"
+type = "functional"
+struct_name = "AI077Proxy"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Proxy management"
+
+[[agent]]
+id = "AI078"
+name = "Firewall"
+type = "functional"
+struct_name = "AI078Firewall"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Network firewall and security"
+
+[[agent]]
+id = "AI079"
+name = "Scanner"
+type = "functional"
+struct_name = "AI079Scanner"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Security scanning"
+
+[[agent]]
+id = "AI080"
+name = "Detector"
+type = "functional"
+struct_name = "AI080Detector"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Anomaly and fraud detection"
+
+[[agent]]
+id = "AI081"
+name = "Analyzer"
+type = "functional"
+struct_name = "AI081Analyzer"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Data analysis"
+
+[[agent]]
+id = "AI082"
+name = "Predictor"
+type = "functional"
+struct_name = "AI082Predictor"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Predictive analytics"
+
+[[agent]]
+id = "AI083"
+name = "Forecaster"
+type = "functional"
+struct_name = "AI083Forecaster"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Market forecasting"
+
+[[agent]]
+id = "AI084"
+name = "Simulator"
+type = "functional"
+struct_name = "AI084Simulator"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Simulation and scenario testing"
+
+[[agent]]
+id = "AI085"
+name = "Model"
+type = "functional"
+struct_name = "AI085Model"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "ML model management"
+
+[[agent]]
+id = "AI086"
+name = "Trainer"
+type = "functional"
+struct_name = "AI086Trainer"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Model training"
+
+[[agent]]
+id = "AI087"
+name = "Validator"
+type = "functional"
+struct_name = "AI087Validator"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Model and transaction validation"
+
+[[agent]]
+id = "AI088"
+name = "Auditor"
+type = "functional"
+struct_name = "AI088Auditor"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "System and compliance auditing"
+
+[[agent]]
+id = "AI089"
+name = "Inspector"
+type = "functional"
+struct_name = "AI089Inspector"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Quality inspection"
+
+[[agent]]
+id = "AI090"
+name = "Reviewer"
+type = "functional"
+struct_name = "AI090Reviewer"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Code and transaction review"
+
+[[agent]]
+id = "AI091"
+name = "Approver"
+type = "functional"
+struct_name = "AI091Approver"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Final approval authority"
+
+[[agent]]
+id = "AI092"
+name = "Constitution Enforcer"
+type = "functional"
+struct_name = "AI092ConstitutionEnforcer"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "CGM constitutional governance"
+
+[[agent]]
+id = "AI093"
+name = "Relationship Matrix Learner"
+type = "functional"
+struct_name = "AI093RelationshipMatrixLearner"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Cross-agent learning and optimization"
+
+[[agent]]
+id = "AI094"
+name = "Subsystem Impact Analyzer"
+type = "functional"
+struct_name = "AI094SubsystemImpactAnalyzer"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Change impact analysis"
+
+[[agent]]
+id = "AI095"
+name = "Audit Logger"
+type = "functional"
+struct_name = "AI095AuditLogger"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Immutable audit trail logging"
+
+[[agent]]
+id = "AI096"
+name = "KPI Alignment Monitor"
+type = "functional"
+struct_name = "AI096KpiAlignmentMonitor"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "KPI target alignment monitoring"
+
+[[agent]]
+id = "AI097"
+name = "Supervisor Core"
+type = "supervisor"
+struct_name = "AI097SupervisorCore"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Core system supervisor"
+
+[[agent]]
+id = "AI098"
+name = "Supervisor Trading"
+type = "supervisor"
+struct_name = "AI098SupervisorTrading"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Trading operations supervisor"
+
+[[agent]]
+id = "AI099"
+name = "Supervisor Security"
+type = "supervisor"
+struct_name = "AI099SupervisorSecurity"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Security operations supervisor"
+
+[[agent]]
+id = "AI100"
+name = "Supervisor Infrastructure"
+type = "supervisor"
+struct_name = "AI100SupervisorInfrastructure"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Infrastructure supervisor"
+
+[[agent]]
+id = "AI101"
+name = "Supervisor Profit"
+type = "supervisor"
+struct_name = "AI101SupervisorProfit"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "CGM Profit subsystem supervisor"
+
+[[agent]]
+id = "AI102"
+name = "Supervisor Growth"
+type = "supervisor"
+struct_name = "AI102SupervisorGrowth"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "CGM Growth subsystem supervisor"
+
+[[agent]]
+id = "AI103"
+name = "Supervisor Velocity"
+type = "supervisor"
+struct_name = "AI103SupervisorVelocity"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "CGM Velocity subsystem supervisor"
+
+[[agent]]
+id = "AI104"
+name = "Supervisor Efficiency"
+type = "supervisor"
+struct_name = "AI104SupervisorEfficiency"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "CGM Efficiency subsystem supervisor"
+
+[[agent]]
+id = "AI105"
+name = "Supervisor Security Enhanced"
+type = "supervisor"
+struct_name = "AI105SupervisorSecurity"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "CGM Security subsystem supervisor"
+
+[[agent]]
+id = "AI106"
+name = "Supervisor Quality"
+type = "supervisor"
+struct_name = "AI106SupervisorQuality"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "CGM Quality subsystem supervisor"
+
+[[agent]]
+id = "AI107"
+name = "Copilot Auditor"
+type = "supervisor"
+struct_name = "AI107CopilotAuditor"
+file = "backend/ai_agents.rs"
+status = "ACTIVE"
+description = "Copilot system audit and oversight"
+
+# ============================================================================
+# REGISTRY STATISTICS
+# ============================================================================
+
+[statistics]
+functional_agents = 96
+supervisor_agents = 11
+total_agents = 107
+active_agents = 107
+inactive_agents = 0
+
+# ============================================================================
+# AGENT CATEGORIES
+# ============================================================================
+
+[categories]
+trading = ["AI002", "AI003", "AI004", "AI005", "AI006", "AI007", "AI008", "AI009", "AI010", "AI011", "AI012", "AI013", "AI014", "AI015", "AI016", "AI017", "AI018", "AI019", "AI020", "AI021", "AI022", "AI023", "AI024", "AI025", "AI026", "AI027", "AI028", "AI029", "AI030"]
+governance = ["AI031", "AI032", "AI033", "AI034", "AI035", "AI036", "AI037", "AI038", "AI039", "AI040", "AI041", "AI042", "AI043", "AI044", "AI045", "AI046", "AI047", "AI048", "AI049", "AI050", "AI087", "AI088", "AI089", "AI090", "AI091", "AI092"]
+infrastructure = ["AI051", "AI052", "AI053", "AI054", "AI055", "AI056", "AI057", "AI058", "AI059", "AI060", "AI061", "AI062", "AI063", "AI064", "AI065", "AI066", "AI067", "AI068", "AI069", "AI070", "AI071", "AI072", "AI073", "AI074", "AI075", "AI076", "AI077", "AI078", "AI079", "AI080", "AI081", "AI082", "AI083", "AI084", "AI085", "AI086"]
+supervisor = ["AI097", "AI098", "AI099", "AI100", "AI101", "AI102", "AI103", "AI104", "AI105", "AI106", "AI107"]
+
+# ============================================================================
+# CRITICAL AGENTS (P0)
+# ============================================================================
+
+[critical_agents]
+ai001 = "Desktop Agent - System core"
+ai004 = "Risk Manager - Financial security"
+ai008 = "MEV Shield - Transaction protection"
+ai015 = "Emergency Stop - Circuit breaker"
+ai017 = "Compliance Checker - Regulatory compliance"
+ai035 = "Access Control - Security"
+ai092 = "Constitution Enforcer - Governance"
+ai095 = "Audit Logger - Immutable audit trail"
+ai097 = "Supervisor Core - System oversight"
+ai098 = "Supervisor Trading - Trading oversight"
+ai099 = "Supervisor Security - Security oversight"
+ai100 = "Supervisor Infrastructure - Infrastructure oversight"
+ai107 = "Copilot Auditor - Copilot oversight"

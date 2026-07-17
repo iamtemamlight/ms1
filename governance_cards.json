@@ -1,0 +1,119 @@
+{
+  "approved": 5,
+  "cards": [
+    {
+      "id": "allbright",
+      "last_update": 1783949504,
+      "metrics": [
+        {
+          "name": "uptime",
+          "source": "verified-signal",
+          "unit": "raw",
+          "value": 99.9
+        },
+        {
+          "name": "latency_p50_ms",
+          "source": "verified-signal",
+          "unit": "raw",
+          "value": 18.2
+        }
+      ],
+      "name": "AllBright System",
+      "status": "Operational"
+    },
+    {
+      "id": "copilot",
+      "last_update": 1783949504,
+      "metrics": [
+        {
+          "name": "suggestions",
+          "source": "verified-signal",
+          "unit": "raw",
+          "value": 1200.0
+        },
+        {
+          "name": "accept_rate",
+          "source": "verified-signal",
+          "unit": "raw",
+          "value": 0.82
+        },
+        {
+          "name": "avg_latency_ms",
+          "source": "verified-signal",
+          "unit": "raw",
+          "value": 250.0
+        }
+      ],
+      "name": "Copilot",
+      "status": "Operational"
+    },
+    {
+      "id": "intelligence",
+      "last_update": 1783949504,
+      "metrics": [
+        {
+          "name": "model_accuracy",
+          "source": "verified-signal",
+          "unit": "raw",
+          "value": 0.92
+        },
+        {
+          "name": "inference_count",
+          "source": "verified-signal",
+          "unit": "raw",
+          "value": 5400.0
+        }
+      ],
+      "name": "Intelligence",
+      "status": "Operational"
+    },
+    {
+      "id": "commander",
+      "last_update": 1783949504,
+      "metrics": [
+        {
+          "name": "alerts",
+          "source": "verified-signal",
+          "unit": "raw",
+          "value": 3.0
+        },
+        {
+          "name": "dashboard_load_s",
+          "source": "verified-signal",
+          "unit": "raw",
+          "value": 1.2
+        },
+        {
+          "name": "approvals_recorded",
+          "source": "verified-signal",
+          "unit": "raw",
+          "value": 1.0
+        }
+      ],
+      "name": "Commander",
+      "status": "Operational"
+    },
+    {
+      "id": "zerotrust",
+      "last_update": 1783949504,
+      "metrics": [
+        {
+          "name": "trust_score",
+          "source": "verified-signal",
+          "unit": "raw",
+          "value": 0.97
+        },
+        {
+          "name": "evidence_coverage",
+          "source": "verified-signal",
+          "unit": "raw",
+          "value": 1.0
+        }
+      ],
+      "name": "Zero Trust",
+      "status": "Operational"
+    }
+  ],
+  "generated_at": "2026-07-13T13:31:44.921188400+00:00",
+  "rejected": 0
+}

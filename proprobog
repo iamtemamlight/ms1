@@ -1,0 +1,117 @@
+[7/5/2026 10:23 AM] Temam: Terms of Reference (ToR)
+Wallet Management Module – Non-Custodial MetaMask Integration
+Arbitrage Flash Loan Platform
+1. Objective
+Develop a secure, non-custodial Wallet Management Module that integrates with MetaMask and serves as the central interface for wallet administration, profit distribution, and transaction monitoring within the Arbitrage Flash Loan Platform.
+The platform shall never store or manage MetaMask private keys. Wallet authentication and transaction signing shall be performed through MetaMask.
+2. Wallet Management Dashboard
+The Wallet Management Dashboard shall display a fully sortable, searchable, and filterable table.
+Wallet Management Table
+Column⇅ No.⇅ Account ID⇅ Wallet Name⇅ Wallet Address⇅ Wallet Type⇅ Chain⇅ Balance⇅ Profit Balance⇅ Connection Status⇅ Active (ON/OFF Toggle)⇅ Last SynchronizationActions (Edit • Save • Delete) 
+3. Table Functions
+The table shall support:
+Ascending / Descending sorting on every column
+Multi-column sorting
+Search by Account ID, Wallet Name, or Wallet Address
+Filter by Blockchain
+Filter by Wallet Type
+Filter by Connection Status
+Filter by Active/Inactive status
+Column resizing
+Drag-and-drop column ordering
+Show/Hide columns
+Sticky table header
+Frozen first and last columns
+Pagination (25 / 50 / 100 / 500 rows)
+Row selection with checkboxes
+Bulk operations
+Real-time balance synchronization
+4. Toolbar Functions
+FunctionDescriptionSearchSearch walletsFilter by ChainEthereum, Arbitrum, Polygon, BNB Chain, Base, OptimismFilter by StatusConnected / OfflineFilter by ActiveActive / InactiveFilter by Wallet TypeMetaMask / Watch-onlyAdd WalletAuto Detect / ManualRefreshRefresh balancesExportCSV / Excel / PDF 
+5. Wallet Registration
+The system shall support:
+Auto Detect
+Automatically detect installed MetaMask wallets.
+Import wallet address only.
+Retrieve chain information.
+Retrieve balances.
+Detect connection status.
+Manual Registration
+Administrator may manually register:
+Wallet Name
+Wallet Address
+Blockchain Network
+Manual registration shall not require or store any private key.
+6. Wallet Activation
+Each wallet shall include an ON/OFF toggle.
+Active (ON)
+Eligible for arbitrage execution
+Eligible for profit transfer
+Included in auto wallet rotation
+Available for destination wallet selection
+Inactive (OFF)
+Excluded from arbitrage execution
+Excluded from profit transfer
+Excluded from wallet rotation
+Hidden from destination wallet selection
+Historical records remain available
+7. Profit Transfer Module
+The platform shall include configurable profit transfer settings.
+SettingDescriptionProfit TransferAuto / ManualDestination WalletSelect from Wallet Table or Enter Wallet AddressSelected DestinationWallet Name / Account ID / Wallet AddressAuto RotationAll Active Wallets / Selected Active WalletsRotation SelectionSelect one or more active walletsMinimum Transfer AmountUser-defined thresholdDashboard NotificationEnable / Disable 
+8. Auto Wallet Rotation
+The platform shall support automatic profit distribution.
+All Active Wallets
+Automatically rotate profit transfers among all active wallets.
+Selected Active Wallets
+Rotate profit transfers only among administrator-selected active wallets.
+Manual
+Administrator selects the destination wallet for each transfer.
+9. Transfer History Register
+The system shall maintain a permanent, sortable transfer history.
+Transfer History Table
+Column⇅ Date & Time⇅ Account ID⇅ From Wallet⇅ To Wallet⇅ Blockchain⇅ Token⇅ Amount⇅ Transaction Hash⇅ Status 
+Supported status values:
+Pending
+Confirmed
+Failed
+Cancelled
+10. Supported Blockchains
+The module shall support multiple blockchain networks, including:
+Ethereum
+Arbitrum
+Polygon
+BNB Chain
+Base
+Optimism
+The architecture shall allow additional blockchain networks to be added in the future without redesigning the module.
+[7/5/2026 10:23 AM] Temam: 11. Security Requirements
+The Wallet Management Module shall:
+Operate as a non-custodial system for MetaMask wallets.
+Never store, display, or manage MetaMask private keys.
+Authenticate users through MetaMask.
+Sign transactions through MetaMask.
+Maintain complete audit logs for wallet administration activities.
+Restrict administrative functions through role-based access controls.
+12. Performance Requirements
+The module shall:
+Refresh wallet balances in real time or on demand.
+Support management of hundreds to thousands of wallets.
+Provide fast search, sorting, and filtering.
+Maintain responsive performance during concurrent arbitrage operations.
+13. Deliverables
+The completed Wallet Management Module shall provide:
+Non-custodial MetaMask integration
+Sortable wallet management dashboard
+Automatic wallet detection
+Manual wallet registration
+Wallet activation/deactivation
+Multi-chain wallet support
+Profit transfer management
+Destination wallet selection
+Automatic wallet rotation
+Transfer history register
+Export functionality (CSV, Excel, PDF)
+Real-time wallet balance synchronization
+Dashboard notifications
+Comprehensive audit trail
+[7/5/2026 12:17 PM] Temam: Ollama

@@ -1,0 +1,2315 @@
+﻿cargo :    Compiling allbright-c2-backend v119.0.0 (D:\ALLBRIGHT\backend)
+At line:4 char:26
++ cd D:\ALLBRIGHT\backend; cargo check 2>&1 | Out-File -FilePath "D:\AL ...
++                          ~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (   Compiling al...BRIGHT\backend):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+warning: unused import: `AtomicBool`
+  --> m054_auto_optimizer.rs:10:36
+   |
+10 | use std::sync::atomic::{AtomicU64, AtomicBool, Ordering};
+   |                                    ^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `std::thread`
+  --> m099_zk_proof.rs:10:5
+   |
+10 | use std::thread;
+   |     ^^^^^^^^^^^
+
+warning: unused import: `std::sync::Arc`
+ --> aise_unified_intelligence.rs:8:5
+  |
+8 | use std::sync::Arc;
+  |     ^^^^^^^^^^^^^^
+
+warning: unused import: `tokio::sync::RwLock`
+ --> aise_unified_intelligence.rs:9:5
+  |
+9 | use tokio::sync::RwLock;
+  |     ^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `std::collections::HashMap`
+ --> m132_copilot_auditor.rs:9:5
+  |
+9 | use std::collections::HashMap;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `std::sync::Arc`
+  --> m132_copilot_auditor.rs:10:5
+   |
+10 | use std::sync::Arc;
+   |     ^^^^^^^^^^^^^^
+
+warning: unused import: `std::sync::Arc`
+ --> disaster_recovery.rs:9:5
+  |
+9 | use std::sync::Arc;
+  |     ^^^^^^^^^^^^^^
+
+warning: unused import: `tokio::sync::RwLock`
+  --> disaster_recovery.rs:10:5
+   |
+10 | use tokio::sync::RwLock;
+   |     ^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `Ordering`
+ --> kpi_telemetry.rs:5:36
+  |
+5 | use std::sync::atomic::{AtomicU64, Ordering};
+  |                                    ^^^^^^^^
+
+warning: unused imports: `SystemTime` and `UNIX_EPOCH`
+ --> kpi_telemetry.rs:6:17
+  |
+6 | use std::time::{SystemTime, UNIX_EPOCH};
+  |                 ^^^^^^^^^^  ^^^^^^^^^^
+
+warning: unused import: `MeasuredKpi`
+  --> continuum_optimization.rs:11:51
+   |
+11 | use crate::kpi_telemetry::{KpiTelemetryCollector, MeasuredKpi, Pillar};
+   |                                                   ^^^^^^^^^^^
+
+warning: unused import: `SubcategoryMeasurements`
+  --> continuum_optimization.rs:12:57
+   |
+12 | use crate::m054_auto_optimizer::{AutoOptimizationAgent, SubcategoryMeasurements};
+   |                                                         ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unnecessary parentheses around block return value
+  --> continuum_optimization.rs:77:25
+   |
+77 |                         ((kpi.measured_value - kpi.baseline_value) / kpi.baseline_value)
+   |                         ^                                                              ^
+   |
+   = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+   |
+77 -                         ((kpi.measured_value - kpi.baseline_value) / kpi.baseline_value)
+77 +                         (kpi.measured_value - kpi.baseline_value) / kpi.baseline_value
+   |
+
+warning: variable does not need to be mutable
+   --> main.rs:444:13
+    |
+444 |         let mut key_manager = KeyManager::new();
+    |             ----^^^^^^^^^^^
+    |             |
+    |             help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `secret`
+   --> m099_zk_proof.rs:144:43
+    |
+144 |     pub fn verify(&self, secret_id: &str, secret: &[u8]) -> bool {
+    |                                           ^^^^^^ help: if this is intentional, prefix it with an underscore: 
+`_secret`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable does not need to be mutable
+   --> m008_mev_protection.rs:120:13
+    |
+120 |         let mut protected = true;
+    |             ----^^^^^^^^^
+    |             |
+    |             help: remove this `mut`
+
+warning: unused variable: `avg_liquidity`
+   --> m012_risk_calculator.rs:120:13
+    |
+120 |         let avg_liquidity = if self.positions.is_empty() { 0.0 } else { total_liquidity / self.positions.len() 
+as f64 };
+    |             ^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_avg_liquidity`
+
+warning: unused variable: `data_integrity`
+   --> m132_copilot_auditor.rs:288:13
+    |
+288 |         let data_integrity = self.validate_data_integrity(oracle);
+    |             ^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_data_integrity`
+
+warning: unused variable: `metrics`
+   --> m132_copilot_auditor.rs:370:44
+    |
+370 |     fn assess_health_and_fail_safes(&self, metrics: &CopilotMetrics, benchmarks: &AnalyticalBenchmarks) -> 
+(String, Vec<DacamOverri...
+    |                                            ^^^^^^^ help: if this is intentional, prefix it with an underscore: 
+`_metrics`
+
+warning: unused variable: `prev`
+  --> continuum_optimization.rs:47:13
+   |
+47 |         let prev = *self.profit_30s_previous.lock().unwrap();
+   |             ^^^^ help: if this is intentional, prefix it with an underscore: `_prev`
+
+warning: unused variable: `profit_gap`
+  --> continuum_optimization.rs:51:13
+   |
+51 |         let profit_gap = if curr > 0.0 {
+   |             ^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_profit_gap`
+
+warning: unused variable: `telemetry`
+   --> continuum_optimization.rs:110:9
+    |
+110 |         telemetry: &KpiTelemetryCollector
+    |         ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_telemetry`
+
+warning: unused variable: `file`
+   --> main.rs:584:24
+    |
+584 |         for (id, name, file) in &modules {
+    |                        ^^^^ help: if this is intentional, prefix it with an underscore: `_file`
+
+warning: unused variable: `avg_win_rate`
+    --> main.rs:1421:9
+     |
+1421 |     let avg_win_rate = if runner_count > 0.0 { total_win_rate / runner_count } else { 0.0 };
+     |         ^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_avg_win_rate`
+
+warning: constant `TARGET_SECURITY_LEVEL` is never used
+  --> m099_zk_proof.rs:14:7
+   |
+14 | const TARGET_SECURITY_LEVEL: u64 = 1_000_000_000; // 1 in 1 billion
+   |       ^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `generate_pedersen_params` is never used
+  --> m099_zk_proof.rs:18:4
+   |
+18 | fn generate_pedersen_params() -> ([u8; 32], [u8; 32]) {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `pedersen_commit` is never used
+  --> m099_zk_proof.rs:29:4
+   |
+29 | fn pedersen_commit(secret: &[u8], blinding: &[u8; 32]) -> [u8; 32] {
+   |    ^^^^^^^^^^^^^^^
+
+warning: struct `MerkleNode` is never constructed
+  --> m099_zk_proof.rs:42:8
+   |
+42 | struct MerkleNode {
+   |        ^^^^^^^^^^
+
+warning: associated function `new` is never used
+  --> m099_zk_proof.rs:49:8
+   |
+48 | impl MerkleNode {
+   | --------------- associated function in this implementation
+49 |     fn new(data: &[u8]) -> Self {
+   |        ^^^
+
+warning: struct `MerkleTree` is never constructed
+  --> m099_zk_proof.rs:59:8
+   |
+59 | struct MerkleTree {
+   |        ^^^^^^^^^^
+
+warning: associated items `new`, `insert`, and `get_root_hash` are never used
+  --> m099_zk_proof.rs:65:8
+   |
+64 | impl MerkleTree {
+   | --------------- associated items in this implementation
+65 |     fn new() -> Self {
+   |        ^^^
+...
+69 |     fn insert(&mut self, data: &[u8]) {
+   |        ^^^^^^
+...
+85 |     fn get_root_hash(&self) -> Option<[u8; 32]> {
+   |        ^^^^^^^^^^^^^
+
+warning: struct `ZkProofResult` is never constructed
+  --> m099_zk_proof.rs:92:12
+   |
+92 | pub struct ZkProofResult {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ZkProofManager` is never constructed
+   --> m099_zk_proof.rs:102:12
+    |
+102 | pub struct ZkProofManager {
+    |            ^^^^^^^^^^^^^^
+
+warning: associated items `new`, `commit`, `verify`, `get_security_status`, and `purge` are never used
+   --> m099_zk_proof.rs:111:12
+    |
+110 | impl ZkProofManager {
+    | ------------------- associated items in this implementation
+111 |     pub fn new() -> Self {
+    |            ^^^
+...
+124 |     pub fn commit(&self, secret_id: &str, secret: &[u8]) -> [u8; 32] {
+    |            ^^^^^^
+...
+144 |     pub fn verify(&self, secret_id: &str, secret: &[u8]) -> bool {
+    |            ^^^^^^
+...
+157 |     pub fn get_security_status(&self) -> ZkProofResult {
+    |            ^^^^^^^^^^^^^^^^^^^
+...
+188 |     pub fn purge(&self) {
+    |            ^^^^^
+
+warning: struct `TransactionBatch` is never constructed
+  --> m003_transaction_batcher.rs:11:12
+   |
+11 | pub struct TransactionBatch {
+   |            ^^^^^^^^^^^^^^^^
+
+warning: struct `Transaction` is never constructed
+  --> m003_transaction_batcher.rs:20:12
+   |
+20 | pub struct Transaction {
+   |            ^^^^^^^^^^^
+
+warning: enum `BatchStatus` is never used
+  --> m003_transaction_batcher.rs:29:10
+   |
+29 | pub enum BatchStatus {
+   |          ^^^^^^^^^^^
+
+warning: struct `BatchResult` is never constructed
+  --> m003_transaction_batcher.rs:39:12
+   |
+39 | pub struct BatchResult {
+   |            ^^^^^^^^^^^
+
+warning: struct `TransactionBatcher` is never constructed
+  --> m003_transaction_batcher.rs:49:12
+   |
+49 | pub struct TransactionBatcher {
+   |            ^^^^^^^^^^^^^^^^^^
+
+warning: associated items `new`, `add_transaction`, `get_ready_batch`, `execute_batch`, and `get_stats` are never used
+   --> m003_transaction_batcher.rs:60:12
+    |
+ 59 | impl TransactionBatcher {
+    | ----------------------- associated items in this implementation
+ 60 |     pub fn new() -> Self {
+    |            ^^^
+...
+ 72 |     pub fn add_transaction(&mut self, tx: Transaction) -> Option<String> {
+    |            ^^^^^^^^^^^^^^^
+...
+ 95 |     pub fn get_ready_batch(&mut self) -> Option<TransactionBatch> {
+    |            ^^^^^^^^^^^^^^^
+...
+108 |     pub fn execute_batch(&mut self, batch_id: &str) -> Result<BatchResult, String> {
+    |            ^^^^^^^^^^^^^
+...
+136 |     pub fn get_stats(&self) -> String {
+    |            ^^^^^^^^^
+
+warning: struct `GasPrice` is never constructed
+  --> m007_gas_oracle.rs:11:12
+   |
+11 | pub struct GasPrice {
+   |            ^^^^^^^^
+
+warning: enum `GasSource` is never used
+  --> m007_gas_oracle.rs:21:10
+   |
+21 | pub enum GasSource {
+   |          ^^^^^^^^^
+
+warning: enum `GasStrategy` is never used
+  --> m007_gas_oracle.rs:30:10
+   |
+30 | pub enum GasStrategy {
+   |          ^^^^^^^^^^^
+
+warning: struct `GasPriceOracle` is never constructed
+  --> m007_gas_oracle.rs:38:12
+   |
+38 | pub struct GasPriceOracle {
+   |            ^^^^^^^^^^^^^^
+
+warning: associated items `new`, `get_gas_price`, `update_gas_price`, `estimate_transaction_cost`, 
+`get_optimal_strategy`, and `get_stats` are never used
+   --> m007_gas_oracle.rs:50:12
+    |
+ 49 | impl GasPriceOracle {
+    | ------------------- associated items in this implementation
+ 50 |     pub fn new() -> Self {
+    |            ^^^
+...
+ 76 |     pub fn get_gas_price(&mut self, strategy: GasStrategy) -> u64 {
+    |            ^^^^^^^^^^^^^
+...
+ 91 |     pub fn update_gas_price(&mut self, price: GasPrice) {
+    |            ^^^^^^^^^^^^^^^^
+...
+101 |     pub fn estimate_transaction_cost(&self, gas_limit: u64, strategy: GasStrategy) -> u64 {
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+111 |     pub fn get_optimal_strategy(&self, max_wait_blocks: u64, max_cost_wei: u64) -> GasStrategy {
+    |            ^^^^^^^^^^^^^^^^^^^^
+...
+123 |     pub fn get_stats(&self) -> String {
+    |            ^^^^^^^^^
+
+warning: struct `MevThreat` is never constructed
+  --> m008_mev_protection.rs:11:12
+   |
+11 | pub struct MevThreat {
+   |            ^^^^^^^^^
+
+warning: enum `MevThreatType` is never used
+  --> m008_mev_protection.rs:20:10
+   |
+20 | pub enum MevThreatType {
+   |          ^^^^^^^^^^^^^
+
+warning: enum `ProtectionLevel` is never used
+  --> m008_mev_protection.rs:29:10
+   |
+29 | pub enum ProtectionLevel {
+   |          ^^^^^^^^^^^^^^^
+
+warning: struct `ProtectionResult` is never constructed
+  --> m008_mev_protection.rs:37:12
+   |
+37 | pub struct ProtectionResult {
+   |            ^^^^^^^^^^^^^^^^
+
+warning: struct `MevProtectionEngine` is never constructed
+  --> m008_mev_protection.rs:46:12
+   |
+46 | pub struct MevProtectionEngine {
+   |            ^^^^^^^^^^^^^^^^^^^
+
+warning: associated items `new`, `analyze_transaction`, `protect_transaction`, `add_known_bot`, `get_stats`, and 
+`is_known_bot` are never used
+   --> m008_mev_protection.rs:57:12
+    |
+ 56 | impl MevProtectionEngine {
+    | ------------------------ associated items in this implementation
+ 57 |     pub fn new() -> Self {
+    |            ^^^
+...
+ 72 |     pub fn analyze_transaction(&mut self, tx: &Transaction) -> Vec<MevThreat> {
+    |            ^^^^^^^^^^^^^^^^^^^
+...
+103 |     pub fn protect_transaction(&mut self, tx: &Transaction) -> ProtectionResult {
+    |            ^^^^^^^^^^^^^^^^^^^
+...
+159 |     pub fn add_known_bot(&mut self, address: String) {
+    |            ^^^^^^^^^^^^^
+...
+163 |     pub fn get_stats(&self) -> String {
+    |            ^^^^^^^^^
+...
+173 |     fn is_known_bot(&self, address: &str) -> bool {
+    |        ^^^^^^^^^^^^
+
+warning: struct `AssetAllocation` is never constructed
+  --> m010_portfolio_rebalancer.rs:10:12
+   |
+10 | pub struct AssetAllocation {
+   |            ^^^^^^^^^^^^^^^
+
+warning: enum `RebalanceStrategy` is never used
+  --> m010_portfolio_rebalancer.rs:19:10
+   |
+19 | pub enum RebalanceStrategy {
+   |          ^^^^^^^^^^^^^^^^^
+
+warning: struct `RebalanceAction` is never constructed
+  --> m010_portfolio_rebalancer.rs:26:12
+   |
+26 | pub struct RebalanceAction {
+   |            ^^^^^^^^^^^^^^^
+
+warning: enum `RebalanceActionType` is never used
+  --> m010_portfolio_rebalancer.rs:35:10
+   |
+35 | pub enum RebalanceActionType {
+   |          ^^^^^^^^^^^^^^^^^^^
+
+warning: struct `RebalanceResult` is never constructed
+  --> m010_portfolio_rebalancer.rs:42:12
+   |
+42 | pub struct RebalanceResult {
+   |            ^^^^^^^^^^^^^^^
+
+warning: struct `PortfolioRebalancer` is never constructed
+  --> m010_portfolio_rebalancer.rs:51:12
+   |
+51 | pub struct PortfolioRebalancer {
+   |            ^^^^^^^^^^^^^^^^^^^
+
+warning: associated items `new`, `update_allocation`, `check_rebalance_needed`, `calculate_rebalance`, and 
+`get_portfolio_summary` are never used
+   --> m010_portfolio_rebalancer.rs:62:12
+    |
+ 61 | impl PortfolioRebalancer {
+    | ------------------------ associated items in this implementation
+ 62 |     pub fn new() -> Self {
+    |            ^^^
+...
+104 |     pub fn update_allocation(&mut self, asset: &str, current_value: f64, total_portfolio: f64) {
+    |            ^^^^^^^^^^^^^^^^^
+...
+112 |     pub fn check_rebalance_needed(&self) -> bool {
+    |            ^^^^^^^^^^^^^^^^^^^^^^
+...
+116 |     pub fn calculate_rebalance(&mut self) -> RebalanceResult {
+    |            ^^^^^^^^^^^^^^^^^^^
+...
+173 |     pub fn get_portfolio_summary(&self) -> String {
+    |            ^^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `YieldOpportunity` is never constructed
+  --> m011_yield_aggregator.rs:10:12
+   |
+10 | pub struct YieldOpportunity {
+   |            ^^^^^^^^^^^^^^^^
+
+warning: enum `RiskTolerance` is never used
+  --> m011_yield_aggregator.rs:22:10
+   |
+22 | pub enum RiskTolerance {
+   |          ^^^^^^^^^^^^^
+
+warning: struct `YieldStrategy` is never constructed
+  --> m011_yield_aggregator.rs:29:12
+   |
+29 | pub struct YieldStrategy {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `YieldAggregator` is never constructed
+  --> m011_yield_aggregator.rs:37:12
+   |
+37 | pub struct YieldAggregator {
+   |            ^^^^^^^^^^^^^^^
+
+warning: associated items `new`, `scan_opportunity`, `get_best_opportunities`, `filter_by_risk`, 
+`calculate_optimal_allocation`, and `get_stats` are never used
+   --> m011_yield_aggregator.rs:48:12
+    |
+ 47 | impl YieldAggregator {
+    | -------------------- associated items in this implementation
+ 48 |     pub fn new() -> Self {
+    |            ^^^
+...
+ 60 |     pub fn scan_opportunity(&mut self, opportunity: YieldOpportunity) {
+    |            ^^^^^^^^^^^^^^^^
+...
+ 72 |     pub fn get_best_opportunities(&self, count: usize) -> Vec<&YieldOpportunity> {
+    |            ^^^^^^^^^^^^^^^^^^^^^^
+...
+ 78 |     pub fn filter_by_risk(&self, max_risk: f64) -> Vec<&YieldOpportunity> {
+    |            ^^^^^^^^^^^^^^
+...
+ 85 |     pub fn calculate_optimal_allocation(&self, capital: f64) -> YieldStrategy {
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+123 |     pub fn get_stats(&self) -> String {
+    |            ^^^^^^^^^
+
+warning: struct `RiskMetric` is never constructed
+  --> m012_risk_calculator.rs:10:12
+   |
+10 | pub struct RiskMetric {
+   |            ^^^^^^^^^^
+
+warning: enum `RiskSeverity` is never used
+  --> m012_risk_calculator.rs:19:10
+   |
+19 | pub enum RiskSeverity {
+   |          ^^^^^^^^^^^^
+
+warning: struct `PositionRisk` is never constructed
+  --> m012_risk_calculator.rs:27:12
+   |
+27 | pub struct PositionRisk {
+   |            ^^^^^^^^^^^^
+
+warning: struct `PortfolioRisk` is never constructed
+  --> m012_risk_calculator.rs:38:12
+   |
+38 | pub struct PortfolioRisk {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `RiskCalculator` is never constructed
+  --> m012_risk_calculator.rs:50:12
+   |
+50 | pub struct RiskCalculator {
+   |            ^^^^^^^^^^^^^^
+
+warning: associated items `new`, `add_position`, `calculate_position_risk`, `calculate_portfolio_risk`, 
+`check_risk_breaches`, and `get_risk_summary` are never used
+   --> m012_risk_calculator.rs:61:12
+    |
+ 60 | impl RiskCalculator {
+    | ------------------- associated items in this implementation
+ 61 |     pub fn new() -> Self {
+    |            ^^^
+...
+ 79 |     pub fn add_position(&mut self, position: PositionRisk) {
+    |            ^^^^^^^^^^^^
+...
+ 83 |     pub fn calculate_position_risk(&mut self, asset: &str) -> Option<RiskMetric> {
+    |            ^^^^^^^^^^^^^^^^^^^^^^^
+...
+112 |     pub fn calculate_portfolio_risk(&self) -> PortfolioRisk {
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^
+...
+138 |     pub fn check_risk_breaches(&self) -> Vec<RiskMetric> {
+    |            ^^^^^^^^^^^^^^^^^^^
+...
+165 |     pub fn get_risk_summary(&self) -> String {
+    |            ^^^^^^^^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m013_compliance_checker.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m013_compliance_checker.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M13` is never constructed
+  --> m013_compliance_checker.rs:27:12
+   |
+27 | pub struct M13 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m013_compliance_checker.rs:34:12
+   |
+33 | impl M13 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m014_audit_logger.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m014_audit_logger.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M14` is never constructed
+  --> m014_audit_logger.rs:27:12
+   |
+27 | pub struct M14 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m014_audit_logger.rs:34:12
+   |
+33 | impl M14 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m015_performance_reporter.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m015_performance_reporter.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M15` is never constructed
+  --> m015_performance_reporter.rs:27:12
+   |
+27 | pub struct M15 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m015_performance_reporter.rs:34:12
+   |
+33 | impl M15 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m022_arbitrage_detector.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m022_arbitrage_detector.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M22` is never constructed
+  --> m022_arbitrage_detector.rs:27:12
+   |
+27 | pub struct M22 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m022_arbitrage_detector.rs:34:12
+   |
+33 | impl M22 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m023_liquidity_analyzer.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m023_liquidity_analyzer.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M23` is never constructed
+  --> m023_liquidity_analyzer.rs:27:12
+   |
+27 | pub struct M23 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m023_liquidity_analyzer.rs:34:12
+   |
+33 | impl M23 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m024_price_monitor.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m024_price_monitor.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M24` is never constructed
+  --> m024_price_monitor.rs:27:12
+   |
+27 | pub struct M24 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m024_price_monitor.rs:34:12
+   |
+33 | impl M24 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m025_trade_executor.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m025_trade_executor.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M25` is never constructed
+  --> m025_trade_executor.rs:27:12
+   |
+27 | pub struct M25 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m025_trade_executor.rs:34:12
+   |
+33 | impl M25 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m026_order_router.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m026_order_router.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M26` is never constructed
+  --> m026_order_router.rs:27:12
+   |
+27 | pub struct M26 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m026_order_router.rs:34:12
+   |
+33 | impl M26 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m027_slippage_calculator.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m027_slippage_calculator.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M27` is never constructed
+  --> m027_slippage_calculator.rs:27:12
+   |
+27 | pub struct M27 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m027_slippage_calculator.rs:34:12
+   |
+33 | impl M27 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m028_fraud_detector.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m028_fraud_detector.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M28` is never constructed
+  --> m028_fraud_detector.rs:27:12
+   |
+27 | pub struct M28 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m028_fraud_detector.rs:34:12
+   |
+33 | impl M28 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m029_access_controller.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m029_access_controller.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M29` is never constructed
+  --> m029_access_controller.rs:27:12
+   |
+27 | pub struct M29 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m029_access_controller.rs:34:12
+   |
+33 | impl M29 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m030_encryption_manager.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m030_encryption_manager.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M30` is never constructed
+  --> m030_encryption_manager.rs:27:12
+   |
+27 | pub struct M30 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m030_encryption_manager.rs:34:12
+   |
+33 | impl M30 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m031_key_rotator.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m031_key_rotator.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M31` is never constructed
+  --> m031_key_rotator.rs:27:12
+   |
+27 | pub struct M31 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m031_key_rotator.rs:34:12
+   |
+33 | impl M31 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m032_certificate_manager.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m032_certificate_manager.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M32` is never constructed
+  --> m032_certificate_manager.rs:27:12
+   |
+27 | pub struct M32 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m032_certificate_manager.rs:34:12
+   |
+33 | impl M32 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m033_audit_trail.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m033_audit_trail.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M33` is never constructed
+  --> m033_audit_trail.rs:27:12
+   |
+27 | pub struct M33 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m033_audit_trail.rs:34:12
+   |
+33 | impl M33 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m034_anomaly_detector.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m034_anomaly_detector.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M34` is never constructed
+  --> m034_anomaly_detector.rs:27:12
+   |
+27 | pub struct M34 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m034_anomaly_detector.rs:34:12
+   |
+33 | impl M34 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m035_threat_monitor.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m035_threat_monitor.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M35` is never constructed
+  --> m035_threat_monitor.rs:27:12
+   |
+27 | pub struct M35 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m035_threat_monitor.rs:34:12
+   |
+33 | impl M35 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m036_incident_responder.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m036_incident_responder.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M36` is never constructed
+  --> m036_incident_responder.rs:27:12
+   |
+27 | pub struct M36 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m036_incident_responder.rs:34:12
+   |
+33 | impl M36 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m037_backup_manager.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m037_backup_manager.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M37` is never constructed
+  --> m037_backup_manager.rs:27:12
+   |
+27 | pub struct M37 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m037_backup_manager.rs:34:12
+   |
+33 | impl M37 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m038_container_manager.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m038_container_manager.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M38` is never constructed
+  --> m038_container_manager.rs:27:12
+   |
+27 | pub struct M38 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m038_container_manager.rs:34:12
+   |
+33 | impl M38 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m039_load_balancer.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m039_load_balancer.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M39` is never constructed
+  --> m039_load_balancer.rs:27:12
+   |
+27 | pub struct M39 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m039_load_balancer.rs:34:12
+   |
+33 | impl M39 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m040_service_mesh.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m040_service_mesh.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M40` is never constructed
+  --> m040_service_mesh.rs:27:12
+   |
+27 | pub struct M40 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m040_service_mesh.rs:34:12
+   |
+33 | impl M40 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m042_config_manager.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m042_config_manager.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M42` is never constructed
+  --> m042_config_manager.rs:27:12
+   |
+27 | pub struct M42 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m042_config_manager.rs:34:12
+   |
+33 | impl M42 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m043_secret_manager.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m043_secret_manager.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M43` is never constructed
+  --> m043_secret_manager.rs:27:12
+   |
+27 | pub struct M43 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m043_secret_manager.rs:34:12
+   |
+33 | impl M43 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m045_health_checker.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m045_health_checker.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M45` is never constructed
+  --> m045_health_checker.rs:27:12
+   |
+27 | pub struct M45 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m045_health_checker.rs:34:12
+   |
+33 | impl M45 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m046_metrics_collector.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m046_metrics_collector.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M46` is never constructed
+  --> m046_metrics_collector.rs:27:12
+   |
+27 | pub struct M46 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m046_metrics_collector.rs:34:12
+   |
+33 | impl M46 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m047_log_aggregator.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m047_log_aggregator.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M47` is never constructed
+  --> m047_log_aggregator.rs:27:12
+   |
+27 | pub struct M47 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m047_log_aggregator.rs:34:12
+   |
+33 | impl M47 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m048_alert_dispatcher.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m048_alert_dispatcher.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M48` is never constructed
+  --> m048_alert_dispatcher.rs:27:12
+   |
+27 | pub struct M48 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m048_alert_dispatcher.rs:34:12
+   |
+33 | impl M48 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m049_incident_tracker.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m049_incident_tracker.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M49` is never constructed
+  --> m049_incident_tracker.rs:27:12
+   |
+27 | pub struct M49 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m049_incident_tracker.rs:34:12
+   |
+33 | impl M49 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m050_governance_engine.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m050_governance_engine.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M50` is never constructed
+  --> m050_governance_engine.rs:27:12
+   |
+27 | pub struct M50 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m050_governance_engine.rs:34:12
+   |
+33 | impl M50 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m056_learning_engine.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m056_learning_engine.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M56` is never constructed
+  --> m056_learning_engine.rs:27:12
+   |
+27 | pub struct M56 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m056_learning_engine.rs:34:12
+   |
+33 | impl M56 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m060_model_trainer.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m060_model_trainer.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M60` is never constructed
+  --> m060_model_trainer.rs:27:12
+   |
+27 | pub struct M60 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m060_model_trainer.rs:34:12
+   |
+33 | impl M60 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m064_data_pipeline.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m064_data_pipeline.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M64` is never constructed
+  --> m064_data_pipeline.rs:27:12
+   |
+27 | pub struct M64 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m064_data_pipeline.rs:34:12
+   |
+33 | impl M64 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m065_feature_store.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m065_feature_store.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M65` is never constructed
+  --> m065_feature_store.rs:27:12
+   |
+27 | pub struct M65 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m065_feature_store.rs:34:12
+   |
+33 | impl M65 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m078_governance_auditor.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m078_governance_auditor.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M78` is never constructed
+  --> m078_governance_auditor.rs:27:12
+   |
+27 | pub struct M78 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m078_governance_auditor.rs:34:12
+   |
+33 | impl M78 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m079_constitutional_enforcer.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m079_constitutional_enforcer.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M79` is never constructed
+  --> m079_constitutional_enforcer.rs:27:12
+   |
+27 | pub struct M79 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m079_constitutional_enforcer.rs:34:12
+   |
+33 | impl M79 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: struct `ModuleMetrics` is never constructed
+  --> m080_compliance_reporter.rs:10:12
+   |
+10 | pub struct ModuleMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `ModuleResult` is never constructed
+  --> m080_compliance_reporter.rs:19:12
+   |
+19 | pub struct ModuleResult {
+   |            ^^^^^^^^^^^^
+
+warning: struct `M80` is never constructed
+  --> m080_compliance_reporter.rs:27:12
+   |
+27 | pub struct M80 {
+   |            ^^^
+
+warning: associated items `new`, `execute`, `get_health`, and `get_stats` are never used
+  --> m080_compliance_reporter.rs:34:12
+   |
+33 | impl M80 {
+   | -------- associated items in this implementation
+34 |     pub fn new() -> Self {
+   |            ^^^
+...
+48 |     pub fn execute(&mut self) -> ModuleResult {
+   |            ^^^^^^^
+...
+73 |     pub fn get_health(&self) -> f64 {
+   |            ^^^^^^^^^^
+...
+80 |     pub fn get_stats(&self) -> String {
+   |            ^^^^^^^^^
+
+warning: methods `get_failed_checks` and `get_security_metrics` are never used
+   --> security_gate.rs:172:12
+    |
+ 23 | impl SecurityGate {
+    | ----------------- methods in this implementation
+...
+172 |     pub fn get_failed_checks(&self) -> Vec<String> {
+    |            ^^^^^^^^^^^^^^^^^
+...
+180 |     pub fn get_security_metrics(&self) -> serde_json::Value {
+    |            ^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `MultiObjectiveWeights` is never constructed
+  --> multi_objective_solver.rs:11:12
+   |
+11 | pub struct MultiObjectiveWeights {
+   |            ^^^^^^^^^^^^^^^^^^^^^
+
+warning: methods `validate` and `normalize` are never used
+  --> multi_objective_solver.rs:28:12
+   |
+27 | impl MultiObjectiveWeights {
+   | -------------------------- methods in this implementation
+28 |     pub fn validate(&self) -> bool {
+   |            ^^^^^^^^
+...
+36 |     pub fn normalize(&mut self) {
+   |            ^^^^^^^^^
+
+warning: struct `ObjectiveValues` is never constructed
+  --> multi_objective_solver.rs:48:12
+   |
+48 | pub struct ObjectiveValues {
+   |            ^^^^^^^^^^^^^^^
+
+warning: associated items `new` and `weighted_sum` are never used
+  --> multi_objective_solver.rs:55:12
+   |
+54 | impl ObjectiveValues {
+   | -------------------- associated items in this implementation
+55 |     pub fn new(profit: f64, risk: f64, latency_us: f64) -> Self {
+   |            ^^^
+...
+60 |     pub fn weighted_sum(&self, weights: &MultiObjectiveWeights) -> f64 {
+   |            ^^^^^^^^^^^^
+
+warning: struct `ParetoSolution` is never constructed
+  --> multi_objective_solver.rs:70:12
+   |
+70 | pub struct ParetoSolution {
+   |            ^^^^^^^^^^^^^^
+
+warning: struct `MultiObjectiveSolver` is never constructed
+  --> multi_objective_solver.rs:78:12
+   |
+78 | pub struct MultiObjectiveSolver {
+   |            ^^^^^^^^^^^^^^^^^^^^
+
+warning: associated items `new`, `solve`, `fast_non_dominated_sort`, `local_search`, `compute_pareto_frontier`, and 
+`solve_with_constraints` are never used
+   --> multi_objective_solver.rs:86:12
+    |
+ 85 | impl MultiObjectiveSolver {
+    | ------------------------- associated items in this implementation
+ 86 |     pub fn new(weights: MultiObjectiveWeights) -> Self {
+    |            ^^^
+...
+ 96 |     pub fn solve<F: Fn(f64) -> ObjectiveValues>(
+    |            ^^^^^
+...
+145 |     fn fast_non_dominated_sort(
+    |        ^^^^^^^^^^^^^^^^^^^^^^^
+...
+180 |     fn local_search<F: Fn(f64) -> ObjectiveValues>(
+    |        ^^^^^^^^^^^^
+...
+213 |     pub fn compute_pareto_frontier<F: Fn(f64) -> ObjectiveValues>(
+    |            ^^^^^^^^^^^^^^^^^^^^^^^
+...
+244 |     pub fn solve_with_constraints<F: Fn(f64) -> ObjectiveValues>(
+    |            ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `solve_multi_objective` is never used
+   --> multi_objective_solver.rs:287:8
+    |
+287 | pub fn solve_multi_objective<F: Fn(f64) -> ObjectiveValues>(
+    |        ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `solve_multi_objective_custom` is never used
+   --> multi_objective_solver.rs:297:8
+    |
+297 | pub fn solve_multi_objective_custom<F: Fn(f64) -> ObjectiveValues>(
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `LoadResult` is never constructed
+   --> hot_swap_module.rs:205:12
+    |
+205 | pub struct LoadResult {
+    |            ^^^^^^^^^^
+
+warning: associated functions `success` and `failure` are never used
+   --> hot_swap_module.rs:214:12
+    |
+213 | impl LoadResult {
+    | --------------- associated functions in this implementation
+214 |     pub fn success(name: &str, version: &str, time_ms: u64) -> Self {
+    |            ^^^^^^^
+...
+217 |     pub fn failure(name: &str, error: String) -> Self {
+    |            ^^^^^^^
+
+warning: struct `DefaultHotSwapModule` is never constructed
+   --> hot_swap_module.rs:223:12
+    |
+223 | pub struct DefaultHotSwapModule {
+    |            ^^^^^^^^^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+   --> hot_swap_module.rs:229:12
+    |
+228 | impl DefaultHotSwapModule {
+    | ------------------------- associated function in this implementation
+229 |     pub fn new(name: &str, major: u16, minor: u16, patch: u16) -> Self {
+    |            ^^^
+
+warning: struct `AgentDna` is never constructed
+  --> cross_agent_learning.rs:14:12
+   |
+14 | pub struct AgentDna {
+   |            ^^^^^^^^
+
+warning: struct `CrossAgentLearning` is never constructed
+  --> cross_agent_learning.rs:24:12
+   |
+24 | pub struct CrossAgentLearning {
+   |            ^^^^^^^^^^^^^^^^^^
+
+warning: associated items `new`, `register_dna`, `get_fleet_lock`, `get_champion_sync`, `propagate_champion_sync`, and 
+`get_local_dna` are never used
+  --> cross_agent_learning.rs:32:12
+   |
+31 | impl CrossAgentLearning {
+   | ----------------------- associated items in this implementation
+32 |     pub fn new() -> Self {
+   |            ^^^
+...
+42 |     pub fn register_dna(&mut self, dna: AgentDna) {
+   |            ^^^^^^^^^^^^
+...
+47 |     pub fn get_fleet_lock(&self) -> Arc<RwLock<HashMap<String, AgentDna>>> {
+   |            ^^^^^^^^^^^^^^
+...
+52 |     pub fn get_champion_sync(&self, agent_id: &str) -> Option<AgentDna> {
+   |            ^^^^^^^^^^^^^^^^^
+...
+58 |     pub fn propagate_champion_sync(&mut self, champion: AgentDna) -> Result<(), String> {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^
+...
+72 |     pub fn get_local_dna(&self) -> &HashMap<String, AgentDna> {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `Experiment` is never constructed
+  --> champion_challenger.rs:12:12
+   |
+12 | pub struct Experiment {
+   |            ^^^^^^^^^^
+
+warning: enum `ExperimentStatus` is never used
+  --> champion_challenger.rs:25:10
+   |
+25 | pub enum ExperimentStatus {
+   |          ^^^^^^^^^^^^^^^^
+
+warning: struct `StrategyConfig` is never constructed
+  --> champion_challenger.rs:32:12
+   |
+32 | pub struct StrategyConfig {
+   |            ^^^^^^^^^^^^^^
+
+warning: associated function `default_champion` is never used
+  --> champion_challenger.rs:41:12
+   |
+40 | impl StrategyConfig {
+   | ------------------- associated function in this implementation
+41 |     pub fn default_champion() -> Self {
+   |            ^^^^^^^^^^^^^^^^
+
+warning: struct `ChampionChallengerManager` is never constructed
+  --> champion_challenger.rs:53:12
+   |
+53 | pub struct ChampionChallengerManager {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: associated items `new`, `create_experiment`, `record_result`, `get_active`, and `get_winner_config` are never 
+used
+   --> champion_challenger.rs:59:12
+    |
+ 58 | impl ChampionChallengerManager {
+    | ------------------------------ associated items in this implementation
+ 59 |     pub fn new(max_concurrent: usize) -> Self {
+    |            ^^^
+...
+ 67 |     pub fn create_experiment(
+    |            ^^^^^^^^^^^^^^^^^
+...
+ 98 |     pub fn record_result(&mut self, experiment_id: &str, winner: String) {
+    |            ^^^^^^^^^^^^^
+...
+115 |     pub fn get_active(&self) -> Vec<&Experiment> {
+    |            ^^^^^^^^^^
+...
+123 |     pub fn get_winner_config(&self, experiment_id: &str) -> Option<StrategyConfig> {
+    |            ^^^^^^^^^^^^^^^^^
+
+warning: struct `FleetSnapshot` is never constructed
+  --> disaster_recovery.rs:15:12
+   |
+15 | pub struct FleetSnapshot {
+   |            ^^^^^^^^^^^^^
+
+warning: enum `SnapshotType` is never used
+  --> disaster_recovery.rs:26:10
+   |
+26 | pub enum SnapshotType {
+   |          ^^^^^^^^^^^^
+
+warning: struct `RunnerState` is never constructed
+  --> disaster_recovery.rs:34:12
+   |
+34 | pub struct RunnerState {
+   |            ^^^^^^^^^^^
+
+warning: struct `DisasterRecoveryManager` is never constructed
+  --> disaster_recovery.rs:44:12
+   |
+44 | pub struct DisasterRecoveryManager {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: multiple associated items are never used
+   --> disaster_recovery.rs:53:12
+    |
+ 52 | impl DisasterRecoveryManager {
+    | ---------------------------- associated items in this implementation
+ 53 |     pub fn new() -> Self {
+    |            ^^^
+...
+ 64 |     pub fn create_snapshot(
+    |            ^^^^^^^^^^^^^^^
+...
+101 |     pub fn get_latest(&self) -> Option<&FleetSnapshot> {
+    |            ^^^^^^^^^^
+...
+106 |     pub fn get_by_id(&self, id: &str) -> Option<&FleetSnapshot> {
+    |            ^^^^^^^^^
+...
+111 |     pub fn restore_from_snapshot(&self, snapshot_id: &str) -> Result<HashMap<String, RunnerState>, String> {
+    |            ^^^^^^^^^^^^^^^^^^^^^
+...
+117 |     pub fn needs_checkpoint(&self, current_block: u64) -> bool {
+    |            ^^^^^^^^^^^^^^^^
+...
+122 |     pub fn time_since_last_snapshot(&self) -> u64 {
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^
+...
+137 |     pub fn estimated_recovery_time(&self, runner_count: u32) -> u64 {
+    |            ^^^^^^^^^^^^^^^^^^^^^^^
+...
+145 |     pub fn set_auto_recovery(&mut self, enabled: bool) {
+    |            ^^^^^^^^^^^^^^^^^
+...
+150 |     pub fn get_checkpoint_history(&self) -> Vec<(String, u64, f64)> {
+    |            ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: enum `SecurityEventType` is never used
+  --> intrusion_detection.rs:13:10
+   |
+13 | pub enum SecurityEventType {
+   |          ^^^^^^^^^^^^^^^^^
+
+warning: enum `AlertSeverity` is never used
+  --> intrusion_detection.rs:25:10
+   |
+25 | pub enum AlertSeverity {
+   |          ^^^^^^^^^^^^^
+
+warning: struct `SecurityEvent` is never constructed
+  --> intrusion_detection.rs:34:12
+   |
+34 | pub struct SecurityEvent {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `IntrusionDetectionSystem` is never constructed
+  --> intrusion_detection.rs:46:12
+   |
+46 | pub struct IntrusionDetectionSystem {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `AlertThresholds` is never constructed
+  --> intrusion_detection.rs:55:12
+   |
+55 | pub struct AlertThresholds {
+   |            ^^^^^^^^^^^^^^^
+
+warning: multiple associated items are never used
+   --> intrusion_detection.rs:72:12
+    |
+ 71 | impl IntrusionDetectionSystem {
+    | ----------------------------- associated items in this implementation
+ 72 |     pub fn new() -> Self {
+    |            ^^^
+...
+ 83 |     pub fn record_event(&mut self, event: SecurityEvent) {
+    |            ^^^^^^^^^^^^
+...
+ 97 |     pub fn block_ip(&mut self, ip: &str) {
+    |            ^^^^^^^^
+...
+106 |     pub fn unblock_ip(&mut self, ip: &str) {
+    |            ^^^^^^^^^^
+...
+111 |     pub fn is_blocked(&self, ip: &str) -> bool {
+    |            ^^^^^^^^^^
+...
+116 |     pub fn detect_brute_force(&self, ip: &str) -> bool {
+    |            ^^^^^^^^^^^^^^^^^^
+...
+133 |     pub fn detect_rate_limit(&self, ip: &str) -> bool {
+    |            ^^^^^^^^^^^^^^^^^
+...
+150 |     pub fn detect_suspicious_pattern(&self, target: &str) -> bool {
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+168 |     pub fn get_active_alerts(&self) -> Vec<&SecurityEvent> {
+    |            ^^^^^^^^^^^^^^^^^
+...
+182 |     pub fn blocked_ip_count(&self) -> usize {
+    |            ^^^^^^^^^^^^^^^^
+...
+187 |     pub fn set_detection_enabled(&mut self, enabled: bool) {
+    |            ^^^^^^^^^^^^^^^^^^^^^
+...
+192 |     pub fn detection_rate(&self) -> f64 {
+    |            ^^^^^^^^^^^^^^
+...
+198 |     pub fn analyze_threats(&mut self) -> Vec<String> {
+    |            ^^^^^^^^^^^^^^^
+
+warning: associated items `weight` and `from_kpi_id` are never used
+  --> kpi_telemetry.rs:33:12
+   |
+32 | impl Pillar {
+   | ----------- associated items in this implementation
+33 |     pub fn weight(&self) -> f64 {
+   |            ^^^^^^
+...
+55 |     pub fn from_kpi_id(kpi_id: u8) -> Self {
+   |            ^^^^^^^^^^^
+
+warning: methods `estimate` and `name` are never used
+  --> kpi_telemetry.rs:70:8
+   |
+69 | pub trait BaselineEstimator {
+   |           ----------------- methods in this trait
+70 |     fn estimate(&self, context: &EstimationContext) -> f64;
+   |        ^^^^^^^^
+71 |     fn name(&self) -> &'static str;
+   |        ^^^^
+
+warning: struct `EstimationContext` is never constructed
+  --> kpi_telemetry.rs:75:12
+   |
+75 | pub struct EstimationContext {
+   |            ^^^^^^^^^^^^^^^^^
+
+warning: enum `MarketRegime` is never used
+  --> kpi_telemetry.rs:85:10
+   |
+85 | pub enum MarketRegime {
+   |          ^^^^^^^^^^^^
+
+warning: field `estimation_context` is never read
+   --> kpi_telemetry.rs:190:5
+    |
+187 | pub struct KpiTelemetryCollector {
+    |            --------------------- field in this struct
+...
+190 |     estimation_context: AtomicU64, // Serialized EstimationContext (placeholder)
+    |     ^^^^^^^^^^^^^^^^^^
+
+warning: methods `record_kpi`, `get_pillar_kpis`, `estimate_baseline`, `compute_pillar_subtotal`, `compute_apex`, and 
+`update_estimation_context` are never used
+   --> kpi_telemetry.rs:216:12
+    |
+193 | impl KpiTelemetryCollector {
+    | -------------------------- methods in this implementation
+...
+216 |     pub fn record_kpi(&self, kpi: MeasuredKpi) {
+    |            ^^^^^^^^^^
+...
+224 |     pub fn get_pillar_kpis(&self, pillar: Pillar) -> Vec<MeasuredKpi> {
+    |            ^^^^^^^^^^^^^^^
+...
+233 |     pub fn estimate_baseline(&self, kpi_id: u8, ctx: &EstimationContext) -> Option<f64> {
+    |            ^^^^^^^^^^^^^^^^^
+...
+238 |     pub fn compute_pillar_subtotal(&self, pillar: Pillar, ctx: &EstimationContext) -> f64 {
+    |            ^^^^^^^^^^^^^^^^^^^^^^^
+...
+258 |     pub fn compute_apex(&self, ctx: &EstimationContext) -> f64 {
+    |            ^^^^^^^^^^^^
+...
+267 |     pub fn update_estimation_context(&self, ctx: EstimationContext) {
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: field `total_cycles` is never read
+  --> continuum_optimization.rs:20:5
+   |
+15 | pub struct OptimizationContinuum {
+   |            --------------------- field in this struct
+...
+20 |     total_cycles: AtomicU64,
+   |     ^^^^^^^^^^^^
+
+warning: methods `get_kpi_gain`, `get_pillar_gain`, `drive_optimizer_adjustments`, `dimension_id_to_name`, and 
+`record_profit_30s` are never used
+   --> continuum_optimization.rs:97:12
+    |
+ 25 | impl OptimizationContinuum {
+    | -------------------------- methods in this implementation
+...
+ 97 |     pub fn get_kpi_gain(&self, kpi_id: usize) -> f64 {
+    |            ^^^^^^^^^^^^
+...
+102 |     pub fn get_pillar_gain(&self, pillar_idx: usize) -> f64 {
+    |            ^^^^^^^^^^^^^^^
+...
+107 |     pub fn drive_optimizer_adjustments(
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+135 |     fn dimension_id_to_name(&self, dim_id: usize) -> String {
+    |        ^^^^^^^^^^^^^^^^^^^^
+...
+167 |     pub fn record_profit_30s(&self, profit_eth: f64) {
+    |            ^^^^^^^^^^^^^^^^^
+
+warning: `allbright-c2-backend` (bin "allbright-c2-backend") generated 259 warnings (run `cargo fix --bin 
+"allbright-c2-backend" -p allbright-c2-backend` to apply 24 suggestions)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 10.02s
+warning: the following packages contain code that will be rejected by a future version of Rust: sqlx-postgres v0.7.4
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report 
+future-incompatibilities --id 2`

@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-06-30T17:40:58.221368300+00:00",
+  "entries": [
+    {
+      "id": "39d922df-3208-4f15-aca4-ef8b1e7bb2ab",
+      "file_name": "39d922df-3208-4f15-aca4-ef8b1e7bb2ab.json",
+      "source": {
+        "kind": "normal"
+      },
+      "created_at": "2026-06-29T13:48:34.656436200+00:00",
+      "updated_at": "2026-06-29T13:50:32.296878400+00:00",
+      "title": "anayse current status of ALLBRIGHT/apps/dashboard/src/compon...",
+      "model": "groq/allbright",
+      "mode": "agent",
+      "message_count": 5,
+      "root_chat_id": "39d922df-3208-4f15-aca4-ef8b1e7bb2ab",
+      "is_title_generated": true,
+      "total_lines_added": 0,
+      "total_lines_removed": 0,
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "tasks_failed": 0,
+      "total_prompt_tokens": 0,
+      "total_completion_tokens": 0,
+      "total_tokens": 0,
+      "total_cache_read_tokens": 0,
+      "total_cache_creation_tokens": 0,
+      "displayable_chat": true,
+      "waiting_for_card_ids": [],
+      "file_len": 41453,
+      "file_modified_unix_ms": 1782741032297
+    },
+    {
+      "id": "b390e7ee-ec37-4de9-8400-b9e37831d172",
+      "file_name": "b390e7ee-ec37-4de9-8400-b9e37831d172.json",
+      "source": {
+        "kind": "normal"
+      },
+      "created_at": "2026-06-29T13:59:19.475948600+00:00",
+      "updated_at": "2026-06-29T14:05:38.751936100+00:00",
+      "title": "Hi are you there to help ?",
+      "model": "groq/allbright",
+      "mode": "agent",
+      "message_count": 5,
+      "root_chat_id": "b390e7ee-ec37-4de9-8400-b9e37831d172",
+      "is_title_generated": true,
+      "total_lines_added": 0,
+      "total_lines_removed": 0,
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "tasks_failed": 0,
+      "total_prompt_tokens": 0,
+      "total_completion_tokens": 0,
+      "total_tokens": 0,
+      "total_cache_read_tokens": 0,
+      "total_cache_creation_tokens": 0,
+      "displayable_chat": true,
+      "waiting_for_card_ids": [],
+      "file_len": 41453,
+      "file_modified_unix_ms": 1782741938746
+    }
+  ]
+}

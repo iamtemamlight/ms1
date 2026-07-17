@@ -1,0 +1,41 @@
+# .dockerignore
+# Exclude large files from Docker build context
+
+# Dependencies
+node_modules/
+apps/dashboard/node_modules/
+target/
+src-tauri/target/
+backend/target/
+
+# Build artifacts
+*.log
+*.tmp
+dist/
+
+# Development files
+.git/
+.vscode/
+*.md
+!README.md
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Large data
+logs/
+data/
+models/
+learning/
+bench/
+
+# Temporary files
+*.bak
+*.orig
+*~

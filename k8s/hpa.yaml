@@ -1,0 +1,91 @@
+# ALLBRIGHT Horizontal Pod Autoscaler Configuration
+# Auto-scales backend pods based on CPU/memory utilization and custom metrics
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: allbright-backend-hpa
+  namespace: allbright
+  labels:
+    app: allbright-backend
+    tier: backend
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: allbright-backend
+  minReplicas: 3
+  maxReplicas: 20
+  metrics:
+    # CPU-based scaling: target 70% utilization
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    # Memory-based scaling: target 80% utilization  
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+        - type: Percent
+          value: 10
+          periodSeconds: 60
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 15
+        - type: Pods
+          value: 4
+          periodSeconds: 15
+      selectPolicy: Max
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: allbright-redis-hpa
+  namespace: allbright
+  labels:
+    app: allbright-redis
+    tier: cache
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: allbright-redis
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60
+
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: allbright-backend-pdb
+  namespace: allbright
+  labels:
+    app: allbright-backend
+    tier: backend
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: allbright-backend
+      tier: backend
