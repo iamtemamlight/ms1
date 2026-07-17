@@ -1,12 +1,11 @@
-# ALLBRIGHT Dashboard — React + Vite production build for Render
-# Multi-stage build: Node.js builder → Nginx runtime
+# ALLBRIGHT Dashboard — React + Vite + Express production build for Render
+# Single-stage Node.js runtime using server.ts proxy
 
 # ============================================================================
-# Stage 1: Build
+# Build Stage
 # ============================================================================
 FROM node:20-alpine AS builder
 
-# Install build dependencies
 RUN apk add --no-cache \
     python3 \
     make \
@@ -15,42 +14,30 @@ RUN apk add --no-cache \
 
 WORKDIR /app
 
-# Cache npm dependencies - copy package files first
 COPY apps/dashboard/package*.json ./
-
-# Install dependencies (including devDependencies for build)
 RUN npm ci
 
-# Copy source code
 COPY apps/dashboard/ .
-
-# Build the React app for production
-# This creates the dist/ folder with static assets
 RUN npm run build
 
 # ============================================================================
-# Stage 2: Production Runtime (Nginx)
+# Production Runtime
 # ============================================================================
-FROM nginx:alpine
+FROM node:20-alpine
 
-# Install curl for health checks
 RUN apk add --no-cache curl
 
-# Copy built assets from builder stage
-COPY --from=builder /app/dist /usr/share/nginx/html
+WORKDIR /app
 
-# Copy nginx configuration
-COPY apps/dashboard/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/package*.json ./
 
-# Create health check endpoint
-RUN echo "healthy" > /usr/share/nginx/html/healthz
-
-# Expose port 80 (Render's default web port)
+# Render serves on port 10000 by default, but we map to 80 in docker-compose
+# Render will set PORT env var automatically
 EXPOSE 80
 
-# Add health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost/healthz || exit 1
+    CMD curl -f http://localhost:80/api/health || exit 1
 
-# Start nginx in foreground
-CMD ["nginx", "-g", "daemon off;"]
+# Use PORT env var if provided (Render), default to 80 for docker-compose
+CMD ["sh", "-c", "PORT=${PORT:-80} node dist/server.cjs"]

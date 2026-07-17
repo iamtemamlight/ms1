@@ -140,7 +140,7 @@ services:
     restart: unless-stopped
 
   # ============================================================================
-  # DASHBOARD FRONTEND (React + Vite + Tauri) - Primary + 2 Backups
+  # DASHBOARD FRONTEND (React + Vite + Express) - Primary + 2 Backups
   # ============================================================================
   dashboard:
     build:
@@ -152,19 +152,15 @@ services:
       - "5174:80"   # Backup 1
       - "5175:80"   # Backup 2
     environment:
-      - VITE_BACKEND_API_URL=http://backend:3000
-      - VITE_WS_URL=ws://backend:50052
-      - VITE_ENGINE_MODE=simulation
-      - VITE_FLEET_RPC_URL=http://localport-rpc:8545
-      - VITE_DEMO_MODE=true
-      - VITE_DEBUG=false
+      - RUST_BACKEND_URL=http://backend:3001
+      - NODE_ENV=production
     depends_on:
       - backend
     networks:
       - apx-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost/"]
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost/api/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -181,7 +177,8 @@ services:
     ports:
       - "5176:80"
     environment:
-      - VITE_API_URL=http://backend:51051
+      - RUST_BACKEND_URL=http://backend:51051
+      - NODE_ENV=production
     networks:
       - apx-network
     restart: unless-stopped
@@ -194,7 +191,8 @@ services:
     ports:
       - "5177:80"
     environment:
-      - VITE_API_URL=http://backend:51052
+      - RUST_BACKEND_URL=http://backend:51052
+      - NODE_ENV=production
     networks:
       - apx-network
     restart: unless-stopped

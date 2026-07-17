@@ -4,6 +4,10 @@ version = "119.0.0"
 edition = "2021"
 build = "build.rs"
 
+[lib]
+name = "allbright_c2"
+path = "lib.rs"
+
 [[bin]]
 name = "allbright-c2-backend"
 path = "main.rs"

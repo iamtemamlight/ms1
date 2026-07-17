@@ -24,6 +24,11 @@ use axum::{
 };
 use crate::middleware::{build_cors, RateLimitState, request_id_middleware, api_key_middleware, rate_limit_middleware};
 
+mod submicron;
+
+use crate::submicron::{MemoryPool, LockFreeQueue, StatePredictionTable, PredictedState};
+use crate::submicron::benches::{run_all_benchmarks};
+
 // AISE Agent trait – all agents implement this
 pub trait Agent {
     fn new() -> Self where Self: Sized;
