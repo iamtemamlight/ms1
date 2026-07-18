@@ -79,6 +79,47 @@ audit_rounds = 3
 | Quality | 5% | M076-M090, M072 | ✅ IMPLEMENTED |
 | UPGRADE4 (Extension) | 0% | M091-M105 | ✅ IMPLEMENTED |
 
+---
+
+### 1.2b KPI Verification — Live Simulation (2026-07-16, updated 2026-07-18)
+
+Source of truth for KPI values: `LIVE_SIMULATION_AND_METRICS_REPORT.md` (live real-time
+market data, 1,247 data points, 107/107 agents, 119/119 modules). These are the
+**currently found KPIs** captured from the verified live simulation.
+
+**Overall Fleet Score (verified):** Health **94.2/100 (A-)** · Compliance **97.5%** · Alert **GREEN** · Apex Deflection **0.023** · Uptime **99.95%** · Success Rate **95%** · MEV Protection **99.85%**.
+
+| # | SubSystem | KPI | Verified Value | Target | Status |
+|---|-----------|-----|----------------|--------|--------|
+| 1 | Profit | Total Net Profit | $1,250.75 | $1,500 | ⚠️ 83% |
+| 3 | Profit | Profit Per Trade | $45.80 | $50 | ⚠️ 91.6% |
+| 5 | Profit | Gas Costs | $199.75 | $150 | ❌ 133% OVER |
+| 8 | Profit | Arb Opportunities | 47 | 50 | ✅ 94% |
+| 9 | Profit | Success Rate | 94.0% | 95% | ⚠️ 98.9% |
+| 11 | Shield | MEV Protection | 99.85% | 99.9% | ✅ 99.85% |
+| 13 | Velocity | Scan Latency | 0.8ms | 1.0ms | ✅ 80% |
+| 15 | Velocity | P50 Latency | 19,800µs | 15,000µs | ⚠️ 132% |
+| 17 | Velocity | P99 Latency | 85,000µs | 50,000µs | ❌ 170% |
+| 25 | Shield | MEV Attack Rate | 0.15% | 0.1% | ❌ 150% |
+| 31 | Shield | Circuit Breaker | 0 triggers | 0 | ✅ |
+| 49 | Continuity | Fleet Uptime | 99.95% | 99.9% | ✅ 100% |
+| 57 | Continuity | Disaster Recovery | 0 | 0 | ✅ |
+| 67 | Market | Arb Opportunities/hr | 47 | 50 | ⚠️ 94% |
+
+**Subsystem health (verified):** Profit 85.3 · Velocity 78.5 · Shield 98.5 · Efficiency 91.2 · Continuity 99.8 · Market 88.7.
+
+**Top gaps to close before mainnet:** (1) Gas costs 133% over target → enable M202 Gas Predictor; (2) Trade/P99 latency over target → private RPC (Flashbots); (3) Capital efficiency 0.92 vs 0.95 → raise flash-loan utilization (78%).
+
+**Backend↔Frontend integration gap — CLOSED (verified 2026-07-18):**
+The previously "UNKNOWN" `/api/*` dashboard endpoints were confirmed implemented via a
+`compat_*` layer. This session fixed the 29 compile errors blocking the backend, added the
+missing `POST /api/settings`, `/api/wallet/deposit|withdraw|transfer-profit`,
+`/api/system/kill` routes, exempted `/healthz`+`/readyz` from the API-key middleware, fixed
+the bare-`PORT` HTTP bind crash, and verified all new endpoints live against a booted backend
+(188 modules registered, 107 AISE agents activated, Postgres connected). The dashboard now
+receives real `/api/metrics` (incl. populated `profitTrend`), `/api/opportunities`,
+`/api/settings`, `/api/wallet`, `/api/governance/cards`.
+
 ### 1.3 Security Stack
 
 | Layer | Component | Status |
