@@ -26,8 +26,11 @@ export default function CommanderView({ settings, onUpdateSettings, convertAndFo
   const [deployProgress, setDeployProgress] = useState(0);
   const [deployTxHash, setDeployTxHash] = useState('');
   const [backendMode, setBackendMode] = useState<string>('paper');
+  const [deployMode, setDeployMode] = useState<'manual' | 'autonomous'>('manual');
   const [preflightPassed, setPreflightPassed] = useState<boolean | null>(null);
   const [simRunning, setSimRunning] = useState(false);
+  const [awaitingApproval, setAwaitingApproval] = useState(false);
+  const [pendingStage, setPendingStage] = useState<string | null>(null);
   const [envConfigExpanded, setEnvConfigExpanded] = useState(true);
   const [configRowCount, setConfigRowCount] = useState<number>(0);
   const [envConfigs, setEnvConfigs] = useState<EnvConfigItem[]>(() => {
@@ -178,15 +181,22 @@ const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
   useEffect(() => {
     const fetchPipeline = async () => {
       try {
-        const [pf, sim] = await Promise.all([
+        const [pf, sim, dep] = await Promise.all([
           fetch(API_BASE + '/api/preflight/status').then(r => r.ok ? r.json() : null).catch(() => null),
           fetch(API_BASE + '/api/simulation/status').then(r => r.ok ? r.json() : null).catch(() => null),
+          fetch(API_BASE + '/api/deploy/status').then(r => r.ok ? r.json() : null).catch(() => null),
         ]);
         if (pf) setPreflightPassed(pf.passed);
         if (sim) setSimRunning(sim.running);
-        const dep = await fetch(API_BASE + '/api/deploy/status').then(r => r.ok ? r.json() : null).catch(() => null);
         if (dep) {
-          if (dep.mode) setBackendMode(dep.mode);
+          if (dep.backend_mode) setBackendMode(dep.backend_mode);
+          if (dep.awaiting_approval) {
+            setAwaitingApproval(true);
+            setPendingStage(dep.pending_stage || 'next stage');
+          } else {
+            setAwaitingApproval(false);
+            setPendingStage(null);
+          }
           if (dep.stage && dep.stage !== 'idle') { setDeployState('success'); setDeployTxHash(dep.txHash); }
         }
       } catch (e) {}
@@ -311,10 +321,29 @@ const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
             <div className="mt-4 pt-3 border-t border-slate-800/15 flex justify-between items-center text-[10px] font-mono"><span className={styles.textMuted}>Sim Cycle</span><span className="text-amber-400 font-bold flex items-center gap-1"><span className="h-1.5 w-1.5 bg-amber-400 rounded-full animate-pulse" /><span>{simRunning ? 'Simulating...' : 'Idle (Ready)'}</span></span></div>
           </div>
           <div className={`${styles.innerCard} min-h-[220px]`}>
-            <div className="flex justify-between items-center mb-3"><span className="text-[10px] font-bold text-rose-400 font-mono tracking-widest uppercase">3. LIVE ENGINE</span><span className={`ml-2 px-1.5 py-0.5 rounded text-[8px] font-black uppercase ${backendMode === 'live' ? 'bg-rose-500 text-slate-950' : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'}`}>{backendMode === 'live' ? 'LIVE' : 'SIMULATION / PAPER'}</span><div className="flex bg-slate-950/60 p-0.5 rounded border border-slate-800 text-[9px] font-mono"><button onClick={() => setPipelineToggles(prev => ({ ...prev, live: 'auto' }))} className={`px-1.5 py-0.5 rounded font-bold uppercase transition-all ${pipelineToggles.live === 'auto' ? 'bg-rose-500 text-slate-950 font-black' : 'text-slate-400 hover:text-slate-200'}`}>Auto</button><button onClick={() => setPipelineToggles(prev => ({ ...prev, live: 'manual' }))} className={`px-1.5 py-0.5 rounded font-bold uppercase transition-all ${pipelineToggles.live === 'manual' ? 'bg-rose-500 text-slate-950 font-black' : 'text-slate-400 hover:text-slate-200'}`}>Manual</button></div></div>
+            <div className="flex flex-col gap-3 mb-3">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center space-x-2">
+                  <span className="text-[10px] font-bold text-rose-400 font-mono tracking-widest uppercase">3. LIVE ENGINE</span>
+                  <span className={`px-1.5 py-0.5 rounded text-[8px] font-black uppercase ${backendMode === 'live' ? 'bg-rose-500 text-slate-950' : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'}`}>{backendMode === 'live' ? 'LIVE' : 'SIMULATION / PAPER'}</span>
+                </div>
+                <div className="flex bg-slate-950/60 p-0.5 rounded border border-slate-800 text-[9px] font-mono">
+                  <button onClick={() => setBackendMode('paper')} className={`px-1.5 py-0.5 rounded font-bold uppercase transition-all cursor-pointer ${backendMode === 'paper' ? 'bg-amber-500 text-slate-950 font-black' : 'text-slate-400 hover:text-slate-200'}`}>Paper</button>
+                  <button onClick={() => setBackendMode('live')} className={`px-1.5 py-0.5 rounded font-bold uppercase transition-all cursor-pointer ${backendMode === 'live' ? 'bg-rose-500 text-slate-950 font-black' : 'text-slate-400 hover:text-slate-200'}`}>Live</button>
+                </div>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-[10px] text-slate-400 font-mono">Deploy Mode</span>
+                <div className="flex bg-slate-950/60 p-0.5 rounded border border-slate-800 text-[9px] font-mono">
+                  <button onClick={() => setDeployMode('manual')} className={`px-1.5 py-0.5 rounded font-bold uppercase transition-all cursor-pointer ${deployMode === 'manual' ? 'bg-teal-500 text-slate-950 font-black' : 'text-slate-400 hover:text-slate-200'}`}>Manual</button>
+                  <button onClick={() => setDeployMode('autonomous')} className={`px-1.5 py-0.5 rounded font-bold uppercase transition-all cursor-pointer ${deployMode === 'autonomous' ? 'bg-teal-500 text-slate-950 font-black' : 'text-slate-400 hover:text-slate-200'}`}>Autonomous</button>
+                </div>
+              </div>
+            </div>
             <p className={`text-xs ${styles.textMuted} leading-relaxed`}>Initiates actual smart contracts, requesting multi-hop arbitrage flashloans to private builders directly.</p>
             <div className="mt-4 pt-3 border-t border-slate-800/15 space-y-3">
-              {deployState === 'idle' && (<button onClick={async () => { const isLive = backendMode === 'live'; const ok = window.confirm(isLive ? "SYSTEM CONFIRMATION REQUIRED:\nDeploy to LIVE? This triggers REAL on-chain execution with the configured wallet." : "SIMULATION DEPLOY:\nThis triggers a PAPER/simulation deploy only. No real funds, no on-chain execution."); if (!ok) return; setDeployState('deploying'); setDeployProgress(0); try { const res = await fetch(API_BASE + '/api/deploy', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ stage: isLive ? 'live' : 'paper', mode: settings.profitTargetAuto ? 'autonomous' : 'manual', pipelineToggles, settings, backendMode }) }); const data = await res.json(); if (!res.ok || !data.deploy) { setDeployState('idle'); alert('Deploy failed: ' + (data?.error || 'backend error')); return; } const startedAt = Date.now(); const poll = setInterval(async () => { try { const dep = await fetch(API_BASE + '/api/deploy/status').then(r => r.ok ? r.json() : null); if (dep) { if (typeof dep.progress === 'number') setDeployProgress(Math.max(0, Math.min(100, dep.progress))); if (dep.txHash) setDeployTxHash(dep.txHash); if (dep.stage && dep.stage !== 'idle') { clearInterval(poll); setDeployTxHash(dep.txHash || data.deploy.txHash || ''); setDeployState('success'); setDeployProgress(100); return; } } } catch (e) {} if (Date.now() - startedAt > 60000) { clearInterval(poll); setDeployState('idle'); alert('Deploy timed out waiting for backend confirmation.'); } }, 1500); } catch (err) { setDeployState('idle'); alert('Deploy error: ' + (err as Error).message); } }} className="w-full py-2 px-3 rounded-lg bg-gradient-to-r from-rose-600 to-red-500 hover:from-rose-500 hover:to-red-400 text-white font-mono font-bold text-xs tracking-wide uppercase transition-all shadow-md hover:shadow-lg hover:shadow-rose-950/20 active:scale-[0.98] cursor-pointer flex items-center justify-center space-x-1.5"><Zap className="h-3.5 w-3.5 text-white animate-pulse" /><span>{isLive ? 'Auto Deploy to Live' : 'Deploy (Simulation / Paper)'}</span></button>)}
+                            {awaitingApproval && deployState === 'idle' && (<button onClick={async () => { try { const res = await fetch(API_BASE + '/api/deployment/approve', { method: 'POST' }); const data = await res.json(); if (!res.ok) { alert('Approval failed: ' + (data?.error || 'backend error')); return; } setAwaitingApproval(false); setPendingStage(null); setDeployProgress(data.progress || 50); if (data.stage === 'Completed' || data.stage === 'Live') { setDeployState('success'); setDeployProgress(100); setDeployTxHash(data.txHash || ''); } } catch (err) { alert('Approval error: ' + (err as Error).message); } }} className="w-full py-2 px-3 rounded-lg bg-gradient-to-r from-teal-600 to-emerald-500 hover:from-teal-500 hover:to-emerald-400 text-white font-mono font-bold text-xs tracking-wide uppercase transition-all shadow-md hover:shadow-lg hover:shadow-teal-950/20 active:scale-[0.98] cursor-pointer flex items-center justify-center space-x-1.5"><Check className="h-3.5 w-3.5 text-white" /><span>Approve Advance to {pendingStage || 'Next Stage'}</span></button>)}
+               {deployState === 'idle' && (<button onClick={async () => { const isLive = backendMode === 'live'; const ok = window.confirm(isLive ? "SYSTEM CONFIRMATION REQUIRED:\nDeploy to LIVE? This triggers REAL on-chain execution with the configured wallet." : "SIMULATION DEPLOY:\nThis triggers a PAPER/simulation deploy only. No real funds, no on-chain execution."); if (!ok) return; setDeployState('deploying'); setDeployProgress(0); try { const res = await fetch(API_BASE + '/api/deploy', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ stage: isLive ? 'live' : 'paper', mode: deployMode, pipelineToggles, settings, backendMode }) }); const data = await res.json(); if (!res.ok || !data.deploy) { setDeployState('idle'); alert('Deploy failed: ' + (data?.error || 'backend error')); return; } const startedAt = Date.now(); const poll = setInterval(async () => { try { const dep = await fetch(API_BASE + '/api/deploy/status').then(r => r.ok ? r.json() : null); if (dep) { if (typeof dep.progress === 'number') setDeployProgress(Math.max(0, Math.min(100, dep.progress))); if (dep.txHash) setDeployTxHash(dep.txHash); if (dep.stage && dep.stage !== 'idle') { clearInterval(poll); setDeployTxHash(dep.txHash || data.deploy.txHash || ''); setDeployState('success'); setDeployProgress(100); return; } } } catch (e) {} if (Date.now() - startedAt > 60000) { clearInterval(poll); setDeployState('idle'); alert('Deploy timed out waiting for backend confirmation.'); } }, 1500); } catch (err) { setDeployState('idle'); alert('Deploy error: ' + (err as Error).message); } }} className="w-full py-2 px-3 rounded-lg bg-gradient-to-r from-rose-600 to-red-500 hover:from-rose-500 hover:to-red-400 text-white font-mono font-bold text-xs tracking-wide uppercase transition-all shadow-md hover:shadow-lg hover:shadow-rose-950/20 active:scale-[0.98] cursor-pointer flex items-center justify-center space-x-1.5"><Zap className="h-3.5 w-3.5 text-white animate-pulse" /><span>{isLive ? 'Auto Deploy to Live' : 'Deploy (Simulation / Paper)'}</span></button>)}
               {deployState === 'deploying' && (<div className="space-y-2"><div className="flex justify-between items-center text-[10px] font-mono text-rose-400"><span className="flex items-center gap-1.5"><svg className="animate-spin h-3.5 w-3.5 text-rose-400" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" /></svg><span>Deploying Smart Contract...</span></span><span className="animate-pulse text-xs">{deployProgress}%</span></div><div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-rose-500 to-red-500 animate-[pulse_1.5s_infinite]" style={{ width: `${deployProgress}%` }} /></div></div>)}
               {deployState === 'success' && (<div className="p-2 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-center font-mono animate-fadeIn"><div className="flex items-center justify-center space-x-1.5 text-xs font-bold mb-1"><Check className="h-4 w-4 text-emerald-400" /><span>CONTRACT DEPLOYED</span></div><p className="text-[9px] text-slate-400 truncate font-mono">Tx: {deployTxHash || 'pending'}</p><button onClick={() => setDeployState('idle')} className="mt-2 text-[9px] text-teal-400 hover:underline cursor-pointer">Reset Status</button></div>)}
               <div className="flex justify-between items-center text-[10px] font-mono"><span className={styles.textMuted}>Execution State</span>{deployState === 'success' ? (<span className="text-emerald-400 font-bold flex items-center gap-1"><span className="h-1.5 w-1.5 bg-emerald-400 rounded-full animate-pulse" /><span>Live (Active)</span></span>) : deployState === 'deploying' ? (<span className="text-rose-400 font-bold flex items-center gap-1"><span className="h-1.5 w-1.5 bg-rose-500 rounded-full animate-ping" /><span>Deploying...</span></span>) : (<span className="text-slate-400 font-bold flex items-center gap-1"><span className="h-1.5 w-1.5 bg-slate-500 rounded-full" /><span>Awaiting Trigger</span></span>)}</div>
@@ -325,3 +354,4 @@ const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     </div>
   );
 }
+
