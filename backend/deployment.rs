@@ -133,6 +133,12 @@ pub struct DeploymentAuthorization {
     pub awaiting_approval: bool,
     /// The next stage the Copilot will run once the Commander approves.
     pub pending_stage: Option<DeploymentStage>,
+    /// Pipeline auto/manual toggles from the dashboard UI.
+    pub pipeline_toggles: Option<serde_json::Value>,
+    /// Full Commander knob settings from the dashboard.
+    pub settings: Option<serde_json::Value>,
+    /// Backend mode: "paper" or "live".
+    pub backend_mode: String,
 }
 
 impl Default for DeploymentAuthorization {
@@ -148,6 +154,9 @@ impl Default for DeploymentAuthorization {
             completed_at: None,
             awaiting_approval: false,
             pending_stage: None,
+            pipeline_toggles: None,
+            settings: None,
+            backend_mode: "paper".to_string(),
         }
     }
 }
@@ -410,10 +419,26 @@ async fn apply_fix(error_code: &str) -> Option<String> {
 ///   pauses and requires the Commander to approve advancement to the next stage.
 /// * Manual — Commander controls every step; the full pipeline runs but every
 ///   auto-fix is deferred to the Commander (existing behavior).
+///
+/// Additional context from the dashboard:
+/// - `pipeline_toggles`: auto/manual per stage from the UI
+/// - `settings`: full Commander knob settings
+/// - `backend_mode`: "paper" or "live"
 pub async fn run_copilot_workflow(
     selector_mode: CopilotDeploymentMode,
+    pipeline_toggles: Option<serde_json::Value>,
+    settings: Option<serde_json::Value>,
+    backend_mode: String,
 ) -> Result<DeploymentAuthorization, AppError> {
-    info!("Copilot workflow requested in {:?} mode (selector)", selector_mode);
+    info!("Copilot workflow requested in {:?} mode (selector), backend_mode={}", selector_mode, backend_mode);
+
+    // Store dashboard context in deployment state for downstream stages.
+    {
+        let mut state = DEPLOYMENT_STATE.write().await;
+        state.pipeline_toggles = pipeline_toggles.clone();
+        state.settings = settings.clone();
+        state.backend_mode = backend_mode.clone();
+    }
 
     // Authorization spans the entire pipeline: preflight → simulation → live.
     authorize_copilot_deployment(selector_mode).await?;
@@ -436,9 +461,10 @@ pub async fn run_copilot_workflow(
     match selector_mode {
         CopilotDeploymentMode::Autonomous => {
             // Full authority: run config → preflight → simulation → live, no gate.
+            // Chief Architect approval is enforced inside transform_to_live when backend_mode is live.
             run_preflight().await?;
             run_simulation().await?;
-            transform_to_live().await
+            transform_to_live(backend_mode).await
         }
         CopilotDeploymentMode::Assisted => {
             // Run one stage, then pause for Commander approval before advancing.
@@ -446,9 +472,10 @@ pub async fn run_copilot_workflow(
         }
         CopilotDeploymentMode::Manual => {
             // Commander-driven: full pipeline, fixes deferred to Commander.
+            // Chief Architect approval is enforced inside transform_to_live when backend_mode is live.
             run_preflight().await?;
             run_simulation().await?;
-            transform_to_live().await
+            transform_to_live(backend_mode).await
         }
     }
 }
@@ -473,7 +500,10 @@ async fn run_next_stage(
     let result = match next {
         DeploymentStage::Preflight => run_preflight().await?,
         DeploymentStage::Simulation => run_simulation().await?,
-        DeploymentStage::Live => transform_to_live().await?,
+        DeploymentStage::Live => {
+            let backend_mode = DEPLOYMENT_STATE.read().await.backend_mode.clone();
+            transform_to_live(backend_mode).await?
+        }
         _ => get_deployment_status().await?,
     };
 
@@ -724,10 +754,32 @@ pub async fn run_simulation() -> Result<DeploymentAuthorization, AppError> {
 }
 
 /// Transform to live production
-pub async fn transform_to_live() -> Result<DeploymentAuthorization, AppError> {
+pub async fn transform_to_live(backend_mode: String) -> Result<DeploymentAuthorization, AppError> {
     let mut state = DEPLOYMENT_STATE.write().await;
     state.current_stage = DeploymentStage::Live;
     state.progress = 0.0;
+    
+    // Chief Architect approval gate for LIVE mode.
+    // Per the deployment plan, PILOT→LIVE requires Chief Architect approval.
+    // This is enforced as an env-var gate until YubiKey integration is implemented.
+    if backend_mode == "live" {
+        let chief_architect_approved = std::env::var("CHIEF_ARCHITECT_APPROVAL")
+            .map(|v| v == "true")
+            .unwrap_or(false);
+        
+        if !chief_architect_approved {
+            state.current_stage = DeploymentStage::Failed;
+            add_log(&mut *state, LogLevel::Error, DeploymentStage::Live,
+                    "EXECUTION HALTED: Chief Architect approval required for LIVE mode. Set CHIEF_ARCHITECT_APPROVAL=true after manual review.".to_string(), 
+                    Some("CHIEF_ARCHITECT_APPROVAL_REQUIRED".to_string()), false).await;
+            return Err(AppError::Forbidden(
+                "EXECUTION HALTED: Chief Architect approval required for LIVE deployment. Set CHIEF_ARCHITECT_APPROVAL=true after manual review of APEX metrics and Zero Checksum verification.".to_string()
+            ));
+        }
+        
+        add_log(&mut *state, LogLevel::Info, DeploymentStage::Live,
+                "Chief Architect approval verified for LIVE mode".to_string(), None, false).await;
+    }
     
     add_log(&mut *state, LogLevel::Info, DeploymentStage::Live,
             "Initiating live production deployment...".to_string(), None, false).await;

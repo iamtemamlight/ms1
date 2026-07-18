@@ -2646,7 +2646,8 @@ async fn run_simulation_deployment(
 /// POST /api/deployment/live - Transform to live production
 async fn run_live_deployment(
 ) -> Result<Json<crate::deployment::DeploymentAuthorization>, AppError> {
-    let result = crate::deployment::transform_to_live().await?;
+    let backend_mode = crate::deployment::DEPLOYMENT_STATE.read().await.backend_mode.clone();
+    let result = crate::deployment::transform_to_live(backend_mode).await?;
     Ok(Json(result))
 }
 
@@ -2681,7 +2682,7 @@ async fn run_copilot_workflow(
         "autonomous" => crate::deployment::CopilotDeploymentMode::Autonomous,
         _ => return Err(AppError::InvalidInput(format!("Invalid deployment mode: {}", payload.mode))),
     };
-    let result = crate::deployment::run_copilot_workflow(mode).await?;
+    let result = crate::deployment::run_copilot_workflow(mode, None, None, "paper".to_string()).await?;
     Ok(Json(result))
 }
 
@@ -3011,7 +3012,7 @@ async fn main() -> Result<(), AppError> {
             "autonomous" => crate::deployment::CopilotDeploymentMode::Autonomous,
             _ => crate::deployment::CopilotDeploymentMode::Manual,
         };
-        let result = crate::deployment::run_copilot_workflow(deploy_mode).await?;
+        let result = crate::deployment::run_copilot_workflow(deploy_mode, None, None, "paper".to_string()).await?;
         Ok(Json(serde_json::to_value(result).map_err(|e| AppError::Internal(format!("Serialization error: {}", e)))?))
     }
 
@@ -3051,7 +3052,10 @@ async fn main() -> Result<(), AppError> {
             "autonomous" => crate::deployment::CopilotDeploymentMode::Autonomous,
             _ => crate::deployment::CopilotDeploymentMode::Manual,
         };
-        let result = crate::deployment::run_copilot_workflow(deploy_mode).await?;
+        let pipeline_toggles = payload.get("pipelineToggles").cloned();
+        let settings = payload.get("settings").cloned();
+        let backend_mode = payload.get("backendMode").and_then(|v| v.as_str()).unwrap_or("paper").to_string();
+        let result = crate::deployment::run_copilot_workflow(deploy_mode, pipeline_toggles, settings, backend_mode).await?;
         Ok(Json(serde_json::to_value(result).map_err(|e| AppError::Internal(format!("Serialization error: {}", e)))?))
     }
 
