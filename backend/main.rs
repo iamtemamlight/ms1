@@ -2949,11 +2949,16 @@ async fn main() -> Result<(), AppError> {
             "maxGasFeeUsd": 120,
             "slippagePct": 0.5,
             "autoExecute": false,
-            "growthRate": 1.2,
-            "riskMode": "BALANCED",
-            "stability": 85,
-            "fleetCapacity": "AUTO",
-            "chainsSelection": "AUTO",
+            "growthRate": env::var("GROWTH_RATE").ok().and_then(|v| v.parse().ok()).unwrap_or(1.2),
+            "growthRateAuto": env::var("GROWTH_RATE_AUTO").map(|v| v == "true" || v == "1").unwrap_or(true),
+            "riskMode": env::var("RISK_MODE").unwrap_or_else(|_| "BALANCED".to_string()),
+            "riskModeAuto": env::var("RISK_MODE_AUTO").map(|v| v == "true" || v == "1").unwrap_or(true),
+            "stability": env::var("STABILITY_THRESHOLD").ok().and_then(|v| v.parse().ok()).unwrap_or(85),
+            "stabilityAuto": env::var("STABILITY_AUTO").map(|v| v == "true" || v == "1").unwrap_or(true),
+            "fleetCapacity": env::var("FLEET_CAPACITY").unwrap_or_else(|_| "AUTO".to_string()),
+            "fleetCapacityAuto": env::var("FLEET_CAPACITY_AUTO").map(|v| v == "true" || v == "1").unwrap_or(true),
+            "chainsSelection": env::var("CHAINS_SELECTION").unwrap_or_else(|_| "AUTO".to_string()),
+            "chainsSelectionAuto": env::var("CHAINS_SELECTION_AUTO").map(|v| v == "true" || v == "1").unwrap_or(true),
             "profitTransferMode": "MANUAL",
             "accumulatedProfitsUsd": 0,
             "profitTransferMinThresholdUsd": 100,
@@ -3065,6 +3070,36 @@ async fn main() -> Result<(), AppError> {
         }
         if let Some(v) = payload.get("selectedNetwork").and_then(|v| v.as_str()) {
             env::set_var("NETWORK_NAME", v);
+        }
+        if let Some(v) = payload.get("growthRate").and_then(|v| v.as_f64()) {
+            env::set_var("GROWTH_RATE", v.to_string());
+        }
+        if let Some(v) = payload.get("growthRateAuto").and_then(|v| v.as_bool()) {
+            env::set_var("GROWTH_RATE_AUTO", v.to_string());
+        }
+        if let Some(v) = payload.get("riskMode").and_then(|v| v.as_str()) {
+            env::set_var("RISK_MODE", v);
+        }
+        if let Some(v) = payload.get("riskModeAuto").and_then(|v| v.as_bool()) {
+            env::set_var("RISK_MODE_AUTO", v.to_string());
+        }
+        if let Some(v) = payload.get("stability").and_then(|v| v.as_i64()) {
+            env::set_var("STABILITY_THRESHOLD", v.to_string());
+        }
+        if let Some(v) = payload.get("stabilityAuto").and_then(|v| v.as_bool()) {
+            env::set_var("STABILITY_AUTO", v.to_string());
+        }
+        if let Some(v) = payload.get("fleetCapacity").and_then(|v| v.as_str()) {
+            env::set_var("FLEET_CAPACITY", v);
+        }
+        if let Some(v) = payload.get("fleetCapacityAuto").and_then(|v| v.as_bool()) {
+            env::set_var("FLEET_CAPACITY_AUTO", v.to_string());
+        }
+        if let Some(v) = payload.get("chainsSelection").and_then(|v| v.as_str()) {
+            env::set_var("CHAINS_SELECTION", v);
+        }
+        if let Some(v) = payload.get("chainsSelectionAuto").and_then(|v| v.as_bool()) {
+            env::set_var("CHAINS_SELECTION_AUTO", v.to_string());
         }
         // Return the current settings merged with the incoming payload so the
         // dashboard receives a `{ settings: {...} }` shape it already handles.

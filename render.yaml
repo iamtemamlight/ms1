@@ -35,15 +35,42 @@ services:
           name: allbright-redis
           type: redis
           property: connectionString
-      # Secrets — set these in the Render dashboard (sync:false keeps them out of git)
+      # Core chain / wallet / execution config — set in Render dashboard
+      - key: WALLET_ADDRESS
+        sync: false
+      - key: PRIVATE_KEY
+        sync: false
+      - key: NETWORK_NAME
+        value: Arbitrum Mainnet
+      - key: CHAIN_ID
+        value: "42161"
+      - key: PAPER_TRADING_MODE
+        value: "false"
+      # AI / provider keys — set in Render dashboard
+      - key: OPENAI_API_KEY
+        sync: false
       - key: OPENROUTER_API_KEY
         sync: false
       - key: GROQ_API_KEY
         sync: false
       - key: PIMLICO_API_KEY
         sync: false
-      - key: PRIVATE_KEY
+      # MEV / flashbots
+      - key: FLASHBOTS_AUTH_KEY
         sync: false
+      - key: FLASHBOTS_RPC_URL
+        value: https://relay.flashbots.net
+      # Security / compliance
+      - key: CIRCUIT_BREAKER_ADDRESS
+        sync: false
+      - key: ALLOWED_ORIGINS
+        value: https://allbright-dashboard.onrender.com
+      - key: JWT_SECRET
+        generateValue: true
+      - key: REQUIRE_KYC
+        value: "false"
+      - key: REQUIRE_AML
+        value: "false"
 
   # ============================================================================
   # React Dashboard Service (Express server proxies /api to the backend)
