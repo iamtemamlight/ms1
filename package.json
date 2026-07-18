@@ -12,6 +12,7 @@
     "desktop:build:msi-nsis": "cd src-tauri && tauri build --bundles msi nsis"
   },
   "dependencies": {
+    "@vitejs/plugin-react": "^6.0.3",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1"
