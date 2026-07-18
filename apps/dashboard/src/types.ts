@@ -112,10 +112,12 @@ export interface CustomWalletItem {
   id: string;
   name: string;
   address: string;
-  privateKey: string;
   chain: string;
   balance: number;
   isActive: boolean;
+  // Withdrawal wallets store ONLY: name, address, chain, created_date, status.
+  // No private key / seed / mnemonic is ever held on the frontend.
+  createdDate?: string;
 }
 
 // ============================================================================

@@ -52,8 +52,8 @@ export default function App() {
       try { return JSON.parse(saved); } catch (e) { }
     }
     return [
-      { id: 'w-1', name: 'AllBright Commander Wallet', address: ENV_WALLET_ADDRESS, privateKey: 'REDACTED', chain: 'Arbitrum Mainnet', balance: 42500.0, isActive: true },
-      { id: 'w-2', name: 'Flash Loan Executor', address: ENV_EXECUTOR_ADDRESS, privateKey: 'REDACTED', chain: 'Ethereum Mainnet', balance: 18250.0, isActive: true },
+      { id: 'w-1', name: 'AllBright Commander Wallet', address: ENV_WALLET_ADDRESS, chain: 'Arbitrum Mainnet', balance: 42500.0, isActive: true, createdDate: new Date().toISOString() },
+      { id: 'w-2', name: 'Flash Loan Executor', address: ENV_EXECUTOR_ADDRESS, chain: 'Ethereum Mainnet', balance: 18250.0, isActive: true, createdDate: new Date().toISOString() },
     ];
   });
 
