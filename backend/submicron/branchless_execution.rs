@@ -86,6 +86,7 @@ impl BranchlessValidator {
 }
 
 #[repr(C, align(64))]
+#[derive(Debug, Clone)]
 pub struct BitwiseReciprocalTable {
     pub shifts: [u8; 256],
     pub masks: [u64; 256],
@@ -122,6 +123,7 @@ impl Default for BitwiseReciprocalTable {
 }
 
 #[repr(C, align(64))]
+#[derive(Debug, Clone)]
 pub struct DirectStepArray {
     pub steps: [i64; 1024],
     pub granularity_shift: u8,

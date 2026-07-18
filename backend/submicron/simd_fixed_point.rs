@@ -18,13 +18,13 @@ impl SimdFixedPoint {
     /// Convert f64 to fixed-point 64.64
     #[inline(always)]
     pub fn from_f64(value: f64) -> Fixed64 {
-        (value * (1u64 << 64) as f64) as u64
+        (value * (1u128 << 64) as f64) as u64
     }
     
     /// Convert fixed-point 64.64 to f64
     #[inline(always)]
     pub fn to_f64(value: Fixed64) -> f64 {
-        value as f64 / (1u64 << 64) as f64
+        value as f64 / (1u128 << 64) as f64
     }
     
     /// Scalar fixed-point multiplication
@@ -60,7 +60,7 @@ impl SimdFixedPoint {
 impl SimdFixedPoint {
     /// AVX2 fixed-point multiplication (4 parallel operations)
     /// Requires AVX2 support
-    #[inline(always)]
+    #[inline]
     #[target_feature(enable = "avx2")]
     pub unsafe fn mul_avx2(a: __m256i, b: __m256i) -> __m256i {
         // 4 parallel 64-bit multiplications using AVX2
@@ -70,14 +70,14 @@ impl SimdFixedPoint {
     }
     
     /// AVX2 fixed-point addition (4 parallel operations)
-    #[inline(always)]
+    #[inline]
     #[target_feature(enable = "avx2")]
     pub unsafe fn add_avx2(a: __m256i, b: __m256i) -> __m256i {
         _mm256_add_epi64(a, b)
     }
     
     /// AVX2 fixed-point subtraction (4 parallel operations)
-    #[inline(always)]
+    #[inline]
     #[target_feature(enable = "avx2")]
     pub unsafe fn sub_avx2(a: __m256i, b: __m256i) -> __m256i {
         _mm256_sub_epi64(a, b)
@@ -85,7 +85,7 @@ impl SimdFixedPoint {
     
     /// AVX-512 fixed-point multiplication (8 parallel operations)
     /// Requires AVX-512F support
-    #[inline(always)]
+    #[inline]
     #[target_feature(enable = "avx512f")]
     pub unsafe fn mul_avx512(a: __m512i, b: __m512i) -> __m512i {
         // 8 parallel 64-bit multiplications
@@ -93,14 +93,14 @@ impl SimdFixedPoint {
     }
     
     /// AVX-512 fixed-point addition (8 parallel operations)
-    #[inline(always)]
+    #[inline]
     #[target_feature(enable = "avx512f")]
     pub unsafe fn add_avx512(a: __m512i, b: __m512i) -> __m512i {
         _mm512_add_epi64(a, b)
     }
     
     /// AVX-512 fixed-point subtraction (8 parallel operations)
-    #[inline(always)]
+    #[inline]
     #[target_feature(enable = "avx512f")]
     pub unsafe fn sub_avx512(a: __m512i, b: __m512i) -> __m512i {
         _mm512_sub_epi64(a, b)
@@ -108,7 +108,7 @@ impl SimdFixedPoint {
     
     /// AVX-512 profit calculation (8 parallel operations)
     /// Calculates: revenue - cost for 8 trades simultaneously
-    #[inline(always)]
+    #[inline]
     #[target_feature(enable = "avx512f")]
     pub unsafe fn profit_calc_avx512(revenues: __m512i, costs: __m512i) -> __m512i {
         _mm512_sub_epi64(revenues, costs)
@@ -116,7 +116,7 @@ impl SimdFixedPoint {
     
     /// AVX-512 slippage calculation (8 parallel operations)
     /// Calculates: (expected - actual) / expected
-    #[inline(always)]
+    #[inline]
     #[target_feature(enable = "avx512f")]
     pub unsafe fn slippage_calc_avx512(expected: __m512i, actual: __m512i) -> __m512i {
         let diff = _mm512_sub_epi64(expected, actual);
@@ -174,11 +174,11 @@ impl SimdBatchProcessor {
         let remainder = chunks.remainder();
         
         for chunk in chunks {
-            let rev_vec = _mm512_loadu_si512(chunk.as_ptr() as *const i64);
-            let cost_vec = _mm512_loadu_si512(costs[chunk.len() * 8..].as_ptr() as *const i64);
+            let rev_vec = _mm512_loadu_si512(chunk.as_ptr() as *const __m512i);
+            let cost_vec = _mm512_loadu_si512(costs[chunk.len() * 8..].as_ptr() as *const __m512i);
             let profit = SimdFixedPoint::profit_calc_avx512(rev_vec, cost_vec);
             
-            _mm512_storeu_si512(self.buffer.as_mut_ptr() as *mut i64, profit);
+            _mm512_storeu_si512(self.buffer.as_mut_ptr() as *mut __m512i, profit);
             results.extend_from_slice(&self.buffer);
         }
         

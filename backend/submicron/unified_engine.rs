@@ -52,6 +52,17 @@ pub struct UnifiedEngine {
     pub last_payload_len: AtomicU64,
 }
 
+impl std::fmt::Debug for UnifiedEngine {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("UnifiedEngine")
+            .field("total_cycles", &self.total_cycles.load(Ordering::Relaxed))
+            .field("total_profit", &self.total_profit.load(Ordering::Relaxed))
+            .field("total_gas", &self.total_gas.load(Ordering::Relaxed))
+            .field("last_optimal_input", &self.last_optimal_input.load(Ordering::Relaxed))
+            .finish()
+    }
+}
+
 impl UnifiedEngine {
     pub fn new(
         memory_pool: &'static MemoryPool,
@@ -98,7 +109,7 @@ impl UnifiedEngine {
             cycle_count: 11,
             base_fee: self.last_base_fee.load(Ordering::SeqCst),
             priority_fee: self.last_priority_fee.load(Ordering::SeqCst),
-            optimal_input: self.last_optimal_input.load(Ordering::SeqCst),
+            optimal_input: self.last_optimal_input.load(Ordering::SeqCst) as i64,
             validation_mask: self.last_validation_mask.load(Ordering::SeqCst),
             payload_len: self.last_payload_len.load(Ordering::SeqCst),
         }

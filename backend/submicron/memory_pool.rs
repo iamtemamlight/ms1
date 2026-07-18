@@ -20,6 +20,16 @@ pub struct MemoryPool {
 unsafe impl Send for MemoryPool {}
 unsafe impl Sync for MemoryPool {}
 
+impl std::fmt::Debug for MemoryPool {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("MemoryPool")
+            .field("capacity", &self.capacity)
+            .field("current", &self.current.load(Ordering::Relaxed))
+            .field("watermark", &self.watermark.load(Ordering::Relaxed))
+            .finish()
+    }
+}
+
 impl MemoryPool {
     /// Create a new memory pool with specified capacity in bytes
     /// 

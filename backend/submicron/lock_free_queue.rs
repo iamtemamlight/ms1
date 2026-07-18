@@ -18,6 +18,16 @@ pub struct LockFreeQueue<T> {
     buffer: UnsafeCell<[MaybeUninit<T>; CAPACITY]>,
 }
 
+impl<T> std::fmt::Debug for LockFreeQueue<T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("LockFreeQueue")
+            .field("head", &self.head.load(Ordering::Relaxed))
+            .field("tail", &self.tail.load(Ordering::Relaxed))
+            .field("capacity", &CAPACITY)
+            .finish()
+    }
+}
+
 const CAPACITY: usize = 65536; // 2^16 entries, fits in L2 cache on most CPUs
 
 unsafe impl<T: Send> Send for LockFreeQueue<T> {}

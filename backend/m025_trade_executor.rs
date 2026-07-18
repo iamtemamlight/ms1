@@ -8,7 +8,7 @@
 use std::collections::HashMap;
 
 // Sub-microsecond optimization modules
-use crate::submicron::{MemoryPool, LockFreeQueue, StatePredictionTable, PredictedState};
+use crate::submicron::{MemoryPool, LockFreeQueue, StatePredictionTable, PredictedState, Opportunity};
 use crate::submicron::branchless_execution::{BranchlessValidator, branchless_select, branchless_validation_mask, BitwiseReciprocalTable, DirectStepArray};
 use crate::submicron::unified_engine::{UnifiedEngine, UnifiedEngineConfig};
 
@@ -81,8 +81,8 @@ impl M25 {
         let trade_queue = LockFreeQueue::new();
         
         let initial_state = PredictedState {
-            eth_price: 3000_0000000000000000,
-            gas_price: 30_0000000000000000,
+            eth_price: 3000_000000000000000,
+            gas_price: 30_000000000000000,
             pool_reserves: [1_000_000_000_000_000_000; 32],
             block_hash: [0; 32],
             timestamp: 0,

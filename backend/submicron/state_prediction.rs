@@ -53,6 +53,33 @@ pub struct StatePredictionTable {
 
 const TABLE_SIZE: usize = 1_048_576; // 2^20 entries
 
+impl std::fmt::Debug for StatePredictionTable {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("StatePredictionTable")
+            .field("current_index", &self.current_index.load(Ordering::Relaxed))
+            .field("base_block", &self.base_block)
+            .field("base_timestamp", &self.base_timestamp)
+            .field("table_size", &TABLE_SIZE)
+            .finish()
+    }
+}
+
+impl Clone for StatePredictionTable {
+    fn clone(&self) -> Self {
+        let mut states: [MaybeUninit<PredictedState>; TABLE_SIZE] =
+            unsafe { std::mem::MaybeUninit::uninit().assume_init() };
+        for (dst, src) in states.iter_mut().zip(self.states.iter()) {
+            unsafe { dst.as_mut_ptr().write(src.assume_init_read()); }
+        }
+        Self {
+            states,
+            current_index: AtomicU64::new(self.current_index.load(Ordering::Relaxed)),
+            base_block: self.base_block,
+            base_timestamp: self.base_timestamp,
+        }
+    }
+}
+
 impl StatePredictionTable {
     /// Create a new state prediction table
     /// 

@@ -110,6 +110,10 @@ app.post("/api/wallet/transfer-profit", (req, res) => {
   proxyRequest(req, res, "/api/wallet/transfer-profit");
 });
 
+app.post("/api/system/kill", (req, res) => {
+  proxyRequest(req, res, "/api/system/kill");
+});
+
 app.post("/api/execute", (req, res) => {
   proxyRequest(req, res, "/api/execute");
 });

@@ -118,8 +118,8 @@ impl FlashLoanExecutor {
         let transaction_queue = LockFreeQueue::new();
         
         let initial_state = PredictedState {
-            eth_price: 3000_0000000000000000,
-            gas_price: 30_0000000000000000,
+            eth_price: 3000_000000000000000,
+            gas_price: 30_000000000000000,
             pool_reserves: [1_000_000_000_000_000_000; 32],
             block_hash: [0; 32],
             timestamp: 0,
@@ -252,8 +252,19 @@ impl FlashLoanExecutor {
         // Get predicted state (eliminates RPC call)
         let predicted_state = self.state_prediction.get_current();
 
-        // Unified engine pipeline (11-cycle mathematical core)
-        let _pipeline = self.unified_engine.execute_pipeline(opportunity);
+        // Unified engine pipeline (11-cycle mathematical core).
+        // `execute_pipeline` consumes the predictive-batching `Opportunity`; build a
+        // bridge struct from the flash-loan opportunity. The engine currently ignores
+        // the payload (only increments the cycle counter), so value mapping is best-effort.
+        let bridge_opportunity = crate::submicron::Opportunity {
+            profit: opportunity.expected_profit_eth as i64,
+            gas_cost: opportunity.gas_cost_eth as u64,
+            gas_limit: 0,
+            priority: 0,
+            pool_hash: 0,
+            pair_hash: 0,
+        };
+        let _pipeline = self.unified_engine.execute_pipeline(&bridge_opportunity);
 
         // Execute flash loan based on opportunity type
         let result = match opportunity.pool.as_str() {
