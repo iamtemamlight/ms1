@@ -12,6 +12,8 @@
     "desktop:build:msi-nsis": "cd src-tauri && tauri build --bundles msi nsis"
   },
   "dependencies": {
+    "@tailwindcss/forms": "^0.5.11",
+    "@tailwindcss/typography": "^0.5.20",
     "@vitejs/plugin-react": "^6.0.3",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
