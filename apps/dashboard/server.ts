@@ -6,7 +6,6 @@
 import express from "express";
 import path from "path";
 import * as fs from "fs";
-import { createServer as createViteServer } from "vite";
 import cors from "cors";
 
 const app = express();
@@ -181,11 +180,8 @@ app.post("/api/deployment/reset", (req, res) => {
 
 async function startServer() {
   if (process.env.NODE_ENV !== "production") {
-    const vite = await createViteServer({
-      server: { middlewareMode: true, watch: {} },
-      appType: "spa",
-    });
-    app.use(vite.middlewares);
+    // Vite development server - removed for production to avoid runtime dependency
+    // In production, static files are served directly from dist/
   } else {
     const distPath = path.join(__dirname, "..", "dist");
 
