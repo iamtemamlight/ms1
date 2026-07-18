@@ -1,7 +1,10 @@
 //! Deployment Authorization & Copilot Control
 //! 
 //! Manages the deployment workflow: Preflight → Simulation → Live
-//! with Copilot authorization modes: Manual, Assisted, Autonomous
+//! with Copilot authorization modes: Manual, Autonomous
+//!
+//! Pipeline toggles (auto/manual per stage) are controlled from the dashboard
+//! and stored in DeploymentAuthorization.pipeline_toggles.
 //!
 //! In Autonomous mode, the Copilot exercises real deep system authority
 //! via `CopilotSystemAccess` to drill into modules, env, filesystem, agents.
@@ -21,8 +24,6 @@ use rand::Rng;
 pub enum CopilotDeploymentMode {
     /// Commander controls all steps manually
     Manual,
-    /// Copilot diagnoses and suggests fixes, commander approves
-    Assisted,
     /// Copilot runs full workflow autonomously, fixes errors in real-time
     Autonomous,
 }
@@ -31,7 +32,6 @@ impl std::fmt::Display for CopilotDeploymentMode {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             CopilotDeploymentMode::Manual => write!(f, "manual"),
-            CopilotDeploymentMode::Assisted => write!(f, "assisted"),
             CopilotDeploymentMode::Autonomous => write!(f, "autonomous"),
         }
     }
@@ -128,7 +128,7 @@ pub struct DeploymentAuthorization {
     pub errors: Vec<DeploymentError>,
     pub started_at: Option<String>,
     pub completed_at: Option<String>,
-    /// Assisted mode: true when a stage finished and the Copilot is paused
+    /// Manual mode: true when a stage finished and the Copilot is paused
     /// waiting for the Commander to approve advancement to the next stage.
     pub awaiting_approval: bool,
     /// The next stage the Copilot will run once the Commander approves.
@@ -285,7 +285,7 @@ pub async fn diagnose_and_fix(stage: DeploymentStage, error_code: &str, message:
     
     state.errors.push(deployment_error);
     
-    // Auto-fix if in autonomous mode or assisted mode with auto-fixable error
+    // Auto-fix only in Autonomous mode. In Manual mode, log and let Commander decide.
     if state.mode == CopilotDeploymentMode::Autonomous && auto_fixable {
         if let Some(fix) = apply_fix(error_code).await {
             add_log(&mut state, LogLevel::Success, stage, 
@@ -299,15 +299,11 @@ pub async fn diagnose_and_fix(stage: DeploymentStage, error_code: &str, message:
             
             return Ok(Some(fix));
         }
-    } else if state.mode == CopilotDeploymentMode::Assisted && auto_fixable {
-        add_log(&mut state, LogLevel::Warn, stage,
-                format!("Assisted fix available for {}: {}", error_code, fix_description.clone().unwrap_or("No description".to_string())),
-                Some(error_code.to_string()), false).await;
-    } else {
-        add_log(&mut state, LogLevel::Error, stage,
-                format!("Error: {} - {}", error_code, message),
-                Some(error_code.to_string()), false).await;
     }
+    
+    add_log(&mut state, LogLevel::Error, stage,
+            format!("Error: {} - {}", error_code, message),
+            Some(error_code.to_string()), false).await;
     
     Ok(fix_description)
 }
@@ -412,18 +408,13 @@ async fn apply_fix(error_code: &str) -> Option<String> {
 
 /// Authorize the copilot and run the deployment workflow using `selector_mode`.
 ///
-/// * Autonomous — 100% authority: config import + preflight → simulation → live
-///   run end-to-end with no human gate. The Copilot may read/import the `.env`
-///   from the directory to automate configuration and deploy capital to live.
-/// * Assisted — staged: after each stage (config/preflight/simulation) the Copilot
-///   pauses and requires the Commander to approve advancement to the next stage.
-/// * Manual — Commander controls every step; the full pipeline runs but every
-///   auto-fix is deferred to the Commander (existing behavior).
+/// * Manual — Commander controls stage progression via pipeline toggles.
+///   Each stage runs when the Commander triggers it. Auto-fixes are deferred.
+/// * Autonomous — Copilot runs the full pipeline automatically. Auto-fixes
+///   are applied in real-time. Pipeline toggles are ignored.
 ///
-/// Additional context from the dashboard:
-/// - `pipeline_toggles`: auto/manual per stage from the UI
-/// - `settings`: full Commander knob settings
-/// - `backend_mode`: "paper" or "live"
+/// Pipeline toggles (auto/manual per stage) are stored in deployment state
+/// and control stage progression in Manual mode.
 pub async fn run_copilot_workflow(
     selector_mode: CopilotDeploymentMode,
     pipeline_toggles: Option<serde_json::Value>,
@@ -460,93 +451,88 @@ pub async fn run_copilot_workflow(
 
     match selector_mode {
         CopilotDeploymentMode::Autonomous => {
-            // Full authority: run config → preflight → simulation → live, no gate.
-            // Chief Architect approval is enforced inside transform_to_live when backend_mode is live.
+            // Full authority: run preflight → simulation → live, no gates.
             run_preflight().await?;
             run_simulation().await?;
-            transform_to_live(backend_mode).await
-        }
-        CopilotDeploymentMode::Assisted => {
-            // Run one stage, then pause for Commander approval before advancing.
-            run_next_stage(selector_mode).await
+            let final_backend_mode = DEPLOYMENT_STATE.read().await.backend_mode.clone();
+            transform_to_live(final_backend_mode).await
         }
         CopilotDeploymentMode::Manual => {
-            // Commander-driven: full pipeline, fixes deferred to Commander.
-            // Chief Architect approval is enforced inside transform_to_live when backend_mode is live.
-            run_preflight().await?;
-            run_simulation().await?;
-            transform_to_live(backend_mode).await
+            // Commander-driven: run stages sequentially, respecting pipeline toggles.
+            // If a toggle is "manual", pause and wait for Commander to trigger next stage.
+            run_stage_with_toggle(DeploymentStage::Preflight, run_preflight).await?;
+            run_stage_with_toggle(DeploymentStage::Simulation, run_simulation).await?;
+            let final_backend_mode = DEPLOYMENT_STATE.read().await.backend_mode.clone();
+            transform_to_live(final_backend_mode).await
         }
     }
 }
 
-/// Run the next deployment stage based on the current progress, and (in Assisted
-/// mode) pause for Commander approval before advancing further.
-async fn run_next_stage(
-    mode: CopilotDeploymentMode,
-) -> Result<DeploymentAuthorization, AppError> {
-    let next = {
-        let state = DEPLOYMENT_STATE.read().await;
-        match state.current_stage {
-            DeploymentStage::Idle => DeploymentStage::Preflight,
-            DeploymentStage::Preflight => DeploymentStage::Simulation,
-            DeploymentStage::Simulation => DeploymentStage::Live,
-            DeploymentStage::Live => DeploymentStage::Completed,
-            DeploymentStage::Completed => DeploymentStage::Completed,
-            DeploymentStage::Failed => DeploymentStage::Failed,
-        }
+/// Run a deployment stage, then check pipeline toggles to decide whether to
+/// auto-advance or pause for Commander approval.
+///
+/// In Manual mode: if the NEXT stage's pipeline toggle is "manual", pause and
+/// wait for the Commander to trigger the next stage from the UI.
+/// In Autonomous mode: this function is not used (all stages run automatically).
+async fn run_stage_with_toggle<Fut>(
+    stage: DeploymentStage,
+    stage_fn: fn() -> Fut,
+) -> Result<(), AppError>
+where
+    Fut: std::future::Future<Output = Result<DeploymentAuthorization, AppError>>,
+{
+    // Run the stage
+    stage_fn().await?;
+
+    // Determine if we should pause before advancing
+    let next_stage = match stage {
+        DeploymentStage::Preflight => Some(DeploymentStage::Simulation),
+        DeploymentStage::Simulation => Some(DeploymentStage::Live),
+        _ => None,
     };
 
-    let result = match next {
-        DeploymentStage::Preflight => run_preflight().await?,
-        DeploymentStage::Simulation => run_simulation().await?,
-        DeploymentStage::Live => {
-            let backend_mode = DEPLOYMENT_STATE.read().await.backend_mode.clone();
-            transform_to_live(backend_mode).await?
+    if let Some(next) = next_stage {
+        let toggle = get_pipeline_toggle(next);
+        
+        // Pause if the next stage's toggle is "manual"
+        if toggle == "manual" {
+            let reason = format!("MANUAL TOGGLE: stage '{}' complete — pipeline toggle for '{}' is manual, awaiting Commander approval", stage, next);
+            
+            let mut state = DEPLOYMENT_STATE.write().await;
+            state.awaiting_approval = true;
+            state.pending_stage = Some(next);
+            state.current_stage = stage; // Stay on current stage until approved
+            add_log(
+                &mut state,
+                LogLevel::Warn,
+                stage,
+                reason,
+                None,
+                false,
+            ).await;
         }
-        _ => get_deployment_status().await?,
-    };
-
-    // Assisted mode: pause after each non-final stage and wait for the Commander.
-    if mode == CopilotDeploymentMode::Assisted
-        && (next == DeploymentStage::Preflight || next == DeploymentStage::Simulation)
-    {
-        let pending = if next == DeploymentStage::Preflight {
-            DeploymentStage::Simulation
-        } else {
-            DeploymentStage::Live
-        };
-        let mut state = DEPLOYMENT_STATE.write().await;
-        state.awaiting_approval = true;
-        state.pending_stage = Some(pending);
-        add_log(
-            &mut state,
-            LogLevel::Warn,
-            next,
-            format!(
-                "ASSISTED: stage '{}' complete — awaiting Commander approval to advance to '{}'",
-                next, pending
-            ),
-            None,
-            false,
-        ).await;
     }
 
-    Ok(result)
+    Ok(())
 }
 
-/// Commander approves advancement to the next stage (Assisted mode).
-/// Returns an error if no stage is currently awaiting approval.
-pub async fn approve_deployment_advance() -> Result<DeploymentAuthorization, AppError> {
-    {
-        let state = DEPLOYMENT_STATE.read().await;
-        if !state.awaiting_approval {
-            return Err(AppError::InvalidInput(
-                "No deployment stage is currently awaiting Commander approval.".to_string(),
-            ));
-        }
-    }
-    run_next_stage(DEPLOYMENT_STATE.read().await.mode).await
+/// Get the pipeline toggle for a given stage from the deployment state.
+/// Returns "auto" if not set or not found.
+fn get_pipeline_toggle(stage: DeploymentStage) -> String {
+    let state = DEPLOYMENT_STATE.blocking_read();
+    let toggles = match &state.pipeline_toggles {
+        Some(t) => t,
+        None => return "auto".to_string(),
+    };
+    
+    let key = match stage {
+        DeploymentStage::Preflight => "preflight",
+        DeploymentStage::Simulation => "simulation",
+        DeploymentStage::Live => "live",
+        _ => return "auto".to_string(),
+    };
+    
+    toggles.get(key).and_then(|v| v.as_str()).unwrap_or("auto").to_string()
 }
 
 /// Automated governance pre-check for the deployment pipeline (governance4.md
@@ -554,7 +540,7 @@ pub async fn approve_deployment_advance() -> Result<DeploymentAuthorization, App
 ///
 /// Blocks ALL modes on Critical constitutional violations. In Autonomous mode,
 /// High violations are logged but do not block (Autonomous retains operational
-/// authority for non-constitutional issues). Manual and Assisted modes block on
+/// authority for non-constitutional issues). Manual mode blocks on
 /// High violations as well.
 pub async fn enforce_deployment_governance_gate(
     mode: CopilotDeploymentMode,
@@ -604,7 +590,7 @@ pub async fn enforce_deployment_governance_gate(
 /// the logging pipeline across preflight → simulation → live.
 ///
 /// Returns `Ok(Some(fix))` when a fix was applied, `Ok(None)` when not auto-fixable
-/// or not in Autonomous mode (defers to Commander in Manual/Assisted).
+/// or not in Autonomous mode (defers to Commander in Manual).
 pub async fn diagnose_logging_error(
     stage: DeploymentStage,
     error_code: &str,
@@ -651,7 +637,7 @@ pub async fn diagnose_logging_error(
         }
     }
 
-    // Manual / Assisted / non-fixable: log and let Commander decide.
+    // Manual / Autonomous: log and let Commander decide.
     add_log(
         &mut state,
         LogLevel::Error,

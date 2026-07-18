@@ -2614,7 +2614,6 @@ async fn authorize_copilot_deployment(
 ) -> Result<Json<crate::deployment::DeploymentAuthorization>, AppError> {
     let mode = match payload.mode.to_lowercase().as_str() {
         "manual" => crate::deployment::CopilotDeploymentMode::Manual,
-        "assisted" => crate::deployment::CopilotDeploymentMode::Assisted,
         "autonomous" => crate::deployment::CopilotDeploymentMode::Autonomous,
         _ => return Err(AppError::InvalidInput(format!("Invalid deployment mode: {}", payload.mode))),
     };
@@ -2678,20 +2677,10 @@ async fn run_copilot_workflow(
 ) -> Result<Json<crate::deployment::DeploymentAuthorization>, AppError> {
     let mode = match payload.mode.to_lowercase().as_str() {
         "manual" => crate::deployment::CopilotDeploymentMode::Manual,
-        "assisted" => crate::deployment::CopilotDeploymentMode::Assisted,
         "autonomous" => crate::deployment::CopilotDeploymentMode::Autonomous,
         _ => return Err(AppError::InvalidInput(format!("Invalid deployment mode: {}", payload.mode))),
     };
     let result = crate::deployment::run_copilot_workflow(mode, None, None, "paper".to_string()).await?;
-    Ok(Json(result))
-}
-
-/// POST /api/deployment/approve - Commander approves advancement to the next
-/// deployment stage (Assisted mode). No-op gate for Autonomous (which runs to
-/// live automatically) and Manual (Commander drives each stage directly).
-async fn approve_deployment_advance(
-) -> Result<Json<crate::deployment::DeploymentAuthorization>, AppError> {
-    let result = crate::deployment::approve_deployment_advance().await?;
     Ok(Json(result))
 }
 
@@ -3008,7 +2997,6 @@ async fn main() -> Result<(), AppError> {
         let mode = payload.get("mode").and_then(|v| v.as_str()).unwrap_or("manual");
         let deploy_mode = match mode {
             "manual" => crate::deployment::CopilotDeploymentMode::Manual,
-            "assisted" => crate::deployment::CopilotDeploymentMode::Assisted,
             "autonomous" => crate::deployment::CopilotDeploymentMode::Autonomous,
             _ => crate::deployment::CopilotDeploymentMode::Manual,
         };
@@ -3048,7 +3036,6 @@ async fn main() -> Result<(), AppError> {
         let mode = payload.get("mode").and_then(|v| v.as_str()).unwrap_or("manual");
         let deploy_mode = match mode {
             "manual" => crate::deployment::CopilotDeploymentMode::Manual,
-            "assisted" => crate::deployment::CopilotDeploymentMode::Assisted,
             "autonomous" => crate::deployment::CopilotDeploymentMode::Autonomous,
             _ => crate::deployment::CopilotDeploymentMode::Manual,
         };
@@ -3224,7 +3211,6 @@ async fn main() -> Result<(), AppError> {
         .route("/api/deployment/logs", get(get_deployment_logs))
         .route("/api/deployment/reset", post(reset_deployment))
         .route("/api/deployment/run", post(run_copilot_workflow))
-        .route("/api/deployment/approve", post(approve_deployment_advance))
         .route("/api/deployment/log-diagnose", post(log_diagnose))
         .route("/api/auto-transfer/status", get(auto_transfer_scheduler::get_status))
         .route("/api/auto-transfer/trigger", post(auto_transfer_scheduler::post_trigger))

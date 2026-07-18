@@ -110,10 +110,22 @@ impl M25 {
                 last_status: "IDLE".into(),
             },
             config: HashMap::new(),
-            max_slippage_bps: 50,
-            min_profit_eth: 0.001,
+            max_slippage_bps: match std::env::var("RISK_MODE").as_deref() {
+                Ok("CONSERVATIVE") => 20,
+                Ok("AGGRESSIVE") => 100,
+                _ => 50,
+            },
+            min_profit_eth: std::env::var("MIN_PROFIT_THRESHOLD_USDC")
+                .ok()
+                .and_then(|v| v.parse::<f64>().ok())
+                .map(|usd| usd / 3420.5) // rough ETH/USD conversion
+                .unwrap_or(0.001),
             gas_limit: 21000,
-            max_gas_price_gwei: 100.0,
+            max_gas_price_gwei: std::env::var("MAX_GAS_FEE_USD")
+                .ok()
+                .and_then(|v| v.parse::<f64>().ok())
+                .map(|usd| (usd / 21000.0) * 1e9 / 3420.5)
+                .unwrap_or(100.0),
             dry_run: std::env::var("PAPER_TRADING_MODE")
                 .unwrap_or_else(|_| "false".to_string())
                 .parse()
@@ -247,11 +259,52 @@ impl M25 {
         server: &mut super::CentralC2Server,
         pair: &str,
         side: &str,
-        size: f64,
-        expected_profit_eth: f64,
-        slippage_bps: u32,
+        mut size: f64,
+        mut expected_profit_eth: f64,
+        mut slippage_bps: u32,
         gas_cost_eth: f64,
     ) -> Option<ModuleResult> {
+        // Apply Commander knob settings to execution parameters
+        let growth_rate = std::env::var("GROWTH_RATE").ok().and_then(|v| v.parse::<f64>().ok()).unwrap_or(1.2);
+        let risk_mode = std::env::var("RISK_MODE").unwrap_or_else(|_| "BALANCED".to_string());
+        let stability = std::env::var("STABILITY_THRESHOLD").ok().and_then(|v| v.parse::<f64>().ok()).unwrap_or(85.0);
+        let fleet_capacity = std::env::var("FLEET_CAPACITY").unwrap_or_else(|_| "AUTO".to_string());
+
+        // growthRate: leverage multiplier for position sizing and profit expectation
+        if growth_rate > 0.0 && growth_rate != 1.0 {
+            size *= growth_rate;
+            expected_profit_eth *= growth_rate;
+        }
+
+        // riskMode: enforce slippage ceiling
+        let max_slippage = match risk_mode.as_str() {
+            "CONSERVATIVE" => 20u32,
+            "AGGRESSIVE" => 100u32,
+            _ => 50u32,
+        };
+        if slippage_bps > max_slippage {
+            slippage_bps = max_slippage;
+        }
+
+        // stability: low stability raises profit floor (requires higher conviction)
+        let min_profit_multiplier = if stability < 50.0 { 1.5 } else { 1.0 };
+        expected_profit_eth *= min_profit_multiplier;
+
+        // fleetCapacity: cap trade size against vault collateral
+        // Default vault size from env or 100 ETH equivalent; AUTO means 50% of vault
+        let vault_size_eth = std::env::var("VAULT_SIZE_ETH").ok().and_then(|v| v.parse::<f64>().ok()).unwrap_or(100.0);
+        let max_trade_pct = match fleet_capacity.as_str() {
+            "25%" => 0.25,
+            "50%" => 0.50,
+            "75%" => 0.75,
+            "100%" => 1.0,
+            _ => 0.5, // AUTO = 50%
+        };
+        let max_trade_size = vault_size_eth * max_trade_pct;
+        if size > max_trade_size {
+            size = max_trade_size;
+        }
+
         let gas_cost_eth = if let Some(ref fb) = server.flashbots_mev_protection {
             let (base, priority, _max_fee) = server.gas_predictor.get_optimal_gas_params(
                 crate::m202_gas_predictor::GasStrategy::Standard,
