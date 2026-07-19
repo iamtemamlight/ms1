@@ -8,6 +8,10 @@ import path from "path";
 import * as fs from "fs";
 import cors from "cors";
 import * as crypto from "crypto";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -249,7 +253,14 @@ app.post("/api/deployment/reset", (req, res) => {
 });
 
 async function startServer() {
-  const distPath = path.join(__dirname, "..", "dist");
+  // Support both:
+  //  - tsx server.ts          -> cwd = apps/dashboard, __dirname = apps/dashboard
+  //  - node dist/server.cjs   -> cwd = apps/dashboard, __dirname = apps/dashboard/dist
+  const distPath =
+    fs.existsSync(path.join(process.cwd(), "dist")) ||
+    fs.existsSync(path.join(__dirname, "dist"))
+      ? path.join(process.cwd(), "dist")
+      : path.join(__dirname, "..", "dist");
 
   if (!fs.existsSync(distPath)) {
     console.warn(`⚠️  Frontend build not found at ${distPath}. Run "npm run build" first.`);
